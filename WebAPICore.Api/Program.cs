@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using WebAPICore.Api.Data;
 using WebAPICore.Api.Middleware;
+using WebAPICore.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddOpenApi();
 // 資料庫配置：Supabase (PostgreSQL)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// 業務邏輯服務註冊 (Scoped)
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 
 // 全域例外處理 + ProblemDetails (RFC 7807)
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -26,6 +31,8 @@ app.UseStatusCodePages();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    // 現代化 OpenAPI 互動文件介面 (訪問 /scalar/v1)
+    app.MapScalarApiReference();
 
     // 練習用：故意丟例外，觀察全域錯誤處理的輸出（僅 Development）
     app.MapGet("/debug/throw", () => { throw new InvalidOperationException("boom"); });

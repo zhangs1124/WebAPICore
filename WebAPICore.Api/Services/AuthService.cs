@@ -92,6 +92,15 @@ public class AuthService : IAuthService
             .FirstOrDefaultAsync(u => u.Username == username.Trim(), cancellationToken);
     }
 
+    /// <inheritdoc />
+    public async Task<IReadOnlyList<User>> GetUsersAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users
+            .AsNoTracking()
+            .OrderByDescending(u => u.CreatedAt)
+            .ToListAsync(cancellationToken);
+    }
+
     private static string HashPassword(string password)
     {
         var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password + "AntigravitySalt2026"));

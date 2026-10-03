@@ -84,4 +84,24 @@ public class AuthController : ControllerBase
             });
         }
     }
+
+    /// <summary>
+    /// 取得所有系統使用者清單
+    /// </summary>
+    [HttpGet("users")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await _authService.GetUsersAsync(cancellationToken);
+        var result = users.Select(u => new
+        {
+            u.Id,
+            u.Username,
+            u.DisplayName,
+            u.Role,
+            u.IsActive,
+            u.CreatedAt
+        });
+        return Ok(result);
+    }
 }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="utf-8" />
@@ -57,13 +57,33 @@
         </div>
     </div>
 
+    <!-- 右側滑出抽屜 (Offcanvas Drawers) -->
+    <partial name="_UserDrawer" />
+    <partial name="_PurchaseDrawer" />
+    <partial name="_StocktakeDrawer" />
+
     <!-- Tabler Core JS (Bootstrap 5) -->
     <script src="https://cdn.jsdelivr.net/npm/@@tabler/core@1.0.0-beta20/dist/js/tabler.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor LayoutHttpAccessor
+    @{
+        var laySession = LayoutHttpAccessor.HttpContext?.Session.GetString("UserSession");
+        var layRole = "Warehouse";
+        var layName = "現場倉管員";
+        if (!string.IsNullOrEmpty(laySession))
+        {
+            var s = System.Text.Json.JsonSerializer.Deserialize<WebAPICore.Api.Models.UserSession>(laySession);
+            if (s != null) { layRole = s.Role; layName = s.DisplayName; }
+        }
+    }
+
     <!-- 全域主題切換與共用通知腳本 -->
     <script>
+        window.currentUserRole = '@layRole';
+        window.currentUserName = '@layName';
+
         function toggleTablerTheme(theme) {
             localStorage.setItem('tabler-theme', theme);
             document.documentElement.setAttribute('data-bs-theme', theme);
@@ -86,6 +106,39 @@
                 if (search) search.focus();
             }
         });
+
+        // 依據角色動態控制 UI 顯示/遮蔽 (顯現管控核心)
+        function applyRolePermissions() {
+            const role = window.currentUserRole;
+
+            // 1. Admin 專屬控制項
+            document.querySelectorAll('.role-admin-only').forEach(el => {
+                el.style.display = (role === 'Admin') ? '' : 'none';
+            });
+
+            // 2. Manager 專屬控制項 (審核、盤點校正)
+            document.querySelectorAll('.role-manager-only').forEach(el => {
+                el.style.display = (role === 'Manager' || role === 'Admin') ? '' : 'none';
+            });
+
+            // 3. Purchaser 專屬控制項 (填寫採購單)
+            document.querySelectorAll('.role-purchaser-only').forEach(el => {
+                el.style.display = (role !== 'Warehouse') ? '' : 'none';
+            });
+
+            // 4. 進價成本遮蔽 (倉管員看不到進價)
+            document.querySelectorAll('.price-cost-cell').forEach(el => {
+                if (role === 'Warehouse') {
+                    if (!el.dataset.rawPrice) el.dataset.rawPrice = el.innerText;
+                    el.innerText = '***';
+                    el.title = '現場作業員無權限檢視成本單價';
+                } else if (el.dataset.rawPrice) {
+                    el.innerText = el.dataset.rawPrice;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', applyRolePermissions);
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

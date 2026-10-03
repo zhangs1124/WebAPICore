@@ -1,0 +1,184 @@
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@{
+    Layout = null;
+    var token = Xsrf.GetAndStoreTokens(Context).RequestToken;
+}
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>系統登入 - 智庫存 ERP 雲端管理系統</title>
+    <!-- Tabler Core CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/core@@1.0.0-beta20/dist/css/tabler.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@@3.2.0/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <style>
+        :root { --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; }
+        body { font-feature-settings: "cv03", "cv04", "cv11"; }
+        .login-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column login-bg">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="." class="navbar-brand navbar-brand-autodark d-inline-flex align-items-center text-white text-decoration-none fs-1">
+                    <i class="ti ti-packages text-primary me-2 fs-1"></i>
+                    <span class="fw-bold tracking-tight">智庫存 ERP</span>
+                </a>
+                <div class="text-white-50 mt-1 small">輕量級雲端進銷存管理系統</div>
+            </div>
+
+            <div class="card card-md shadow-lg border-0">
+                <div class="card-body">
+                    <h2 class="h2 text-center mb-4 fw-bold">帳號身分登入</h2>
+
+                    <div id="loginAlert" class="alert alert-danger d-none" role="alert">
+                        <div class="d-flex">
+                            <div><i class="ti ti-alert-circle fs-2 me-2"></i></div>
+                            <div id="loginAlertText">帳號或密碼錯誤</div>
+                        </div>
+                    </div>
+
+                    <form id="loginForm" autocomplete="off" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label required">帳號</label>
+                            <input type="text" class="form-control" id="loginUsername" placeholder="請輸入帳號" required autofocus />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">密碼</label>
+                            <div class="input-group input-group-flat">
+                                <input type="password" class="form-control" id="loginPassword" placeholder="請輸入密碼" required />
+                                <span class="input-group-text">
+                                    <a href="javascript:void(0)" class="link-secondary" onclick="togglePasswordVisibility()" title="顯示密碼">
+                                        <i class="ti ti-eye" id="togglePassIcon"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-footer mt-4">
+                            <button type="submit" class="btn btn-primary w-100 fw-bold" id="btnLogin">
+                                <i class="ti ti-login me-1"></i> 立即登入
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- 快速填入測試角色帳號按鈕 -->
+                    <div class="hr-text text-secondary my-4">或快速點擊帶入測試身分</div>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-danger w-100 btn-sm text-truncate" onclick="fillQuickUser('admin', 'Admin888!', '👑 系統管理員')">
+                                👑 系統管理員 (Admin)
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-warning w-100 btn-sm text-truncate" onclick="fillQuickUser('manager', 'Manager888!', '👔 倉儲主管')">
+                                👔 倉儲主管 (Manager)
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-primary w-100 btn-sm text-truncate" onclick="fillQuickUser('purchaser', 'Buyer888!', '👤 採購人員')">
+                                👤 採購人員 (Purchaser)
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-outline-success w-100 btn-sm text-truncate" onclick="fillQuickUser('warehouse', 'Worker888!', '👷 現場倉管')">
+                                👷 現場倉管 (Warehouse)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center text-white-50 mt-4 small">
+                智庫存 ERP &bull; 內建 RBAC 角色與 Session 驗證機制
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabler Core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@@tabler/core@@1.0.0-beta20/dist/js/tabler.min.js"></script>
+    <script>
+        const csrfToken = '@token';
+
+        function fillQuickUser(username, password, roleName) {
+            document.getElementById('loginUsername').value = username;
+            document.getElementById('loginPassword').value = password;
+            hideAlert();
+        }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('loginPassword');
+            const icon = document.getElementById('togglePassIcon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.className = 'ti ti-eye-off';
+            } else {
+                passInput.type = 'password';
+                icon.className = 'ti ti-eye';
+            }
+        }
+
+        function showAlert(msg) {
+            const alertBox = document.getElementById('loginAlert');
+            document.getElementById('loginAlertText').innerText = msg;
+            alertBox.classList.remove('d-none');
+        }
+
+        function hideAlert() {
+            document.getElementById('loginAlert').classList.add('d-none');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            hideAlert();
+
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const btn = document.getElementById('btnLogin');
+
+            if (!username || !password) {
+                showAlert('請填寫完整帳號與密碼');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>驗證中...';
+
+            try {
+                const response = await fetch('/Account/Login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': csrfToken
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    btn.className = 'btn btn-success w-100 fw-bold';
+                    btn.innerHTML = '<i class="ti ti-check me-1"></i> ' + data.message;
+                    setTimeout(() => {
+                        window.location.href = data.redirectUrl || '/';
+                    }, 600);
+                } else {
+                    showAlert(data.message || '登入失敗，請檢查帳號密碼');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="ti ti-login me-1"></i> 立即登入';
+                }
+            } catch (err) {
+                showAlert('網路錯誤或伺服器異常，請稍後重試');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="ti ti-login me-1"></i> 立即登入';
+            }
+        });
+    </script>
+</body>
+</html>

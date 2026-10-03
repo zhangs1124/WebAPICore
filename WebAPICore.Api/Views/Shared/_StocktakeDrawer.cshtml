@@ -1,0 +1,54 @@
+<!-- 庫存盤點與流水帳右側滑出抽屜 (Offcanvas Drawer) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="stocktakeDrawer" aria-labelledby="stocktakeDrawerLabel" style="width: 580px;">
+    <div class="offcanvas-header bg-dark text-white">
+        <h2 class="offcanvas-title fw-bold" id="stocktakeDrawerLabel">
+            <i class="ti ti-adjustments-alt text-info me-2"></i>庫存盤點校正與歷史履歷
+        </h2>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+        <!-- 主管專屬盤點校正表單 (Manager / Admin 可見) -->
+        <div class="card mb-4 border shadow-sm role-manager-only">
+            <div class="card-header bg-light py-2">
+                <h4 class="card-title fw-bold m-0"><i class="ti ti-clipboard-check text-danger me-1"></i>現場實盤數量覆寫 (主管權限)</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning py-2 small mb-3">
+                    <i class="ti ti-alert-triangle me-1"></i>注意：盤點校正會直接覆寫在庫現有量，並留下不可竄改的盤盈/盤虧審計流水帳。
+                </div>
+                <form id="formStocktake" autocomplete="off">
+                    <input type="hidden" id="stocktakeProductId" />
+                    <div class="mb-2">
+                        <label class="form-label small text-secondary">目標商品</label>
+                        <input type="text" class="form-control form-control-sm bg-light" id="stocktakeProductName" readonly />
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <label class="form-label small text-secondary">系統帳面庫存</label>
+                            <input type="number" class="form-control form-control-sm bg-light" id="stocktakeCurrentQty" readonly />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label required small fw-bold text-danger">現場實盤數量</label>
+                            <input type="number" class="form-control form-control-sm border-danger" id="stocktakeActualQty" min="0" required />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required small">盤盈/盤虧原因說明</label>
+                        <input type="text" class="form-control form-control-sm" id="stocktakeReason" placeholder="例如：搬運碰撞損毀報廢 2 件" required />
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-sm w-100 fw-bold" id="btnSubmitStocktake">
+                        <i class="ti ti-check me-1"></i>確認校正並覆寫庫存
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 歷史異動流水帳時間軸 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="fw-bold m-0"><i class="ti ti-history text-secondary me-1"></i>該商品歷史異動流水帳 (Audit Log)</h4>
+        </div>
+        <div class="border rounded bg-white p-3" style="max-height: 400px; overflow-y: auto;" id="stockMovementHistory">
+            <div class="text-center text-muted py-3">請點選商品清單中的「歷史流水」以載入</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<!-- 系統使用者管理右側滑出抽屜 (Offcanvas Drawer) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="userDrawer" aria-labelledby="userDrawerLabel" style="width: 550px;">
+    <div class="offcanvas-header bg-dark text-white">
+        <h2 class="offcanvas-title fw-bold" id="userDrawerLabel">
+            <i class="ti ti-users-group text-primary me-2"></i>系統使用者與權限管理
+        </h2>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-4">
+        <!-- 角色權限說明卡 -->
+        <div class="alert alert-info border-0 shadow-sm mb-4">
+            <div class="d-flex">
+                <i class="ti ti-shield-lock fs-2 me-2"></i>
+                <div class="small">
+                    <strong>RBAC 權限角色說明：</strong><br />
+                    • <strong>Admin</strong>：最高管理權限，具備所有功能與帳號管理。<br />
+                    • <strong>Manager</strong>：主管權限，可審核採購單與執行盤點校正。<br />
+                    • <strong>Purchaser</strong>：採購人員，可填寫與送出採購單草稿。<br />
+                    • <strong>Warehouse</strong>：倉管現場，負責出入庫，不可調帳且隱藏進價。
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增使用者快速表單 -->
+        <div class="card mb-4 border shadow-sm">
+            <div class="card-header bg-light py-2">
+                <h4 class="card-title fw-bold m-0"><i class="ti ti-user-plus text-success me-1"></i>建立新帳號</h4>
+            </div>
+            <div class="card-body">
+                <form id="formCreateUser" autocomplete="off">
+                    <div class="row g-2 mb-2">
+                        <div class="col-6">
+                            <label class="form-label required small">登入帳號</label>
+                            <input type="text" class="form-control form-control-sm" id="newUsername" placeholder="英文或數字" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label required small">顯示姓名</label>
+                            <input type="text" class="form-control form-control-sm" id="newDisplayName" placeholder="例如：王小明" required />
+                        </div>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label required small">登入密碼</label>
+                            <input type="password" class="form-control form-control-sm" id="newPassword" placeholder="至少 6 碼" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label required small">指派角色</label>
+                            <select class="form-select form-select-sm" id="newRole" required>
+                                <option value="Warehouse">👷 現場倉管 (Warehouse)</option>
+                                <option value="Purchaser">👤 採購人員 (Purchaser)</option>
+                                <option value="Manager">👔 倉儲主管 (Manager)</option>
+                                <option value="Admin">👑 系統管理員 (Admin)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm w-100 fw-bold" id="btnSubmitUser">
+                        <i class="ti ti-check me-1"></i>確認建立帳號
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 現有帳號列表 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="fw-bold m-0"><i class="ti ti-list text-secondary me-1"></i>現有帳號清單</h4>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="loadUsersList()">
+                <i class="ti ti-refresh me-1"></i>刷新清單
+            </button>
+        </div>
+
+        <div class="table-responsive border rounded bg-white">
+            <table class="table table-vcenter table-sm card-table">
+                <thead>
+                    <tr>
+                        <th>帳號 / 姓名</th>
+                        <th>角色</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody id="userListTbody">
+                    <tr><td colspan="3" class="text-center text-muted py-3">載入中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

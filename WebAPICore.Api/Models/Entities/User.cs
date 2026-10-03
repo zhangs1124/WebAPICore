@@ -1,4 +1,4 @@
-﻿namespace WebAPICore.Api.Models.Entities;
+namespace WebAPICore.Api.Models.Entities;
 
 /// <summary>
 /// 系統使用者帳號與角色實體 (支援 RBAC 權限控管)

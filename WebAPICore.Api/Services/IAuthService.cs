@@ -22,4 +22,9 @@ public interface IAuthService
     /// 依帳號名稱查詢使用者
     /// </summary>
     Task<User?> GetUserByUsernameAsync(string username, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 查詢所有使用者清單
+    /// </summary>
+    Task<IReadOnlyList<User>> GetUsersAsync(CancellationToken cancellationToken = default);
 }

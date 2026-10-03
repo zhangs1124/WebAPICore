@@ -1,0 +1,668 @@
+- generic [active] [ref=f11e1]:
+  - generic [ref=f11e2]:
+    - generic [ref=f11e3]:
+      - link "Skip to content" [ref=f11e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner "Global navigation menu" [ref=f11e8]:
+        - generic [ref=f11e9]:
+          - generic [ref=f11e10]:
+            - button "Open menu" [ref=f11e12] [cursor=pointer]
+            - link "Homepage (g then d)" [ref=f11e15] [cursor=pointer]:
+              - /url: /
+          - generic [ref=f11e18]:
+            - navigation "Breadcrumbs" [ref=f11e19]:
+              - list [ref=f11e20]:
+                - listitem [ref=f11e21]:
+                  - link "zhangs1124" [ref=f11e22] [cursor=pointer]:
+                    - /url: /zhangs1124
+                - listitem [ref=f11e24]:
+                  - link "WebAPICore" [ref=f11e25] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore
+                  - button "Switch repository (alt shift r)" [ref=f11e26] [cursor=pointer]
+            - button "Open quick search dialog, type / to search" [ref=f11e31] [cursor=pointer]:
+              - generic [ref=f11e33]:
+                - generic:
+                  - text: Type
+                  - generic: /
+                  - text: to search
+          - generic [ref=f11e34]:
+            - generic [ref=f11e35]:
+              - generic [ref=f11e38]:
+                - link "Chat with Copilot" [ref=f11e40] [cursor=pointer]:
+                  - /url: /copilot
+                - button "Open Copilot…" [ref=f11e45] [cursor=pointer]
+              - button "Create new..." [ref=f11e47] [cursor=pointer]
+              - generic [ref=f11e49]:
+                - link "All issues" [ref=f11e50] [cursor=pointer]:
+                  - /url: /issues
+                - link "All pull requests" [ref=f11e54] [cursor=pointer]:
+                  - /url: /pulls
+                - link "All repositories" [ref=f11e57] [cursor=pointer]:
+                  - /url: /repos
+            - link "You have no unread notifications (g then n)" [ref=f11e60] [cursor=pointer]:
+              - /url: /notifications
+            - button "Open user navigation menu" [ref=f11e64] [cursor=pointer]:
+              - img "User avatar" [ref=f11e65]
+        - heading "Repository navigation" [level=2] [ref=f11e66]
+        - navigation "Repository" [ref=f11e67]:
+          - list [ref=f11e68]:
+            - listitem [ref=f11e69]:
+              - link "Code" [ref=f11e70] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore
+            - listitem [ref=f11e75]:
+              - link "Issues" [ref=f11e76] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/issues
+            - listitem [ref=f11e82]:
+              - link "Pull requests" [ref=f11e83] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/pulls
+            - listitem [ref=f11e88]:
+              - link "Agents" [ref=f11e89] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/agents?author=zhangs1124
+            - listitem [ref=f11e95]:
+              - link "Actions" [ref=f11e96] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/actions
+            - listitem [ref=f11e101]:
+              - link "Projects" [ref=f11e102] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/projects
+            - listitem [ref=f11e107]:
+              - link "Wiki" [ref=f11e108] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/wiki
+            - listitem [ref=f11e113]:
+              - link "Security and quality" [ref=f11e114] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/security
+            - listitem [ref=f11e119]:
+              - link "Insights" [ref=f11e120] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/pulse
+            - listitem [ref=f11e125]:
+              - link "Settings" [ref=f11e126] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/settings
+    - main [ref=f11e134]:
+      - generic [ref=f11e147]:
+        - generic [ref=f11e152]:
+          - generic [ref=f11e155]:
+            - img "zhangs1124" [ref=f11e156]
+            - generic "WebAPICore" [ref=f11e157]:
+              - strong [ref=f11e158]:
+                - link "WebAPICore" [ref=f11e159] [cursor=pointer]:
+                  - /url: /zhangs1124/WebAPICore
+            - generic [ref=f11e160]: Public
+          - list [ref=f11e162]:
+            - listitem [ref=f11e163]:
+              - button "Pin zhangs1124/WebAPICore" [ref=f11e164] [cursor=pointer]:
+                - generic [ref=f11e165]: Pin
+            - listitem [ref=f11e167]:
+              - 'button "Watch: Participating in zhangs1124/WebAPICore. 0 users are watching this repository. Click to change subscription settings." [ref=f11e168] [cursor=pointer]':
+                - generic [ref=f11e169]:
+                  - generic [ref=f11e170]: Watch
+                  - generic:
+                    - generic [aria-hidden]: "0"
+                    - generic: (0)
+            - listitem [ref=f11e171]:
+              - button "You own zhangs1124/WebAPICore and are not a member of any organizations" [ref=f11e172]:
+                - generic [ref=f11e174]:
+                  - text: Fork
+                  - generic [aria-hidden] [ref=f11e175]: "0"
+                  - generic [ref=f11e176]: (0)
+            - listitem [ref=f11e177]:
+              - generic [ref=f11e178]:
+                - button "Star zhangs1124/WebAPICore" [ref=f11e181] [cursor=pointer]:
+                  - generic [ref=f11e183]:
+                    - text: Star
+                    - generic [aria-hidden] [ref=f11e184]: "0"
+                    - generic [ref=f11e185]: (0)
+                - button "Star lists" [ref=f11e187] [cursor=pointer]
+        - generic [ref=f11e190]:
+          - generic [ref=f11e193]:
+            - generic [ref=f11e194]:
+              - generic [ref=f11e195]:
+                - button "main branch" [ref=f11e197] [cursor=pointer]:
+                  - generic [ref=f11e198]: main
+                - generic [ref=f11e202]:
+                  - link [ref=f11e203] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/branches
+                    - generic [ref=f11e206]:
+                      - strong [ref=f11e207]: "1"
+                      - text: Branch
+                  - link [ref=f11e208] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/tags
+                    - generic [ref=f11e211]:
+                      - strong [ref=f11e212]: "0"
+                      - text: Tags
+              - generic [ref=f11e213]:
+                - generic [ref=f11e214]:
+                  - generic [ref=f11e217]:
+                    - combobox "Go to file" [ref=f11e221]
+                    - generic [ref=f11e224]:
+                      - generic [ref=f11e225]: t
+                      - generic [aria-hidden] [ref=f11e226]: T
+                  - generic [ref=f11e227]:
+                    - heading "Add file" [level=2] [ref=f11e228]
+                    - button "Add file" [ref=f11e229] [cursor=pointer]
+                - button "Code" [ref=f11e234] [cursor=pointer]
+            - generic [ref=f11e237]:
+              - generic [ref=f11e238]:
+                - generic [ref=f11e240]:
+                  - heading "Latest commit" [level=2] [ref=f11e241]
+                  - generic [ref=f11e242]:
+                    - generic [ref=f11e244]:
+                      - img "author" [ref=f11e245]
+                      - generic "zhangs1124" [ref=f11e246]
+                    - generic [ref=f11e247]:
+                      - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e250] [cursor=pointer]':
+                        - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - button "Open commit details" [ref=f11e251] [cursor=pointer]
+                  - generic [ref=f11e254]:
+                    - generic [ref=f11e256]:
+                      - link "Commit 2d493ea" [ref=f11e257] [cursor=pointer]:
+                        - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                        - text: 2d493ea
+                      - text: ·
+                      - generic "Oct 3, 2026, 8:36 PM GMT+8" [ref=f11e258]: Oct 3, 20263 minutes ago
+                    - generic [ref=f11e259]:
+                      - heading "History" [level=2] [ref=f11e260]
+                      - link "5 Commits" [ref=f11e261] [cursor=pointer]:
+                        - /url: /zhangs1124/WebAPICore/commits/main/
+                - heading "Folders and files" [level=2] [ref=f11e264]
+                - table "Folders and files" [ref=f11e265]:
+                  - rowgroup:
+                    - row "Name Last commit message Last commit date":
+                      - columnheader "Name"
+                      - columnheader "Last commit message"
+                      - columnheader "Last commit date"
+                  - rowgroup [ref=f11e266]:
+                    - row [ref=f11e267]:
+                      - cell [ref=f11e268]:
+                        - link "WebAPICore.Api, (Directory)" [ref=f11e275] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/tree/main/WebAPICore.Api
+                          - text: WebAPICore.Api
+                      - cell [ref=f11e276]:
+                        - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e279] [cursor=pointer]':
+                          - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - cell "Oct 3, 20263 minutes ago" [ref=f11e280]
+                    - row [ref=f11e282]:
+                      - cell [ref=f11e283]:
+                        - link "WebAPICore.Tests, (Directory)" [ref=f11e290] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/tree/main/WebAPICore.Tests
+                          - text: WebAPICore.Tests
+                      - cell [ref=f11e291]:
+                        - link "Initial commit" [ref=f11e294] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e295]
+                    - row [ref=f11e297]:
+                      - cell [ref=f11e298]:
+                        - link "doc/Conversation, (Directory)" [ref=f11e305] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/tree/main/doc/Conversation
+                          - text: doc/Conversation
+                      - cell [ref=f11e306]:
+                        - link "Initial commit" [ref=f11e309] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e310]
+                    - row [ref=f11e312]:
+                      - cell [ref=f11e313]:
+                        - link ".gitignore, (File)" [ref=f11e320] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/.gitignore
+                          - text: .gitignore
+                      - cell [ref=f11e321]:
+                        - link "Initial commit" [ref=f11e324] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e325]
+                    - row [ref=f11e327]:
+                      - cell [ref=f11e328]:
+                        - link "API測試重點.md, (File)" [ref=f11e335] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/API%E6%B8%AC%E8%A9%A6%E9%87%8D%E9%BB%9E.md
+                          - text: API測試重點.md
+                      - cell [ref=f11e336]:
+                        - link "Initial commit" [ref=f11e339] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e340]
+                    - row [ref=f11e342]:
+                      - cell [ref=f11e343]:
+                        - link "Dockerfile, (File)" [ref=f11e350] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/Dockerfile
+                          - text: Dockerfile
+                      - cell [ref=f11e351]:
+                        - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e354] [cursor=pointer]':
+                          - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - cell "Oct 3, 20263 minutes ago" [ref=f11e355]
+                    - row [ref=f11e357]:
+                      - cell [ref=f11e358]:
+                        - link "Postman.md, (File)" [ref=f11e365] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/Postman.md
+                          - text: Postman.md
+                      - cell [ref=f11e366]:
+                        - link "Initial commit" [ref=f11e369] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e370]
+                    - row [ref=f11e372]:
+                      - cell [ref=f11e373]:
+                        - link "README.md, (File)" [ref=f11e380] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/README.md
+                          - text: README.md
+                      - cell [ref=f11e381]:
+                        - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e384] [cursor=pointer]':
+                          - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - cell "Oct 3, 20263 minutes ago" [ref=f11e385]
+                    - row [ref=f11e387]:
+                      - cell [ref=f11e388]:
+                        - link "WebAPICore.sln, (File)" [ref=f11e395] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/WebAPICore.sln
+                          - text: WebAPICore.sln
+                      - cell [ref=f11e396]:
+                        - link "Initial commit" [ref=f11e399] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e400]
+                    - row [ref=f11e402]:
+                      - cell [ref=f11e403]:
+                        - link "WebAPI請求生命週期詳解.md, (File)" [ref=f11e410] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/WebAPI%E8%AB%8B%E6%B1%82%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F%E8%A9%B3%E8%A7%A3.md
+                          - text: WebAPI請求生命週期詳解.md
+                      - cell [ref=f11e411]:
+                        - link "Initial commit" [ref=f11e414] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/commit/7f387958c6274e8d1b4edb0e75b89e9cf772ea94
+                      - cell "Oct 3, 20261 hour ago" [ref=f11e415]
+                    - row [ref=f11e417]:
+                      - cell [ref=f11e418]:
+                        - link "WebAPI重點.md, (File)" [ref=f11e425] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/WebAPI%E9%87%8D%E9%BB%9E.md
+                          - text: WebAPI重點.md
+                      - cell [ref=f11e426]:
+                        - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e429] [cursor=pointer]':
+                          - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - cell "Oct 3, 20263 minutes ago" [ref=f11e430]
+                    - row [ref=f11e432]:
+                      - cell [ref=f11e433]:
+                        - link "start.bat, (File)" [ref=f11e440] [cursor=pointer]:
+                          - /url: /zhangs1124/WebAPICore/blob/main/start.bat
+                          - text: start.bat
+                      - cell [ref=f11e441]:
+                        - 'link "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL…" [ref=f11e444] [cursor=pointer]':
+                          - /url: /zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+                      - cell "Oct 3, 20263 minutes ago" [ref=f11e445]
+              - generic [ref=f11e448]:
+                - generic [ref=f11e449]:
+                  - heading "Repository files navigation" [level=2] [ref=f11e450]
+                  - navigation "Repository files" [ref=f11e451]:
+                    - list [ref=f11e452]:
+                      - listitem [ref=f11e453]:
+                        - link "README" [ref=f11e454] [cursor=pointer]:
+                          - /url: "#"
+                  - button "Edit file" [ref=f11e456] [cursor=pointer]
+                  - button "Outline" [ref=f11e459] [cursor=pointer]
+                - article [ref=f11e463]:
+                  - generic [ref=f11e464]:
+                    - heading "📦 WebAPICore - 雲端現代化進銷存與倉儲管理系統 (ERP)" [level=1] [ref=f11e465]
+                    - 'link "Permalink: 📦 WebAPICore - 雲端現代化進銷存與倉儲管理系統 (ERP)" [ref=f11e466] [cursor=pointer]':
+                      - /url: "#-webapicore---雲端現代化進銷存與倉儲管理系統-erp"
+                  - paragraph [ref=f11e469]:
+                    - link [ref=f11e470] [cursor=pointer]:
+                      - /url: https://dotnet.microsoft.com/
+                      - img ".NET 9" [ref=f11e471]
+                    - link [ref=f11e472] [cursor=pointer]:
+                      - /url: https://supabase.com/
+                      - img "Database" [ref=f11e473]
+                    - link [ref=f11e474] [cursor=pointer]:
+                      - /url: https://preview.tabler.io
+                      - img "UI" [ref=f11e475]
+                    - link [ref=f11e476] [cursor=pointer]:
+                      - /url: https://scalar.com/
+                      - img "API Doc" [ref=f11e477]
+                    - link [ref=f11e478] [cursor=pointer]:
+                      - /url: https://www.docker.com/
+                      - img "Docker" [ref=f11e479]
+                  - paragraph [ref=f11e480]:
+                    - text: 一個遵循
+                    - strong [ref=f11e481]: Clean Code
+                    - text: 、
+                    - strong [ref=f11e482]: RESTful 規範
+                    - text: 、
+                    - strong [ref=f11e483]: ACID 資料庫交易保證
+                    - text: 與
+                    - strong [ref=f11e484]: Modal-First SPA CRUD
+                    - text: 架構的高效能企業級進銷存管理系統。串接
+                    - strong [ref=f11e485]: Supabase 雲端 PostgreSQL
+                    - text: 資料庫，具備並發防超賣樂觀鎖防護與現代化
+                    - strong [ref=f11e486]: Tabler SaaS 營運儀表板
+                    - text: 。
+                  - separator [ref=f11e487]
+                  - generic [ref=f11e488]:
+                    - heading "🌟 核心架構與技術亮點" [level=2] [ref=f11e489]
+                    - 'link "Permalink: 🌟 核心架構與技術亮點" [ref=f11e490] [cursor=pointer]':
+                      - /url: "#-核心架構與技術亮點"
+                  - list [ref=f11e493]:
+                    - listitem [ref=f11e494]:
+                      - paragraph [ref=f11e495]:
+                        - strong [ref=f11e496]: ACID 資料庫交易與稽核流水帳（Audit Ledger）
+                        - text: ：
+                      - list [ref=f11e497]:
+                        - listitem [ref=f11e498]:
+                          - text: 任何進貨入庫（Inbound）與銷貨出庫（Outbound），均透過 EF Core
+                          - code [ref=f11e499]: BeginTransactionAsync()
+                          - text: 執行。
+                        - listitem [ref=f11e500]: 保證「庫存數值異動」與「不可竄改的流水帳記錄（StockMovements）」同生共死，落實財務級別的帳實相符。
+                    - listitem [ref=f11e501]:
+                      - paragraph [ref=f11e502]:
+                        - strong [ref=f11e503]: 高並發防超賣機制（Race Condition Protection）
+                        - text: ：
+                      - list [ref=f11e504]:
+                        - listitem [ref=f11e505]:
+                          - strong [ref=f11e506]: 底層保證
+                          - text: ：PostgreSQL 資料庫層級建立
+                          - code [ref=f11e507]: CHECK ("CurrentQty" >= 0)
+                          - text: 約束，杜絕負數庫存。
+                        - listitem [ref=f11e508]:
+                          - strong [ref=f11e509]: 應用層保護
+                          - text: ：整合 PostgreSQL 原生
+                          - code [ref=f11e510]: xmin
+                          - text: 系統隱藏欄位作為 EF Core 樂觀鎖版本 Token，並發衝突時拋出例外並防禦。
+                    - listitem [ref=f11e511]:
+                      - paragraph [ref=f11e512]:
+                        - strong [ref=f11e513]: 統一錯誤格式（RFC 7807 ProblemDetails）
+                        - text: ：
+                      - list [ref=f11e514]:
+                        - listitem [ref=f11e515]: 全域 Middleware Pipeline 捕捉未預期例外，統一封裝為標準 RFC 7807 格式，避免伺服器敏感堆疊外洩。
+                    - listitem [ref=f11e516]:
+                      - paragraph [ref=f11e517]:
+                        - strong [ref=f11e518]: 現代化 Tabler SaaS 前端儀表板
+                        - text: ：
+                      - list [ref=f11e519]:
+                        - listitem [ref=f11e520]:
+                          - strong [ref=f11e521]: 4 欄式 KPI 營運指標卡
+                          - text: ：即時掌握商品品項數、總庫存量、低庫存警戒品項。
+                        - listitem [ref=f11e522]:
+                          - strong [ref=f11e523]: 防閃爍 (No FOUC) 深淺主題
+                          - text: ：亮色 / 暗黑模式一秒平滑切換。
+                        - listitem [ref=f11e524]:
+                          - strong [ref=f11e525]: Modal-First SPA CRUD
+                          - text: ：新增商品與出入庫操作皆於磨砂彈窗內非同步完成，零頁面跳轉。
+                  - separator [ref=f11e526]
+                  - generic [ref=f11e527]:
+                    - heading "🏛️ 系統端到端請求架構圖" [level=2] [ref=f11e528]
+                    - 'link "Permalink: 🏛️ 系統端到端請求架構圖" [ref=f11e529] [cursor=pointer]':
+                      - /url: "#️-系統端到端請求架構圖"
+                  - region "mermaid rendered output container" [ref=f11e532]:
+                    - generic [ref=f11e533]:
+                      - generic [ref=f11e534]:
+                        - group [ref=f11e535]:
+                          - button "Open dialog" [ref=f11e536] [cursor=pointer]
+                        - button "Copy mermaid code" [ref=f11e539] [cursor=pointer]
+                      - iframe [ref=f11e544]
+                    - generic [ref=f11e545]: Loading
+                  - separator [ref=f11e550]
+                  - generic [ref=f11e551]:
+                    - heading "🚀 本地快速啟動" [level=2] [ref=f11e552]
+                    - 'link "Permalink: 🚀 本地快速啟動" [ref=f11e553] [cursor=pointer]':
+                      - /url: "#-本地快速啟動"
+                  - generic [ref=f11e556]:
+                    - heading "方式一：使用一鍵啟動腳本（Windows）" [level=3] [ref=f11e557]
+                    - 'link "Permalink: 方式一：使用一鍵啟動腳本（Windows）" [ref=f11e558] [cursor=pointer]':
+                      - /url: "#方式一使用一鍵啟動腳本windows"
+                  - paragraph [ref=f11e561]: 在專案根目錄執行：
+                  - generic [ref=f11e562]:
+                    - generic [ref=f11e563]: .\start.bat
+                    - button "Copy code to clipboard" [ref=f11e565] [cursor=pointer]
+                  - paragraph [ref=f11e569]:
+                    - emphasis [ref=f11e570]: (腳本會自動編譯啟動，並在預設瀏覽器中開啟系統首頁)
+                  - generic [ref=f11e571]:
+                    - heading "方式二：使用 .NET CLI" [level=3] [ref=f11e572]
+                    - 'link "Permalink: 方式二：使用 .NET CLI" [ref=f11e573] [cursor=pointer]':
+                      - /url: "#方式二使用-net-cli"
+                  - generic [ref=f11e576]:
+                    - generic [ref=f11e577]:
+                      - generic [ref=f11e578]: "# 還原依賴並執行 Web API"
+                      - text: dotnet run --project WebAPICore.Api
+                    - button "Copy code to clipboard" [ref=f11e580] [cursor=pointer]
+                  - paragraph [ref=f11e584]: 啟動後請訪問：
+                  - list [ref=f11e585]:
+                    - listitem [ref=f11e586]:
+                      - text: 🌐
+                      - strong [ref=f11e587]: SaaS 營運管理儀表板
+                      - text: ：
+                      - code [ref=f11e588]: http://localhost:5092/
+                    - listitem [ref=f11e589]:
+                      - text: 📚
+                      - strong [ref=f11e590]: Scalar 現代化 API 互動文件
+                      - text: ：
+                      - code [ref=f11e591]: http://localhost:5092/scalar/v1
+                  - separator [ref=f11e592]
+                  - generic [ref=f11e593]:
+                    - heading "📡 核心 API 端點規格" [level=2] [ref=f11e594]
+                    - 'link "Permalink: 📡 核心 API 端點規格" [ref=f11e595] [cursor=pointer]':
+                      - /url: "#-核心-api-端點規格"
+                  - table [ref=f11e599]:
+                    - rowgroup [ref=f11e600]:
+                      - row [ref=f11e601]:
+                        - columnheader "HTTP 方法" [ref=f11e602]
+                        - columnheader "端點路徑" [ref=f11e603]
+                        - columnheader "說明" [ref=f11e604]
+                        - columnheader "關鍵特性" [ref=f11e605]
+                    - rowgroup [ref=f11e606]:
+                      - row [ref=f11e607]:
+                        - cell [ref=f11e608]:
+                          - code [ref=f11e609]: GET
+                        - cell [ref=f11e610]:
+                          - code [ref=f11e611]: /api/v1/products
+                        - cell "查詢商品清單" [ref=f11e612]
+                        - cell "支援關鍵字搜尋、分類過濾與分頁" [ref=f11e613]
+                      - row [ref=f11e614]:
+                        - cell [ref=f11e615]:
+                          - code [ref=f11e616]: GET
+                        - cell [ref=f11e617]:
+                          - code [ref=f11e618]: "/api/v1/products/{id}"
+                        - cell "查詢單一商品與即時庫存" [ref=f11e619]
+                        - cell [ref=f11e620]:
+                          - text: 包含
+                          - code [ref=f11e621]: isLowStock
+                          - text: 安全庫存預警標籤
+                      - row [ref=f11e622]:
+                        - cell [ref=f11e623]:
+                          - code [ref=f11e624]: POST
+                        - cell [ref=f11e625]:
+                          - code [ref=f11e626]: /api/v1/products
+                        - cell "建立新商品" [ref=f11e627]
+                        - cell "SKU 唯一性防重複校驗、自動初始化 0 庫存" [ref=f11e628]
+                      - row [ref=f11e629]:
+                        - cell [ref=f11e630]:
+                          - code [ref=f11e631]: POST
+                        - cell [ref=f11e632]:
+                          - code [ref=f11e633]: /api/v1/inventory/inbound
+                        - cell "進貨入庫作業" [ref=f11e634]
+                        - cell "增加現有庫存、寫入入庫流水帳（ACID 交易）" [ref=f11e635]
+                      - row [ref=f11e636]:
+                        - cell [ref=f11e637]:
+                          - code [ref=f11e638]: POST
+                        - cell [ref=f11e639]:
+                          - code [ref=f11e640]: /api/v1/inventory/outbound
+                        - cell "銷貨出庫作業" [ref=f11e641]
+                        - cell [ref=f11e642]:
+                          - strong [ref=f11e643]: 防超賣檢驗
+                          - text: 、樂觀鎖並發防護、扣減庫存並記帳
+                      - row [ref=f11e644]:
+                        - cell [ref=f11e645]:
+                          - code [ref=f11e646]: GET
+                        - cell [ref=f11e647]:
+                          - code [ref=f11e648]: /api/v1/inventory/low-stock
+                        - cell "查詢低於安全庫存商品" [ref=f11e649]
+                        - cell "輔助採購即時補貨" [ref=f11e650]
+                      - row [ref=f11e651]:
+                        - cell [ref=f11e652]:
+                          - code [ref=f11e653]: GET
+                        - cell [ref=f11e654]:
+                          - code [ref=f11e655]: "/api/v1/inventory/{id}/movements"
+                        - cell "查詢某商品歷史對帳流水帳" [ref=f11e656]
+                        - cell "依時間降冪排列的不可竄改記錄" [ref=f11e657]
+                  - separator [ref=f11e658]
+                  - generic [ref=f11e659]:
+                    - heading "☁️ 雲端容器化部署 (Render)" [level=2] [ref=f11e660]
+                    - 'link "Permalink: ☁️ 雲端容器化部署 (Render)" [ref=f11e661] [cursor=pointer]':
+                      - /url: "#️-雲端容器化部署-render"
+                  - paragraph [ref=f11e664]:
+                    - text: 本專案內建生產等級的多階段建置
+                    - code [ref=f11e665]: Dockerfile
+                    - text: ，可一鍵無痛部署至 Render 免費 Web Service：
+                  - list [ref=f11e666]:
+                    - listitem [ref=f11e667]: 將本專案 Push 至您的 GitHub 儲存庫。
+                    - listitem [ref=f11e668]:
+                      - text: 登入
+                      - link "Render Dashboard" [ref=f11e669] [cursor=pointer]:
+                        - /url: https://dashboard.render.com/
+                      - text: ，點擊
+                      - strong [ref=f11e670]: New +
+                      - text: ➜
+                      - strong [ref=f11e671]: Web Service
+                      - text: 。
+                    - listitem [ref=f11e672]: 連結您的 GitHub 專案。
+                    - listitem [ref=f11e673]:
+                      - strong [ref=f11e674]: Environment
+                      - text: 選擇
+                      - strong [ref=f11e675]: Docker
+                      - text: 。
+                    - listitem [ref=f11e676]:
+                      - text: 在
+                      - strong [ref=f11e677]: Environment Variables
+                      - text: 新增：
+                      - list [ref=f11e678]:
+                        - listitem [ref=f11e679]:
+                          - code [ref=f11e680]: ConnectionStrings__DefaultConnection
+                          - text: =
+                          - code [ref=f11e681]: <您的 Supabase PostgreSQL 連線字串>
+                    - listitem [ref=f11e682]:
+                      - text: 點擊
+                      - strong [ref=f11e683]: Deploy Web Service
+                      - text: ，Render 將全自動在雲端完成映像檔建置並配置 HTTPS 網址！
+          - generic [ref=f11e686]:
+            - generic [ref=f11e687]:
+              - heading "About Edit repository metadata" [level=2] [ref=f11e688]:
+                - generic [ref=f11e690]:
+                  - generic [ref=f11e691]: About
+                  - button "Edit repository metadata" [ref=f11e692] [cursor=pointer]
+              - paragraph [ref=f11e695]: ASP.NET Core 9 Cloud Inventory ERP with Supabase PostgreSQL, Tabler SaaS UI, and Docker
+              - heading "Resources" [level=3] [ref=f11e696]
+              - link "Readme" [ref=f11e698] [cursor=pointer]:
+                - /url: "#readme-ov-file"
+              - generic [ref=f11e701]:
+                - link "Activity" [ref=f11e704] [cursor=pointer]:
+                  - /url: /zhangs1124/WebAPICore/activity
+                - generic [ref=f11e707]:
+                  - heading "Stars" [level=3] [ref=f11e708]
+                  - link [ref=f11e710] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/stargazers
+                    - strong [ref=f11e714]: "0"
+                    - text: stars
+                  - heading "Watchers" [level=3] [ref=f11e715]
+                  - link [ref=f11e717] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/watchers
+                    - strong [ref=f11e721]: "0"
+                    - text: watching
+                  - heading "Forks" [level=3] [ref=f11e722]
+                  - link [ref=f11e724] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/forks
+                    - strong [ref=f11e728]: "0"
+                    - text: forks
+            - generic [ref=f11e729]:
+              - heading [level=2] [ref=f11e730]:
+                - link "Releases" [ref=f11e732] [cursor=pointer]:
+                  - /url: /zhangs1124/WebAPICore/releases
+              - generic [ref=f11e733]: No releases published
+              - link "Create a new release" [ref=f11e735] [cursor=pointer]:
+                - /url: /zhangs1124/WebAPICore/releases/new
+            - generic [ref=f11e736]:
+              - heading [level=2] [ref=f11e737]:
+                - link "Packages" [ref=f11e739] [cursor=pointer]:
+                  - /url: /users/zhangs1124/packages?repo_name=WebAPICore
+              - generic [ref=f11e740]:
+                - text: No packages published
+                - link "Publish your first package" [ref=f11e741] [cursor=pointer]:
+                  - /url: /zhangs1124/WebAPICore/packages
+            - generic [ref=f11e742]:
+              - heading "Contributors" [level=2] [ref=f11e743]
+              - generic [ref=f11e744]: No contributors
+            - generic [ref=f11e745]:
+              - heading "Languages" [level=2] [ref=f11e746]
+              - generic [ref=f11e748]:
+                - 'progressbar "C#: 60.5%" [ref=f11e749]'
+                - 'progressbar "HTML: 38.4%" [ref=f11e750]'
+                - 'progressbar "Other: 1.1%" [ref=f11e751]'
+              - list [ref=f11e752]:
+                - listitem [ref=f11e753]:
+                  - link "C# 60.5%" [ref=f11e754] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/search?l=c%23
+                    - generic [ref=f11e756]: C#
+                    - generic [ref=f11e757]: 60.5%
+                - listitem [ref=f11e758]:
+                  - link "HTML 38.4%" [ref=f11e759] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/search?l=html
+                    - generic [ref=f11e761]: HTML
+                    - generic [ref=f11e762]: 38.4%
+                - listitem [ref=f11e763]:
+                  - link "Other 1.1%" [ref=f11e764] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/search?l=Other
+                    - generic [ref=f11e766]: Other
+                    - generic [ref=f11e767]: 1.1%
+            - generic [ref=f11e768]:
+              - heading "Suggested workflows" [level=2] [ref=f11e769]
+              - paragraph [ref=f11e770]: Based on your tech stack
+              - list [ref=f11e771]:
+                - listitem [ref=f11e772]:
+                  - img ".NET logo" [ref=f11e774]
+                  - generic [ref=f11e775]:
+                    - generic [ref=f11e776]: .NET
+                    - generic [ref=f11e777]: Build and test a .NET or ASP.NET Core project.
+                    - generic [ref=f11e778]: By GitHub Actions
+                  - link "Configure" [ref=f11e779] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/new/main?filename=.github%2Fworkflows%2Fdotnet.yml&workflow_template=ci%2Fdotnet
+                - listitem [ref=f11e782]:
+                  - img ".NET Desktop logo" [ref=f11e784]
+                  - generic [ref=f11e785]:
+                    - generic [ref=f11e786]: .NET Desktop
+                    - generic [ref=f11e787]: Build, test, sign and publish a desktop application built on .NET.
+                    - generic [ref=f11e788]: By GitHub Actions
+                  - link "Configure" [ref=f11e789] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/new/main?filename=.github%2Fworkflows%2Fdotnet-desktop.yml&workflow_template=ci%2Fdotnet-desktop
+                - listitem [ref=f11e792]:
+                  - img "Jekyll using Docker image logo" [ref=f11e794]
+                  - generic [ref=f11e795]:
+                    - generic [ref=f11e796]: Jekyll using Docker image
+                    - generic [ref=f11e797]: Package a Jekyll site using the jekyll/builder Docker image.
+                    - generic [ref=f11e798]: By GitHub Actions
+                  - link "Configure" [ref=f11e799] [cursor=pointer]:
+                    - /url: /zhangs1124/WebAPICore/new/main?filename=.github%2Fworkflows%2Fjekyll-docker.yml&workflow_template=ci%2Fjekyll-docker
+              - generic [ref=f11e802]:
+                - link "More workflows" [ref=f11e803] [cursor=pointer]:
+                  - /url: /zhangs1124/WebAPICore/actions/new
+                - button "Dismiss suggestions" [ref=f11e804] [cursor=pointer]
+    - contentinfo [ref=f11e810]:
+      - heading "Footer" [level=2] [ref=f11e811]
+      - generic [ref=f11e812]:
+        - generic [ref=f11e813]:
+          - link "GitHub Homepage" [ref=f11e814] [cursor=pointer]:
+            - /url: https://github.com
+          - generic [ref=f11e817]: © 2026 GitHub, Inc.
+        - navigation "Footer" [ref=f11e818]:
+          - heading "Footer navigation" [level=3] [ref=f11e819]
+          - list "Footer navigation" [ref=f11e820]:
+            - listitem [ref=f11e821]:
+              - link "Terms" [ref=f11e822] [cursor=pointer]:
+                - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+            - listitem [ref=f11e823]:
+              - link "Privacy" [ref=f11e824] [cursor=pointer]:
+                - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+            - listitem [ref=f11e825]:
+              - link "Security" [ref=f11e826] [cursor=pointer]:
+                - /url: https://github.com/security
+            - listitem [ref=f11e827]:
+              - link "Status" [ref=f11e828] [cursor=pointer]:
+                - /url: https://www.githubstatus.com/
+            - listitem [ref=f11e829]:
+              - link "Community" [ref=f11e830] [cursor=pointer]:
+                - /url: https://github.community/
+            - listitem [ref=f11e831]:
+              - link "Docs" [ref=f11e832] [cursor=pointer]:
+                - /url: https://docs.github.com/
+            - listitem [ref=f11e833]:
+              - link "Contact" [ref=f11e834] [cursor=pointer]:
+                - /url: https://support.github.com?tags=dotcom-footer
+            - listitem [ref=f11e835]:
+              - button "Manage cookies" [ref=f11e837] [cursor=pointer]
+            - listitem [ref=f11e838]:
+              - button "Do not share my personal information" [ref=f11e840] [cursor=pointer]
+  - alert [ref=f11e843]

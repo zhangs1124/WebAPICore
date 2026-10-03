@@ -1,0 +1,162 @@
+- generic [ref=f45e2]:
+  - complementary [ref=f45e3]:
+    - generic [ref=f45e4]:
+      - heading [level=1] [ref=f45e5]:
+        - link " 智庫存 ERP" [ref=f45e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=f45e7]: 
+          - generic [ref=f45e8]: 智庫存 ERP
+      - generic [ref=f45e9]:
+        - list [ref=f45e10]:
+          - listitem [ref=f45e11]:
+            - link " 營運儀表板" [ref=f45e12] [cursor=pointer]:
+              - /url: /
+              - generic [ref=f45e13]: 
+              - generic [ref=f45e15]: 營運儀表板
+          - listitem [ref=f45e16]:
+            - link " 商品品項管理" [ref=f45e17] [cursor=pointer]:
+              - /url: "#productsSection"
+              - generic [ref=f45e18]: 
+              - generic [ref=f45e20]: 商品品項管理
+          - listitem [ref=f45e21]:
+            - link " 安全庫存預警" [ref=f45e22] [cursor=pointer]:
+              - /url: "#lowStockSection"
+              - generic [ref=f45e23]: 
+              - generic [ref=f45e25]: 安全庫存預警
+          - listitem [ref=f45e26]:
+            - link " Scalar API 文件 " [ref=f45e27] [cursor=pointer]:
+              - /url: /scalar/v1
+              - generic [ref=f45e28]: 
+              - generic [ref=f45e30]:
+                - text: Scalar API 文件
+                - generic [ref=f45e31]: 
+        - generic [ref=f45e32]:
+          - generic [ref=f45e33]: Supabase 雲端已連線
+          - generic [ref=f45e36]: ASP.NET Core 9 + Npgsql
+  - generic [ref=f45e37]:
+    - banner [ref=f45e38]:
+      - generic [ref=f45e39]:
+        - generic [ref=f45e40]:
+          - generic [ref=f45e41]:
+            - link "" [ref=f45e42] [cursor=pointer]:
+              - /url: javascript:void(0);
+            - text: 
+          - link "Show notifications" [ref=f45e45] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f45e46]: 
+          - generic [ref=f45e48]:
+            - link "Open user menu" [ref=f45e49] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=f45e50]: Admin
+              - generic [ref=f45e51]:
+                - generic [ref=f45e52]: 倉儲管理員
+                - generic [ref=f45e53]: 系統工程師
+            - text:  
+        - generic [ref=f45e56]:
+          - generic: 
+          - textbox "Search in website" [ref=f45e57]:
+            - /placeholder: 搜尋商品 SKU、品名... (按 Enter 搜尋)
+          - generic: Ctrl + K
+    - main [ref=f45e58]:
+      - generic [ref=f45e59]:
+        - generic [ref=f45e61]:
+          - generic [ref=f45e62]:
+            - generic [ref=f45e63]: INVENTORY MANAGEMENT SYSTEM
+            - heading " 倉儲進銷存營運總覽" [level=2] [ref=f45e64]:
+              - generic [ref=f45e65]: 
+              - text: 倉儲進銷存營運總覽
+          - generic [ref=f45e67]:
+            - button " 重新整理" [ref=f45e68] [cursor=pointer]:
+              - generic [ref=f45e69]: 
+              - text: 重新整理
+            - button " 新增商品" [ref=f45e70] [cursor=pointer]:
+              - generic [ref=f45e71]: 
+              - text: 新增商品
+        - generic [ref=f45e72]:
+          - generic [ref=f45e76]:
+            - generic [ref=f45e77]: 
+            - generic [ref=f45e80]:
+              - generic [ref=f45e81]: 商品總品項數
+              - generic [ref=f45e82]: "0"
+          - generic [ref=f45e86]:
+            - generic [ref=f45e87]: 
+            - generic [ref=f45e90]:
+              - generic [ref=f45e91]: 在庫現存總件數
+              - generic [ref=f45e92]: "0"
+          - generic [ref=f45e96]:
+            - generic [ref=f45e97]: 
+            - generic [ref=f45e100]:
+              - generic [ref=f45e101]: 安全庫存警戒數
+              - generic [ref=f45e102]: "0"
+          - generic [ref=f45e106]:
+            - generic [ref=f45e107]: 
+            - generic [ref=f45e110]:
+              - generic [ref=f45e111]: 雲端資料庫狀態
+              - generic [ref=f45e112]: 正常
+        - generic [ref=f45e114]:
+          - generic [ref=f45e115]:
+            - heading "商品即時庫存明細" [level=3] [ref=f45e116]:
+              - generic [ref=f45e117]: 
+              - text: 商品即時庫存明細
+            - generic [ref=f45e118]:
+              - textbox "搜尋 SKU 或名稱..." [ref=f45e119]
+              - combobox [ref=f45e120]:
+                - option "全部類別" [selected]
+                - option "電腦周邊"
+                - option "辦公設備"
+                - option "生活家電"
+                - option "耗材配件"
+              - button " 查詢" [ref=f45e121] [cursor=pointer]:
+                - generic [ref=f45e122]: 
+                - text: 查詢
+          - table [ref=f45e124]:
+            - rowgroup [ref=f45e125]:
+              - row [ref=f45e126]:
+                - columnheader "商品貨號 (SKU)" [ref=f45e127]
+                - columnheader "商品名稱" [ref=f45e128]
+                - columnheader "分類" [ref=f45e129]
+                - columnheader "銷售單價" [ref=f45e130]
+                - columnheader "現有庫存狀況" [ref=f45e131]
+                - columnheader "安全庫存線" [ref=f45e132]
+                - columnheader "狀態" [ref=f45e133]
+                - columnheader "快速出入庫" [ref=f45e134]
+            - rowgroup [ref=f45e135]:
+              - row [ref=f45e136]:
+                - cell "正在向 Supabase 雲端讀取庫存資料..." [ref=f45e137]:
+                  - status [ref=f45e138]
+                  - text: 正在向 Supabase 雲端讀取庫存資料...
+          - paragraph [ref=f45e140]: 顯示第 0 筆至 0 筆，共 0 筆
+        - generic [ref=f45e141]:
+          - heading "急需補貨商品警戒區 (現有庫存 ≤ 安全庫存)" [level=4] [ref=f45e143]:
+            - generic [ref=f45e144]: 
+            - text: 急需補貨商品警戒區 (現有庫存 ≤ 安全庫存)
+          - table [ref=f45e147]:
+            - rowgroup [ref=f45e148]:
+              - row [ref=f45e149]:
+                - columnheader "SKU" [ref=f45e150]
+                - columnheader "品名" [ref=f45e151]
+                - columnheader "現存數量" [ref=f45e152]
+                - columnheader "安全警戒線" [ref=f45e153]
+                - columnheader "建議採購補貨量" [ref=f45e154]
+                - columnheader "動作" [ref=f45e155]
+            - rowgroup [ref=f45e156]:
+              - row [ref=f45e157]:
+                - cell "載入中..." [ref=f45e158]
+        - text: "* * * * *   *   * "
+    - contentinfo [ref=f45e159]:
+      - generic [ref=f45e161]:
+        - list [ref=f45e163]:
+          - listitem [ref=f45e164]:
+            - generic [ref=f45e165]: ASP.NET Core 9.0
+          - listitem [ref=f45e166]:
+            - text: ·
+            - generic [ref=f45e167]: Supabase PostgreSQL
+          - listitem [ref=f45e168]:
+            - text: ·
+            - generic [ref=f45e169]: Tabler UI
+        - list [ref=f45e171]:
+          - listitem [ref=f45e172]:
+            - text: Copyright © 2026
+            - link "WebAPICore 進銷存展示系統" [ref=f45e173] [cursor=pointer]:
+              - /url: .
+            - text: . All rights reserved.

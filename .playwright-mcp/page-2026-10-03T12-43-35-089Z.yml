@@ -1,0 +1,242 @@
+- generic [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - generic [ref=f27e3]:
+      - banner [ref=f27e4]:
+        - link [ref=f27e6] [cursor=pointer]:
+          - /url: /
+          - img "Render" [ref=f27e7]
+        - button "M My Workspace" [ref=f27e13] [cursor=pointer]:
+          - generic [ref=f27e14]:
+            - generic [ref=f27e15]: M
+            - generic "My Workspace" [ref=f27e16]
+        - generic [ref=f27e21]:
+          - navigation "Breadcrumbs" [ref=f27e22]:
+            - list [ref=f27e23]:
+              - listitem [ref=f27e24]:
+                - link "Projects" [ref=f27e25] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f27e34] [cursor=pointer]:
+                - generic [ref=f27e35]: New Web Service
+                - button "Choose a service type" [ref=f27e1024]
+          - button "Search Ctrl + K" [ref=f27e43] [cursor=pointer]:
+            - text: Search
+            - generic [ref=f27e47]:
+              - generic [ref=f27e50]: Ctrl
+              - generic [ref=f27e51]: +
+              - generic [aria-hidden] [ref=f27e52]: K
+              - generic [ref=f27e53]: K
+        - generic [ref=f27e54]:
+          - button "New" [ref=f27e56] [cursor=pointer]
+          - button "Upgrade" [ref=f27e62] [cursor=pointer]
+          - button [ref=f27e68] [cursor=pointer]:
+            - img "Help" [ref=f27e69]
+          - button "Account menu" [ref=f27e73] [cursor=pointer]:
+            - generic [ref=f27e74]: z
+      - generic [ref=f27e1027]:
+        - main [ref=f27e1028]:
+          - generic [ref=f27e1029]:
+            - heading "New Web Service" [level=1] [ref=f27e1031]
+            - generic [ref=f27e1575]: It looks like you're using Docker, so we've autofilled some fields accordingly.
+          - generic [ref=f27e1032]:
+            - generic [ref=f27e1033]: Source Code
+            - generic [ref=f27e1576]:
+              - img "GitHub" [ref=f27e1578]
+              - link "zhangs1124 / WebAPICore" [ref=f27e1580] [cursor=pointer]:
+                - /url: https://github.com/zhangs1124/WebAPICore
+                - text: zhangs1124
+                - generic [ref=f27e1581]: /
+                - text: WebAPICore
+              - generic [ref=f27e1582]:
+                - separator [ref=f27e1583]: •
+                - time [ref=f27e1585]: 4m ago
+              - button [ref=f27e1587] [cursor=pointer]
+        - main [ref=f27e1593]:
+          - generic:
+            - generic:
+              - heading [level=1]
+          - generic [ref=f27e1594]:
+            - generic [ref=f27e1595]:
+              - generic [ref=f27e1596]:
+                - generic [ref=f27e1597]: Name
+                - generic [ref=f27e1599]: A unique name for your web service.
+              - textbox "Name" [ref=f27e1604]:
+                - /placeholder: example-service-name
+                - text: WebAPICore
+            - group [ref=f27e1605]:
+              - generic [ref=f27e1606]:
+                - generic [ref=f27e1607]: ProjectOptional
+                - paragraph [ref=f27e1609]:
+                  - text: Add this web service to a
+                  - link "project" [ref=f27e1610] [cursor=pointer]:
+                    - /url: https://render.com/docs/projects
+                  - generic [ref=f27e1611]: once it’s created.
+              - generic [ref=f27e1613]:
+                - generic [ref=f27e1614]:
+                  - generic [ref=f27e1615]: Project
+                  - button "Project Select a project…" [ref=f27e1617] [cursor=pointer]:
+                    - generic [ref=f27e1618]: Select a project…
+                - generic [aria-hidden] [ref=f27e1628]: /
+                - generic [ref=f27e1629]:
+                  - generic [ref=f27e1630]: Environment
+                  - button "Environment Select an environment…" [disabled] [ref=f27e1632]:
+                    - generic [ref=f27e1633]: Select an environment…
+            - generic [ref=f27e1651]:
+              - generic [ref=f27e1652]:
+                - generic [ref=f27e1653]: Language
+                - generic [ref=f27e1655]:
+                  - text: Choose the
+                  - link "runtime environment" [ref=f27e1656] [cursor=pointer]:
+                    - /url: https://render.com/docs/language-support
+                  - text: for this service.
+              - button "Language" [ref=f27e1660] [cursor=pointer]:
+                - generic [ref=f27e1661]: Docker
+            - generic [ref=f27e1665]:
+              - generic [ref=f27e1666]:
+                - generic [ref=f27e1667]: Branch
+                - generic [ref=f27e1669]: The Git branch to build and deploy.
+              - combobox [ref=f27e1671]:
+                - generic [ref=f27e1674]:
+                  - textbox "Branch" [ref=f27e1675]:
+                    - /placeholder: Search
+                    - text: main
+                  - button "Clear search input" [ref=f27e1676] [cursor=pointer]
+            - generic [ref=f27e1679]:
+              - generic [ref=f27e1680]:
+                - generic [ref=f27e1681]: Region
+                - generic [ref=f27e1683]:
+                  - text: Your services in the same
+                  - link "region" [ref=f27e1684] [cursor=pointer]:
+                    - /url: https://render.com/docs/regions
+                  - text: can communicate over a
+                  - link "private network." [ref=f27e1685] [cursor=pointer]:
+                    - /url: https://render.com/docs/private-network
+                  - text: You currently have services running in oregon.
+              - generic [ref=f27e1687]:
+                - radiogroup "Region Selector" [ref=f27e1688]:
+                  - radio "Oregon (US West) 4 existing services" [checked] [ref=f27e1691]:
+                    - generic [ref=f27e1695] [cursor=pointer]:
+                      - generic [ref=f27e1696]: Oregon (US West)
+                      - generic [ref=f27e1697]: 4 existing services
+                - button "Deploy in a new region" [ref=f27e1699] [cursor=pointer]
+            - generic [ref=f27e1703]:
+              - generic [ref=f27e1704]:
+                - generic [ref=f27e1705]: Root DirectoryOptional
+                - generic [ref=f27e1707]:
+                  - text: If set, Render runs commands from this directory instead of the repository root. Additionally, code changes outside of this directory do not trigger an auto-deploy. Most commonly used with a
+                  - link "monorepo." [ref=f27e1708] [cursor=pointer]:
+                    - /url: https://render.com/docs/monorepo-support#setting-a-root-directory
+              - combobox [ref=f27e1711]:
+                - textbox "Root DirectoryOptional" [ref=f27e1715]:
+                  - /placeholder: e.g. src
+            - generic [ref=f27e1717]:
+              - generic [ref=f27e1718]:
+                - generic [ref=f27e1719]: Compute
+                - generic [ref=f27e1720]: For more power and to get the most out of Render, we recommend using one of our paid compute plans.
+                - generic [ref=f27e1721]:
+                  - paragraph [ref=f27e1722]: "All paid compute plans support:"
+                  - list [ref=f27e1723]:
+                    - listitem [ref=f27e1724]: Zero Downtime
+                    - listitem [ref=f27e1725]: SSH Access
+                    - listitem [ref=f27e1726]: Scaling
+                    - listitem [ref=f27e1727]: One-off jobs
+                    - listitem [ref=f27e1728]: Support for persistent disks
+              - generic [ref=f27e1730]:
+                - generic [ref=f27e1732]:
+                  - generic [ref=f27e1733]: "Selected:"
+                  - generic [ref=f27e1883]:
+                    - generic [ref=f27e1884]: $0 / month
+                    - generic [ref=f27e1885]:
+                      - generic [ref=f27e1886]: 0.1 CPU
+                      - generic [ref=f27e1887]: 512 MB RAM
+                - generic [ref=f27e1739]:
+                  - alert [ref=f27e1888]:
+                    - generic [ref=f27e1889]: Free instances spin down after periods of inactivity. They do not support SSH access, scaling, one-off jobs, or persistent disks.
+                  - radiogroup [ref=f27e1740]:
+                    - generic [ref=f27e1741]:
+                      - radio "$0 / month 0.1 CPU 512 MB RAM Free" [checked] [active] [ref=f27e1742]:
+                        - generic [ref=f27e1901] [cursor=pointer]:
+                          - generic [ref=f27e1902]: $0 / month
+                          - generic [ref=f27e1903]:
+                            - generic [ref=f27e1904]: 0.1 CPU
+                            - generic [ref=f27e1905]: 512 MB RAM
+                          - generic "Free" [ref=f27e1908]
+                      - radio "$7 / month 0.5 CPU 512 MB RAM 0.5c-512mb" [ref=f27e1753]:
+                        - generic [ref=f27e1911] [cursor=pointer]:
+                          - generic [ref=f27e1912]: $7 / month
+                          - generic [ref=f27e1913]:
+                            - generic [ref=f27e1914]: 0.5 CPU
+                            - generic [ref=f27e1915]: 512 MB RAM
+                          - generic "0.5c-512mb" [ref=f27e1923]
+                      - radio "$25 / month 1 CPU 2 GB RAM 1c-2g" [ref=f27e1769]:
+                        - generic [ref=f27e1772] [cursor=pointer]:
+                          - generic [ref=f27e1773]: $25 / month
+                          - generic [ref=f27e1774]:
+                            - generic [ref=f27e1775]: 1 CPU
+                            - generic [ref=f27e1776]: 2 GB RAM
+                          - generic "1c-2g" [ref=f27e1784]
+                      - radio "$85 / month 2 CPU 4 GB RAM 2c-4g" [ref=f27e1785]:
+                        - generic [ref=f27e1788] [cursor=pointer]:
+                          - generic [ref=f27e1789]: $85 / month
+                          - generic [ref=f27e1790]:
+                            - generic [ref=f27e1791]: 2 CPU
+                            - generic [ref=f27e1792]: 4 GB RAM
+                          - generic "2c-4g" [ref=f27e1800]
+                  - button [ref=f27e1802] [cursor=pointer]
+            - generic [ref=f27e1808]:
+              - generic [ref=f27e1811]:
+                - heading "Environment Variables" [level=4] [ref=f27e1813]
+                - generic [ref=f27e1814]:
+                  - text: Set environment-specific config and secrets (such as API keys), then read those values from your code.
+                  - link "Learn more." [ref=f27e1815] [cursor=pointer]:
+                    - /url: https://render.com/docs/configure-environment-variables
+              - generic [ref=f27e1817]:
+                - table [ref=f27e1818]:
+                  - rowgroup [ref=f27e1819]:
+                    - row [ref=f27e1820]:
+                      - columnheader "Key" [ref=f27e1821]
+                      - columnheader "Value" [ref=f27e1822]
+                      - columnheader "Delete" [ref=f27e1823]
+                  - rowgroup [ref=f27e1825]:
+                    - row [ref=f27e1826]:
+                      - cell [ref=f27e1827]:
+                        - generic [ref=f27e1828]:
+                          - generic [ref=f27e1829]: Key
+                          - textbox "Key" [ref=f27e1831]:
+                            - /placeholder: NAME_OF_VARIABLE
+                      - cell [ref=f27e1832]:
+                        - generic [ref=f27e1833]:
+                          - generic [ref=f27e1834]:
+                            - generic [ref=f27e1835]: Value
+                            - textbox "Value" [ref=f27e1837]:
+                              - /placeholder: value
+                          - button [ref=f27e1839] [cursor=pointer]
+                      - cell [ref=f27e1846]:
+                        - button "Delete" [ref=f27e1847] [cursor=pointer]
+                - generic [ref=f27e1853]:
+                  - button [ref=f27e1854] [cursor=pointer]
+                  - button [ref=f27e1858] [cursor=pointer]
+            - list [ref=f27e1864]:
+              - listitem [ref=f27e1865]:
+                - button "Advanced" [ref=f27e1867] [cursor=pointer]
+            - generic [ref=f27e1872]:
+              - generic [ref=f27e1873]:
+                - button "Deploy web service" [ref=f27e1874] [cursor=pointer]
+                - button "Cancel" [ref=f27e1875] [cursor=pointer]
+              - generic [ref=f27e1924]:
+                - generic [ref=f27e1925]: $0 / month
+                - generic [ref=f27e1926]:
+                  - button "0.1 CPU" [ref=f27e1927] [cursor=pointer]
+                  - button "512 MB RAM" [ref=f27e1928] [cursor=pointer]
+    - generic [aria-hidden]:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic: Move
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button
+  - iframe [aria-hidden] [ref=f27e121]

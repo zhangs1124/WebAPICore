@@ -27,13 +27,13 @@ var app = builder.Build();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
 
+// 啟用 OpenAPI 與現代化 Scalar 互動文件（線上展示支援，訪問 /scalar/v1）
+app.MapOpenApi();
+app.MapScalarApiReference();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    // 現代化 OpenAPI 互動文件介面 (訪問 /scalar/v1)
-    app.MapScalarApiReference();
-
     // 練習用：故意丟例外，觀察全域錯誤處理的輸出（僅 Development）
     app.MapGet("/debug/throw", () => { throw new InvalidOperationException("boom"); });
 }

@@ -1,0 +1,388 @@
+- generic [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - generic [ref=f27e3]:
+      - banner [ref=f27e4]:
+        - link [ref=f27e6] [cursor=pointer]:
+          - /url: /
+          - img "Render" [ref=f27e7]
+        - button "M My Workspace" [ref=f27e13] [cursor=pointer]:
+          - generic [ref=f27e14]:
+            - generic [ref=f27e15]: M
+            - generic "My Workspace" [ref=f27e16]
+        - generic [ref=f27e21]:
+          - navigation "Breadcrumbs" [ref=f27e22]:
+            - list [ref=f27e23]:
+              - listitem [ref=f27e24]:
+                - link "Projects" [ref=f27e25] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f27e34] [cursor=pointer]:
+                - generic [ref=f27e35]: New Web Service
+                - button "Choose a service type" [ref=f27e1024]
+          - button "Search Ctrl + K" [ref=f27e43] [cursor=pointer]:
+            - text: Search
+            - generic [ref=f27e47]:
+              - generic [ref=f27e50]: Ctrl
+              - generic [ref=f27e51]: +
+              - generic [aria-hidden] [ref=f27e52]: K
+              - generic [ref=f27e53]: K
+        - generic [ref=f27e54]:
+          - button "New" [ref=f27e56] [cursor=pointer]
+          - button "Upgrade" [ref=f27e62] [cursor=pointer]
+          - button [ref=f27e68] [cursor=pointer]:
+            - img "Help" [ref=f27e69]
+          - button "Account menu" [ref=f27e73] [cursor=pointer]:
+            - generic [ref=f27e74]: z
+      - main [ref=f27e1028]:
+        - heading "New Web Service" [level=1] [ref=f27e1031]
+        - generic [ref=f27e1032]:
+          - generic [ref=f27e1033]: Source Code
+          - generic [ref=f27e1037]:
+            - list [ref=f27e1038]:
+              - listitem [ref=f27e1039]:
+                - tab "Git Provider" [selected] [ref=f27e1040] [cursor=pointer]
+              - listitem [ref=f27e1041]:
+                - tab "Public Git Repository" [ref=f27e1042] [cursor=pointer]
+              - listitem [ref=f27e1043]:
+                - tab "Existing Image" [ref=f27e1044] [cursor=pointer]
+            - tabpanel "Git Provider" [ref=f27e1046]:
+              - generic [ref=f27e1048]:
+                - generic [ref=f27e1049]:
+                  - textbox "Search" [active] [ref=f27e1053]
+                  - button "Credentials (1)" [ref=f27e1055] [cursor=pointer]
+                - list [ref=f27e1085]:
+                  - generic [ref=f27e1086]:
+                    - listitem [ref=f27e1087]:
+                      - button "GitHub zhangs1124 / WebAPICore 3m ago" [ref=f27e1088] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1090]
+                        - generic [ref=f27e1092]:
+                          - generic [ref=f27e1093]: zhangs1124
+                          - generic [ref=f27e1094]: /
+                          - generic [ref=f27e1095]: WebAPICore
+                        - time [ref=f27e1097]: 3m ago
+                    - listitem [ref=f27e1098]:
+                      - button "GitHub zhangs1124 / dorm-device-monitor 8h ago" [ref=f27e1099] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1101]
+                        - generic [ref=f27e1103]:
+                          - generic [ref=f27e1104]: zhangs1124
+                          - generic [ref=f27e1105]: /
+                          - generic [ref=f27e1108]: dorm-device-monitor
+                        - time [ref=f27e1110]: 8h ago
+                    - listitem [ref=f27e1111]:
+                      - button "GitHub zhangs1124 / AntiGravity-AutoAccept 5d ago" [ref=f27e1112] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1114]
+                        - generic [ref=f27e1116]:
+                          - generic [ref=f27e1117]: zhangs1124
+                          - generic [ref=f27e1118]: /
+                          - generic [ref=f27e1119]: AntiGravity-AutoAccept
+                        - time [ref=f27e1121]: 5d ago
+                    - listitem [ref=f27e1122]:
+                      - button "GitHub zhangs1124 / Kaggle 5d ago View repo" [ref=f27e1123] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1125]
+                        - generic [ref=f27e1127]:
+                          - generic [ref=f27e1128]: zhangs1124
+                          - generic [ref=f27e1129]: /
+                          - generic [ref=f27e1132]: Kaggle
+                        - time [ref=f27e1134]: 5d ago
+                        - link [ref=f27e1136]:
+                          - /url: https://github.com/zhangs1124/Kaggle
+                    - listitem [ref=f27e1141]:
+                      - button "GitHub zhangs1124 / StockCamSystem 5d ago" [ref=f27e1142] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1144]
+                        - generic [ref=f27e1146]:
+                          - generic [ref=f27e1147]: zhangs1124
+                          - generic [ref=f27e1148]: /
+                          - generic [ref=f27e1151]: StockCamSystem
+                        - time [ref=f27e1153]: 5d ago
+                    - listitem [ref=f27e1154]:
+                      - button "GitHub zhangs1124 / TelegramOrder 9d ago" [ref=f27e1155] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1157]
+                        - generic [ref=f27e1159]:
+                          - generic [ref=f27e1160]: zhangs1124
+                          - generic [ref=f27e1161]: /
+                          - generic [ref=f27e1164]: TelegramOrder
+                        - time [ref=f27e1166]: 9d ago
+                    - listitem [ref=f27e1167]:
+                      - button "GitHub zhangs1124 / DormAccessSystem 13d ago" [ref=f27e1168] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1170]
+                        - generic [ref=f27e1172]:
+                          - generic [ref=f27e1173]: zhangs1124
+                          - generic [ref=f27e1174]: /
+                          - generic [ref=f27e1177]: DormAccessSystem
+                        - time [ref=f27e1179]: 13d ago
+                    - listitem [ref=f27e1180]:
+                      - button "GitHub zhangs1124 / KuaiYinNew 14d ago" [ref=f27e1181] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1183]
+                        - generic [ref=f27e1185]:
+                          - generic [ref=f27e1186]: zhangs1124
+                          - generic [ref=f27e1187]: /
+                          - generic [ref=f27e1190]: KuaiYinNew
+                        - time [ref=f27e1192]: 14d ago
+                    - listitem [ref=f27e1193]:
+                      - button "GitHub zhangs1124 / kmuh-certn-tools 16d ago" [ref=f27e1194] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1196]
+                        - generic [ref=f27e1198]:
+                          - generic [ref=f27e1199]: zhangs1124
+                          - generic [ref=f27e1200]: /
+                          - generic [ref=f27e1203]: kmuh-certn-tools
+                        - time [ref=f27e1205]: 16d ago
+                    - listitem [ref=f27e1206]:
+                      - button "GitHub zhangs1124 / KuaiYinWeb 28d ago" [ref=f27e1207] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1209]
+                        - generic [ref=f27e1211]:
+                          - generic [ref=f27e1212]: zhangs1124
+                          - generic [ref=f27e1213]: /
+                          - generic [ref=f27e1214]: KuaiYinWeb
+                        - time [ref=f27e1216]: 28d ago
+                    - listitem [ref=f27e1217]:
+                      - button "GitHub zhangs1124 / KuaiYinTranscriber 28d ago" [ref=f27e1218] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1220]
+                        - generic [ref=f27e1222]:
+                          - generic [ref=f27e1223]: zhangs1124
+                          - generic [ref=f27e1224]: /
+                          - generic [ref=f27e1225]: KuaiYinTranscriber
+                        - time [ref=f27e1227]: 28d ago
+                    - listitem [ref=f27e1228]:
+                      - button "GitHub zhangs1124 / TelegramMsg1 Aug 24" [ref=f27e1229] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1231]
+                        - generic [ref=f27e1233]:
+                          - generic [ref=f27e1234]: zhangs1124
+                          - generic [ref=f27e1235]: /
+                          - generic [ref=f27e1236]: TelegramMsg1
+                        - time [ref=f27e1238]: Aug 24
+                    - listitem [ref=f27e1239]:
+                      - button "GitHub zhangs1124 / SpaMvcApp Aug 17" [ref=f27e1240] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1242]
+                        - generic [ref=f27e1244]:
+                          - generic [ref=f27e1245]: zhangs1124
+                          - generic [ref=f27e1246]: /
+                          - generic [ref=f27e1249]: SpaMvcApp
+                        - time [ref=f27e1251]: Aug 17
+                    - listitem [ref=f27e1252]:
+                      - button "GitHub zhangs1124 / FtpSync Aug 15" [ref=f27e1253] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1255]
+                        - generic [ref=f27e1257]:
+                          - generic [ref=f27e1258]: zhangs1124
+                          - generic [ref=f27e1259]: /
+                          - generic [ref=f27e1260]: FtpSync
+                        - time [ref=f27e1262]: Aug 15
+                    - listitem [ref=f27e1263]:
+                      - button "GitHub zhangs1124 / py-sticker-splitter Aug 15" [ref=f27e1264] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1266]
+                        - generic [ref=f27e1268]:
+                          - generic [ref=f27e1269]: zhangs1124
+                          - generic [ref=f27e1270]: /
+                          - generic [ref=f27e1271]: py-sticker-splitter
+                        - time [ref=f27e1273]: Aug 15
+                    - listitem [ref=f27e1274]:
+                      - button "GitHub zhangs1124 / my-ai-profile Aug 14" [ref=f27e1275] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1277]
+                        - generic [ref=f27e1279]:
+                          - generic [ref=f27e1280]: zhangs1124
+                          - generic [ref=f27e1281]: /
+                          - generic [ref=f27e1284]: my-ai-profile
+                        - time [ref=f27e1286]: Aug 14
+                    - listitem [ref=f27e1287]:
+                      - button "GitHub zhangs1124 / VoyageEnghong Aug 7" [ref=f27e1288] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1290]
+                        - generic [ref=f27e1292]:
+                          - generic [ref=f27e1293]: zhangs1124
+                          - generic [ref=f27e1294]: /
+                          - generic [ref=f27e1297]: VoyageEnghong
+                        - time [ref=f27e1299]: Aug 7
+                    - listitem [ref=f27e1300]:
+                      - button "GitHub zhangs1124 / GithubAction1 Aug 3" [ref=f27e1301] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1303]
+                        - generic [ref=f27e1305]:
+                          - generic [ref=f27e1306]: zhangs1124
+                          - generic [ref=f27e1307]: /
+                          - generic [ref=f27e1308]: GithubAction1
+                        - time [ref=f27e1310]: Aug 3
+                    - listitem [ref=f27e1311]:
+                      - button "GitHub zhangs1124 / skills_backup Aug 2" [ref=f27e1312] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1314]
+                        - generic [ref=f27e1316]:
+                          - generic [ref=f27e1317]: zhangs1124
+                          - generic [ref=f27e1318]: /
+                          - generic [ref=f27e1321]: skills_backup
+                        - time [ref=f27e1323]: Aug 2
+                    - listitem [ref=f27e1324]:
+                      - button "GitHub zhangs1124 / shipping-accounting-net Jul 17" [ref=f27e1325] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1327]
+                        - generic [ref=f27e1329]:
+                          - generic [ref=f27e1330]: zhangs1124
+                          - generic [ref=f27e1331]: /
+                          - generic [ref=f27e1334]: shipping-accounting-net
+                        - time [ref=f27e1336]: Jul 17
+                    - listitem [ref=f27e1337]:
+                      - button "GitHub zhangs1124 / VOyage Jul 13" [ref=f27e1338] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1340]
+                        - generic [ref=f27e1342]:
+                          - generic [ref=f27e1343]: zhangs1124
+                          - generic [ref=f27e1344]: /
+                          - generic [ref=f27e1345]: VOyage
+                        - time [ref=f27e1347]: Jul 13
+                    - listitem [ref=f27e1348]:
+                      - button "GitHub zhangs1124 / 0056-ETF-Dividend-Dashboard Jul 3" [ref=f27e1349] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1351]
+                        - generic [ref=f27e1353]:
+                          - generic [ref=f27e1354]: zhangs1124
+                          - generic [ref=f27e1355]: /
+                          - generic [ref=f27e1356]: 0056-ETF-Dividend-Dashboard
+                        - time [ref=f27e1358]: Jul 3
+                    - listitem [ref=f27e1359]:
+                      - button "GitHub zhangs1124 / book-video-player Jun 29" [ref=f27e1360] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1362]
+                        - generic [ref=f27e1364]:
+                          - generic [ref=f27e1365]: zhangs1124
+                          - generic [ref=f27e1366]: /
+                          - generic [ref=f27e1367]: book-video-player
+                        - time [ref=f27e1369]: Jun 29
+                    - listitem [ref=f27e1370]:
+                      - button "GitHub zhangs1124 / TWRate Jun 29" [ref=f27e1371] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1373]
+                        - generic [ref=f27e1375]:
+                          - generic [ref=f27e1376]: zhangs1124
+                          - generic [ref=f27e1377]: /
+                          - generic [ref=f27e1380]: TWRate
+                        - time [ref=f27e1382]: Jun 29
+                    - listitem [ref=f27e1383]:
+                      - button "GitHub zhangs1124 / smart-patient-clinic Jun 28" [ref=f27e1384] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1386]
+                        - generic [ref=f27e1388]:
+                          - generic [ref=f27e1389]: zhangs1124
+                          - generic [ref=f27e1390]: /
+                          - generic [ref=f27e1391]: smart-patient-clinic
+                        - time [ref=f27e1393]: Jun 28
+                    - listitem [ref=f27e1394]:
+                      - button "GitHub zhangs1124 / EngWordApp Jun 27" [ref=f27e1395] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1397]
+                        - generic [ref=f27e1399]:
+                          - generic [ref=f27e1400]: zhangs1124
+                          - generic [ref=f27e1401]: /
+                          - generic [ref=f27e1404]: EngWordApp
+                        - time [ref=f27e1406]: Jun 27
+                    - listitem [ref=f27e1407]:
+                      - button "GitHub zhangs1124 / mistral-demo Jun 26" [ref=f27e1408] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1410]
+                        - generic [ref=f27e1412]:
+                          - generic [ref=f27e1413]: zhangs1124
+                          - generic [ref=f27e1414]: /
+                          - generic [ref=f27e1417]: mistral-demo
+                        - time [ref=f27e1419]: Jun 26
+                    - listitem [ref=f27e1420]:
+                      - button "GitHub zhangs1124 / mistral Jun 26" [ref=f27e1421] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1423]
+                        - generic [ref=f27e1425]:
+                          - generic [ref=f27e1426]: zhangs1124
+                          - generic [ref=f27e1427]: /
+                          - generic [ref=f27e1430]: mistral
+                        - time [ref=f27e1432]: Jun 26
+                    - listitem [ref=f27e1433]:
+                      - button "GitHub zhangs1124 / AntiNoval Jun 24" [ref=f27e1434] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1436]
+                        - generic [ref=f27e1438]:
+                          - generic [ref=f27e1439]: zhangs1124
+                          - generic [ref=f27e1440]: /
+                          - generic [ref=f27e1443]: AntiNoval
+                        - time [ref=f27e1445]: Jun 24
+                    - listitem [ref=f27e1446]:
+                      - button "GitHub zhangs1124 / FruitChat Jun 15" [ref=f27e1447] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1449]
+                        - generic [ref=f27e1451]:
+                          - generic [ref=f27e1452]: zhangs1124
+                          - generic [ref=f27e1453]: /
+                          - generic [ref=f27e1456]: FruitChat
+                        - time [ref=f27e1458]: Jun 15
+                    - listitem [ref=f27e1459]:
+                      - button "GitHub zhangs1124 / MaxApi1 Jun 12" [ref=f27e1460] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1462]
+                        - generic [ref=f27e1464]:
+                          - generic [ref=f27e1465]: zhangs1124
+                          - generic [ref=f27e1466]: /
+                          - generic [ref=f27e1467]: MaxApi1
+                        - time [ref=f27e1469]: Jun 12
+                    - listitem [ref=f27e1470]:
+                      - button "GitHub zhangs1124 / WeeklyReport Jun 6" [ref=f27e1471] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1473]
+                        - generic [ref=f27e1475]:
+                          - generic [ref=f27e1476]: zhangs1124
+                          - generic [ref=f27e1477]: /
+                          - generic [ref=f27e1480]: WeeklyReport
+                        - time [ref=f27e1482]: Jun 6
+                    - listitem [ref=f27e1483]:
+                      - button "GitHub zhangs1124 / shipping-accounting May 26" [ref=f27e1484] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1486]
+                        - generic [ref=f27e1488]:
+                          - generic [ref=f27e1489]: zhangs1124
+                          - generic [ref=f27e1490]: /
+                          - generic [ref=f27e1491]: shipping-accounting
+                        - time [ref=f27e1493]: May 26
+                    - listitem [ref=f27e1494]:
+                      - button "GitHub zhangs1124 / CockoitApi May 24" [ref=f27e1495] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1497]
+                        - generic [ref=f27e1499]:
+                          - generic [ref=f27e1500]: zhangs1124
+                          - generic [ref=f27e1501]: /
+                          - generic [ref=f27e1504]: CockoitApi
+                        - time [ref=f27e1506]: May 24
+                    - listitem [ref=f27e1507]:
+                      - button "GitHub zhangs1124 / sub2api May 15" [ref=f27e1508] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1510]
+                        - generic [ref=f27e1512]:
+                          - generic [ref=f27e1513]: zhangs1124
+                          - generic [ref=f27e1514]: /
+                          - generic [ref=f27e1515]: sub2api
+                        - time [ref=f27e1517]: May 15
+                    - listitem [ref=f27e1518]:
+                      - button "GitHub zhangs1124 / cockpit May 14" [ref=f27e1519] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1521]
+                        - generic [ref=f27e1523]:
+                          - generic [ref=f27e1524]: zhangs1124
+                          - generic [ref=f27e1525]: /
+                          - generic [ref=f27e1526]: cockpit
+                        - time [ref=f27e1528]: May 14
+                    - listitem [ref=f27e1529]:
+                      - button "GitHub zhangs1124 / USBTurnOn May 10" [ref=f27e1530] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1532]
+                        - generic [ref=f27e1534]:
+                          - generic [ref=f27e1535]: zhangs1124
+                          - generic [ref=f27e1536]: /
+                          - generic [ref=f27e1537]: USBTurnOn
+                        - time [ref=f27e1539]: May 10
+                    - listitem [ref=f27e1540]:
+                      - button "GitHub zhangs1124 / Rag1 May 6" [ref=f27e1541] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1543]
+                        - generic [ref=f27e1545]:
+                          - generic [ref=f27e1546]: zhangs1124
+                          - generic [ref=f27e1547]: /
+                          - generic [ref=f27e1550]: Rag1
+                        - time [ref=f27e1552]: May 6
+                    - listitem [ref=f27e1553]:
+                      - button "GitHub zhangs1124 / VideoLand2 May 6" [ref=f27e1554] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1556]
+                        - generic [ref=f27e1558]:
+                          - generic [ref=f27e1559]: zhangs1124
+                          - generic [ref=f27e1560]: /
+                          - generic [ref=f27e1561]: VideoLand2
+                        - time [ref=f27e1563]: May 6
+                    - listitem [ref=f27e1564]:
+                      - button "GitHub zhangs1124 / vl-sport-schedule May 4" [ref=f27e1565] [cursor=pointer]:
+                        - img "GitHub" [ref=f27e1567]
+                        - generic [ref=f27e1569]:
+                          - generic [ref=f27e1570]: zhangs1124
+                          - generic [ref=f27e1571]: /
+                          - generic [ref=f27e1572]: vl-sport-schedule
+                        - time [ref=f27e1574]: May 4
+    - generic [aria-hidden]:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic: Move
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button
+  - iframe [aria-hidden] [ref=f27e121]

@@ -1,0 +1,79 @@
+- generic [active] [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - generic [ref=f27e3]:
+      - banner [ref=f27e4]:
+        - link [ref=f27e6] [cursor=pointer]:
+          - /url: /
+          - img "Render" [ref=f27e7]
+        - button "M My Workspace" [ref=f27e13] [cursor=pointer]:
+          - generic [ref=f27e14]:
+            - generic [ref=f27e15]: M
+            - generic "My Workspace" [ref=f27e16]
+        - generic [ref=f27e21]:
+          - navigation "Breadcrumbs" [ref=f27e22]:
+            - list [ref=f27e23]:
+              - listitem [ref=f27e24]:
+                - link "Projects" [ref=f27e25] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f27e34]:
+                - generic [ref=f27e35]: New Blueprint
+          - button "Search Ctrl + K" [ref=f27e43] [cursor=pointer]:
+            - text: Search
+            - generic [ref=f27e47]:
+              - generic [ref=f27e50]: Ctrl
+              - generic [ref=f27e51]: +
+              - generic [aria-hidden] [ref=f27e52]: K
+              - generic [ref=f27e53]: K
+        - generic [ref=f27e54]:
+          - button "New" [ref=f27e56] [cursor=pointer]
+          - button "Upgrade" [ref=f27e62] [cursor=pointer]
+          - button [ref=f27e68] [cursor=pointer]:
+            - img "Help" [ref=f27e69]
+          - button "Account menu" [ref=f27e73] [cursor=pointer]:
+            - generic [ref=f27e74]: z
+      - main [ref=f27e78]:
+        - generic [ref=f27e79]:
+          - heading [level=1] [ref=f27e80]:
+            - text: Create a new
+            - link "Web Service" [ref=f27e81] [cursor=pointer]:
+              - /url: https://render.com/docs/web-services
+            - text: in
+            - link "My Workspace" [ref=f27e82] [cursor=pointer]:
+              - /url: /w/tea-d5gs5pp4tr6s7395g6j0/settings
+          - generic [ref=f27e83]: Connect your Git repository or use an existing public repository URL.
+        - generic [ref=f27e87]:
+          - generic [ref=f27e89]:
+            - heading "Connect a repository" [level=4] [ref=f27e94]
+            - generic [ref=f27e97]:
+              - img "Loading..." [ref=f27e98]
+              - generic [ref=f27e101]: Loading repos...
+          - generic [ref=f27e103]:
+            - generic [ref=f27e106]:
+              - heading "Public Git Repository" [level=4] [ref=f27e108]
+              - generic [ref=f27e109]:
+                - text: Use a public repository by entering the URL below. Features like
+                - link "PR Previews" [ref=f27e110] [cursor=pointer]:
+                  - /url: https://render.com/docs/service-previews#pull-request-previews-git-backed
+                - text: and
+                - link "Auto-Deploy" [ref=f27e111] [cursor=pointer]:
+                  - /url: https://render.com/docs/deploys
+                - text: are not available if the repository has not been configured for Render.
+            - generic [ref=f27e113]:
+              - generic [ref=f27e115]:
+                - generic [ref=f27e116]: Repository URL
+                - textbox "Repository URL" [ref=f27e118]:
+                  - /placeholder: https://github.com/render-examples/express-hello-world
+              - button "Continue" [disabled] [ref=f27e119]
+    - generic [aria-hidden]:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic: Move
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button
+  - iframe [aria-hidden] [ref=f27e121]

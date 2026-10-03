@@ -8,6 +8,11 @@
 
 一個遵循 **Clean Code**、**RESTful 規範**、**ACID 資料庫交易保證** 與 **Modal-First SPA CRUD** 架構的高效能企業級進銷存管理系統。串接 **Supabase 雲端 PostgreSQL** 資料庫，具備並發防超賣樂觀鎖防護與現代化 **Tabler SaaS 營運儀表板**。
 
+## 🌐 線上即時展示 (Live Showcase)
+- 🚀 **SaaS 營運管理儀表板**：👉 [https://webapicore.onrender.com/](https://webapicore.onrender.com/)
+- 📚 **Scalar 現代化 API 互動文件**：👉 [https://webapicore.onrender.com/scalar/v1](https://webapicore.onrender.com/scalar/v1)
+- 🗄️ **託管資料庫**：Supabase PostgreSQL（具備 Connection Pooler 與 SSL 強制加密）
+
 ---
 
 ## 🌟 核心架構與技術亮點

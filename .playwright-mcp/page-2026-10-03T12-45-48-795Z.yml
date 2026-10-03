@@ -1,0 +1,412 @@
+- generic [active] [ref=f27e1]:
+  - generic [ref=f27e2]:
+    - generic [ref=f27e3]:
+      - banner [ref=f27e4]:
+        - link [ref=f27e6] [cursor=pointer]:
+          - /url: /
+          - img "Render" [ref=f27e7]
+        - button "M My Workspace" [ref=f27e13] [cursor=pointer]:
+          - generic [ref=f27e14]:
+            - generic [ref=f27e15]: M
+            - generic "My Workspace" [ref=f27e16]
+        - generic [ref=f27e21]:
+          - navigation "Breadcrumbs" [ref=f27e22]:
+            - list [ref=f27e23]:
+              - listitem [ref=f27e24]:
+                - link "Projects" [ref=f27e25] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=f27e34] [cursor=pointer]:
+                - link "WebAPICore" [ref=f27e1935]:
+                  - /url: /web/srv-db0fhapsrm7s73fcfr70
+                - button "Switch Service" [ref=f27e1940]
+              - listitem [ref=f27e1943] [cursor=pointer]:
+                - link "Deploys" [ref=f27e1944]:
+                  - /url: /web/srv-db0fhapsrm7s73fcfr70/deploys
+                - button "Switch page" [ref=f27e1951]
+              - listitem [ref=f27e1954] [cursor=pointer]:
+                - generic [ref=f27e1955]: dep-db0fhb1srm7s73fcfs10
+                - button "Switch Deploy" [ref=f27e1961]
+          - button "Search Ctrl + K" [ref=f27e43] [cursor=pointer]:
+            - text: Search
+            - generic [ref=f27e47]:
+              - generic [ref=f27e50]: Ctrl
+              - generic [ref=f27e51]: +
+              - generic [aria-hidden] [ref=f27e52]: K
+              - generic [ref=f27e53]: K
+        - generic [ref=f27e54]:
+          - button "New" [ref=f27e56] [cursor=pointer]
+          - button "Upgrade" [ref=f27e62] [cursor=pointer]
+          - button [ref=f27e68] [cursor=pointer]:
+            - img "Help" [ref=f27e69]
+          - button "Account menu" [ref=f27e73] [cursor=pointer]:
+            - generic [ref=f27e74]: z
+      - generic [ref=f27e76]:
+        - navigation [ref=f27e1964]:
+          - separator "Resize sidebar" [ref=f27e1965]
+          - generic [ref=f27e1967]:
+            - generic [ref=f27e1968]:
+              - link "Dashboard" [ref=f27e1969] [cursor=pointer]:
+                - /url: /
+              - generic [ref=f27e1973]: WebAPICore
+            - generic [ref=f27e1977]:
+              - list [ref=f27e1978]:
+                - listitem [ref=f27e1979]:
+                  - link "Deploys" [ref=f27e1980] [cursor=pointer]:
+                    - /url: /web/srv-db0fhapsrm7s73fcfr70/deploys
+                - listitem [ref=f27e1985]:
+                  - link "Settings" [ref=f27e1986] [cursor=pointer]:
+                    - /url: /web/srv-db0fhapsrm7s73fcfr70/settings
+              - generic [ref=f27e1991]:
+                - generic [ref=f27e1992]: Monitor
+                - list "Monitor" [ref=f27e1994]:
+                  - listitem [ref=f27e1995]:
+                    - link "Events" [ref=f27e1996] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/events
+                  - listitem [ref=f27e2005]:
+                    - link "Logs" [ref=f27e2006] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/logs
+                  - listitem [ref=f27e2013]:
+                    - link "Metrics" [ref=f27e2014] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/metrics
+              - generic [ref=f27e2018]:
+                - generic [ref=f27e2019]: Manage
+                - list "Manage" [ref=f27e2021]:
+                  - listitem [ref=f27e2022]:
+                    - link "Compute" [ref=f27e2023] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/compute
+                  - listitem [ref=f27e2028]:
+                    - link "Environment" [ref=f27e2029] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/env
+                  - listitem [ref=f27e2035]:
+                    - link "Shell" [ref=f27e2036] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/shell
+                      - generic [ref=f27e2041]:
+                        - generic [ref=f27e2042]: Shell
+                        - status [ref=f27e2045]
+                  - listitem [ref=f27e2048]:
+                    - link "Previews" [ref=f27e2049] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/previews
+                  - listitem [ref=f27e2055]:
+                    - link "Disk" [ref=f27e2056] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/disks
+                      - generic [ref=f27e2062]:
+                        - generic [ref=f27e2063]: Disk
+                        - status [ref=f27e2066]
+                  - listitem [ref=f27e2069]:
+                    - link "One-Off Jobs" [ref=f27e2070] [cursor=pointer]:
+                      - /url: /web/srv-db0fhapsrm7s73fcfr70/jobs
+                      - generic [ref=f27e2077]:
+                        - generic [ref=f27e2078]: One-Off Jobs
+                        - status [ref=f27e2081]
+          - generic [ref=f27e2084]:
+            - alert [ref=f27e2087]:
+              - generic [ref=f27e2088]:
+                - generic [ref=f27e2089]:
+                  - generic [ref=f27e2090]:
+                    - generic [ref=f27e2091]: Introducing Workflows
+                    - generic [ref=f27e2092]: An orchestration and execution engine for long-running, distributed tasks.
+                  - link [ref=f27e2094] [cursor=pointer]:
+                    - /url: https://render.com/workflows
+                - button "Close notification" [ref=f27e2098] [cursor=pointer]
+            - generic [ref=f27e2103]:
+              - list "Footer navigation" [ref=f27e2104]:
+                - listitem [ref=f27e2105]:
+                  - link "Changelog" [ref=f27e2106] [cursor=pointer]:
+                    - /url: https://render.com/changelog
+              - link "Status" [ref=f27e2114] [cursor=pointer]:
+                - /url: https://status.render.com
+              - button "Collapse" [ref=f27e2119] [cursor=pointer]
+        - main [ref=f27e2124]:
+          - generic [ref=f27e2125]:
+            - alert [ref=f27e2126]:
+              - generic [ref=f27e2134]:
+                - generic [ref=f27e2135]: Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.
+                - link "Upgrade now" [ref=f27e2138] [cursor=pointer]:
+                  - /url: /web/srv-db0fhapsrm7s73fcfr70/plan
+            - generic [ref=f27e2139]:
+              - generic [ref=f27e2140]:
+                - generic [ref=f27e2141]:
+                  - 'heading "feat: complete inventory ERP with ASP.NET Core 9, Supabase PostgreSQL, Tabler SaaS UI, and Docker" [level=1] [ref=f27e2143]'
+                  - button [ref=f27e2145] [cursor=pointer]
+                - generic [ref=f27e2149]:
+                  - generic [ref=f27e2150]:
+                    - img "Loading..." [ref=f27e2152]
+                    - term [ref=f27e2155]: Status
+                    - definition [ref=f27e2156]: In progress...
+                  - generic [ref=f27e2157]:
+                    - term [ref=f27e2163]: Duration
+                    - definition [ref=f27e2164]:
+                      - time [ref=f27e2166]: 1m19s
+                  - generic [ref=f27e2167]:
+                    - term [ref=f27e2171]: Deployed
+                    - definition [ref=f27e2172]:
+                      - paragraph [ref=f27e2173]:
+                        - generic [ref=f27e2174]: Oct 3, 2026
+                        - generic [ref=f27e2175]: at
+                        - generic [ref=f27e2176]: 8:44:28 PM
+                        - generic [ref=f27e2177]: GMT+8
+                  - generic [ref=f27e2178]:
+                    - term [ref=f27e2183]: Trigger
+                    - definition [ref=f27e2184]: First Deploy
+                  - generic [ref=f27e2185]:
+                    - term [ref=f27e2189]: Source
+                    - definition [ref=f27e2190]:
+                      - link "2d493ea" [ref=f27e2191] [cursor=pointer]:
+                        - /url: https://github.com/zhangs1124/WebAPICore/commit/2d493eaa59159b39b86b8527cc8269d3623c0c36
+              - generic:
+                - list
+            - generic [ref=f27e2192]:
+              - generic [ref=f27e2194]:
+                - generic [ref=f27e2196]:
+                  - button "All logs" [ref=f27e2199] [cursor=pointer]
+                  - generic [ref=f27e2205]:
+                    - generic [ref=f27e2206]: Search
+                    - searchbox "Search" [ref=f27e2212]
+                  - button "Live tail" [ref=f27e2215] [cursor=pointer]
+                  - button [ref=f27e2228] [cursor=pointer]:
+                    - img "Maximize" [ref=f27e2229]
+                  - button [ref=f27e2234] [cursor=pointer]:
+                    - img "Options" [ref=f27e2235]
+                - generic:
+                  - button "Return to Bottom"
+                - listbox [ref=f27e2239]:
+                  - generic [ref=f27e3387]: Oct 3
+                  - 'option "08:44:43 PM #7 extracting sha256:37fab2d72e96fc2f89722c60a53453f72683e9ad1e46be0608f78e2f91bc1bb0" [ref=f27e2868]':
+                    - time [ref=f27e2876]: 08:44:43 PM
+                    - generic [ref=f27e2877]: "#7 extracting sha256:37fab2d72e96fc2f89722c60a53453f72683e9ad1e46be0608f78e2f91bc1bb0"
+                  - 'option "08:44:45 PM #7 extracting sha256:37fab2d72e96fc2f89722c60a53453f72683e9ad1e46be0608f78e2f91bc1bb0 2.2s done" [ref=f27e2879]':
+                    - time [ref=f27e2887]: 08:44:45 PM
+                    - generic [ref=f27e2888]: "#7 extracting sha256:37fab2d72e96fc2f89722c60a53453f72683e9ad1e46be0608f78e2f91bc1bb0 2.2s done"
+                  - 'option "08:44:45 PM #7 DONE 4.3s" [ref=f27e2890]':
+                    - time [ref=f27e2898]: 08:44:45 PM
+                    - generic [ref=f27e2899]: "#7 DONE 4.3s"
+                  - option "08:44:45 PM" [ref=f27e2901]:
+                    - time [ref=f27e2909]: 08:44:45 PM
+                  - 'option "08:44:45 PM #7 [build 1/7] FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:01fabc4758d1d74e39eda700c8463dae6241a61481f973683692ddcb59a5eeb7" [ref=f27e2911]':
+                    - time [ref=f27e2919]: 08:44:45 PM
+                    - generic [ref=f27e2920]: "#7 [build 1/7] FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:01fabc4758d1d74e39eda700c8463dae6241a61481f973683692ddcb59a5eeb7"
+                  - 'option "08:44:45 PM #7 extracting sha256:7c56c0a614e2f848a2791ffa9af00396742bf131c875b6f9437bca1d434ea05f 0.1s done" [ref=f27e2922]':
+                    - time [ref=f27e2930]: 08:44:45 PM
+                    - generic [ref=f27e2931]: "#7 extracting sha256:7c56c0a614e2f848a2791ffa9af00396742bf131c875b6f9437bca1d434ea05f 0.1s done"
+                  - 'option "08:44:45 PM #7 extracting sha256:fe7e7ba2708b31785f9ac4aee5a7bb948bdc61b920b4c819e123fc802b3ca940 0.0s done" [ref=f27e2933]':
+                    - time [ref=f27e2941]: 08:44:45 PM
+                    - generic [ref=f27e2942]: "#7 extracting sha256:fe7e7ba2708b31785f9ac4aee5a7bb948bdc61b920b4c819e123fc802b3ca940 0.0s done"
+                  - 'option "08:44:45 PM #7 extracting sha256:d3a9ac7d5634b1c8bb6495b3d9102fcf15f12ea4bf9817aa6a1eda6ca08405a9" [ref=f27e2944]':
+                    - time [ref=f27e2952]: 08:44:45 PM
+                    - generic [ref=f27e2953]: "#7 extracting sha256:d3a9ac7d5634b1c8bb6495b3d9102fcf15f12ea4bf9817aa6a1eda6ca08405a9"
+                  - 'option "08:44:45 PM #7 extracting sha256:d3a9ac7d5634b1c8bb6495b3d9102fcf15f12ea4bf9817aa6a1eda6ca08405a9 0.4s done" [ref=f27e2955]':
+                    - time [ref=f27e2963]: 08:44:45 PM
+                    - generic [ref=f27e2964]: "#7 extracting sha256:d3a9ac7d5634b1c8bb6495b3d9102fcf15f12ea4bf9817aa6a1eda6ca08405a9 0.4s done"
+                  - 'option "08:44:45 PM #7 DONE 4.7s" [ref=f27e2966]':
+                    - time [ref=f27e2974]: 08:44:45 PM
+                    - generic [ref=f27e2975]: "#7 DONE 4.7s"
+                  - option "08:44:45 PM" [ref=f27e2977]:
+                    - time [ref=f27e2985]: 08:44:45 PM
+                  - 'option "08:44:45 PM #9 [build 2/7] WORKDIR /src" [ref=f27e2987]':
+                    - time [ref=f27e2995]: 08:44:45 PM
+                    - generic [ref=f27e2996]: "#9 [build 2/7] WORKDIR /src"
+                  - 'option "08:44:45 PM #9 DONE 0.1s" [ref=f27e2998]':
+                    - time [ref=f27e3006]: 08:44:45 PM
+                    - generic [ref=f27e3007]: "#9 DONE 0.1s"
+                  - option "08:44:45 PM" [ref=f27e3009]:
+                    - time [ref=f27e3017]: 08:44:45 PM
+                  - 'option "08:44:45 PM #10 [build 3/7] COPY [WebAPICore.Api/WebAPICore.Api.csproj, WebAPICore.Api/]" [ref=f27e3019]':
+                    - time [ref=f27e3027]: 08:44:45 PM
+                    - generic [ref=f27e3028]: "#10 [build 3/7] COPY [WebAPICore.Api/WebAPICore.Api.csproj, WebAPICore.Api/]"
+                  - 'option "08:44:45 PM #10 DONE 0.0s" [ref=f27e3030]':
+                    - time [ref=f27e3038]: 08:44:45 PM
+                    - generic [ref=f27e3039]: "#10 DONE 0.0s"
+                  - option "08:44:45 PM" [ref=f27e3041]:
+                    - time [ref=f27e3049]: 08:44:45 PM
+                  - 'option "08:44:45 PM #11 [build 4/7] RUN dotnet restore \"WebAPICore.Api/WebAPICore.Api.csproj\"" [ref=f27e3051]':
+                    - time [ref=f27e3059]: 08:44:45 PM
+                    - generic [ref=f27e3060]: "#11 [build 4/7] RUN dotnet restore \"WebAPICore.Api/WebAPICore.Api.csproj\""
+                  - 'option "08:44:46 PM #11 0.865 Determining projects to restore..." [ref=f27e3062]':
+                    - time [ref=f27e3070]: 08:44:46 PM
+                    - generic [ref=f27e3071]: "#11 0.865 Determining projects to restore..."
+                  - 'option "08:44:50 PM #11 4.241 Restored /src/WebAPICore.Api/WebAPICore.Api.csproj (in 3.07 sec)." [ref=f27e3073]':
+                    - time [ref=f27e3081]: 08:44:50 PM
+                    - generic [ref=f27e3082]: "#11 4.241 Restored /src/WebAPICore.Api/WebAPICore.Api.csproj (in 3.07 sec)."
+                  - 'option "08:44:50 PM #11 DONE 4.8s" [ref=f27e3084]':
+                    - time [ref=f27e3092]: 08:44:50 PM
+                    - generic [ref=f27e3093]: "#11 DONE 4.8s"
+                  - option "08:44:50 PM" [ref=f27e3095]:
+                    - time [ref=f27e3103]: 08:44:50 PM
+                  - 'option "08:44:50 PM #12 [build 5/7] COPY . ." [ref=f27e3105]':
+                    - time [ref=f27e3113]: 08:44:50 PM
+                    - generic [ref=f27e3114]: "#12 [build 5/7] COPY . ."
+                  - 'option "08:44:50 PM #12 DONE 0.0s" [ref=f27e3116]':
+                    - time [ref=f27e3124]: 08:44:50 PM
+                    - generic [ref=f27e3125]: "#12 DONE 0.0s"
+                  - option "08:44:50 PM" [ref=f27e3127]:
+                    - time [ref=f27e3135]: 08:44:50 PM
+                  - 'option "08:44:50 PM #13 [build 6/7] WORKDIR /src/WebAPICore.Api" [ref=f27e3137]':
+                    - time [ref=f27e3145]: 08:44:50 PM
+                    - generic [ref=f27e3146]: "#13 [build 6/7] WORKDIR /src/WebAPICore.Api"
+                  - 'option "08:44:50 PM #13 DONE 0.0s" [ref=f27e3148]':
+                    - time [ref=f27e3156]: 08:44:50 PM
+                    - generic [ref=f27e3157]: "#13 DONE 0.0s"
+                  - option "08:44:50 PM" [ref=f27e3159]:
+                    - time [ref=f27e3167]: 08:44:50 PM
+                  - 'option "08:44:50 PM #14 [build 7/7] RUN dotnet publish \"WebAPICore.Api.csproj\" -c Release -o /app/publish /p:UseAppHost=false" [ref=f27e3169]':
+                    - time [ref=f27e3177]: 08:44:50 PM
+                    - generic [ref=f27e3178]: "#14 [build 7/7] RUN dotnet publish \"WebAPICore.Api.csproj\" -c Release -o /app/publish /p:UseAppHost=false"
+                  - 'option "08:44:51 PM #14 0.789 Determining projects to restore..." [ref=f27e3180]':
+                    - time [ref=f27e3188]: 08:44:51 PM
+                    - generic [ref=f27e3189]: "#14 0.789 Determining projects to restore..."
+                  - 'option "08:44:51 PM #14 1.297 All projects are up-to-date for restore." [ref=f27e3191]':
+                    - time [ref=f27e3199]: 08:44:51 PM
+                    - generic [ref=f27e3200]: "#14 1.297 All projects are up-to-date for restore."
+                  - 'option "08:44:56 PM #14 6.058 WebAPICore.Api -> /src/WebAPICore.Api/bin/Release/net9.0/WebAPICore.Api.dll" [ref=f27e3213]':
+                    - time [ref=f27e3221]: 08:44:56 PM
+                    - generic [ref=f27e3222]: "#14 6.058 WebAPICore.Api -> /src/WebAPICore.Api/bin/Release/net9.0/WebAPICore.Api.dll"
+                  - 'option "08:44:56 PM #14 6.169 WebAPICore.Api -> /app/publish/" [ref=f27e3224]':
+                    - time [ref=f27e3232]: 08:44:56 PM
+                    - generic [ref=f27e3233]: "#14 6.169 WebAPICore.Api -> /app/publish/"
+                  - 'option "08:44:56 PM #14 DONE 6.2s" [ref=f27e3235]':
+                    - time [ref=f27e3243]: 08:44:56 PM
+                    - generic [ref=f27e3244]: "#14 DONE 6.2s"
+                  - option "08:44:56 PM" [ref=f27e3246]:
+                    - time [ref=f27e3254]: 08:44:56 PM
+                  - 'option "08:44:56 PM #15 [final 3/3] COPY --from=build /app/publish ." [ref=f27e3256]':
+                    - time [ref=f27e3264]: 08:44:56 PM
+                    - generic [ref=f27e3265]: "#15 [final 3/3] COPY --from=build /app/publish ."
+                  - 'option "08:44:56 PM #15 DONE 0.1s" [ref=f27e3267]':
+                    - time [ref=f27e3275]: 08:44:56 PM
+                    - generic [ref=f27e3276]: "#15 DONE 0.1s"
+                  - option "08:44:57 PM" [ref=f27e3278]:
+                    - time [ref=f27e3286]: 08:44:57 PM
+                  - 'option "08:44:57 PM #16 exporting to image" [ref=f27e3288]':
+                    - time [ref=f27e3296]: 08:44:57 PM
+                    - generic [ref=f27e3297]: "#16 exporting to image"
+                  - 'option "08:44:57 PM #16 exporting layers 0.1s done" [ref=f27e3299]':
+                    - time [ref=f27e3307]: 08:44:57 PM
+                    - generic [ref=f27e3308]: "#16 exporting layers 0.1s done"
+                  - 'option "08:44:57 PM #16 pushing layers" [ref=f27e3310]':
+                    - time [ref=f27e3318]: 08:44:57 PM
+                    - generic [ref=f27e3319]: "#16 pushing layers"
+                  - 'option "08:44:58 PM #16 pushing layers 1.6s done" [ref=f27e3321]':
+                    - time [ref=f27e3329]: 08:44:58 PM
+                    - generic [ref=f27e3330]: "#16 pushing layers 1.6s done"
+                  - 'option "08:44:58 PM #16 DONE 1.8s" [ref=f27e3332]':
+                    - time [ref=f27e3340]: 08:44:58 PM
+                    - generic [ref=f27e3341]: "#16 DONE 1.8s"
+                  - option "08:44:58 PM" [ref=f27e3343]:
+                    - time [ref=f27e3351]: 08:44:58 PM
+                  - 'option "08:44:58 PM #17 exporting cache to registry" [ref=f27e3353]':
+                    - time [ref=f27e3361]: 08:44:58 PM
+                    - generic [ref=f27e3362]: "#17 exporting cache to registry"
+                  - 'option "08:44:58 PM #17 preparing build cache for export" [ref=f27e3364]':
+                    - time [ref=f27e3372]: 08:44:58 PM
+                    - generic [ref=f27e3373]: "#17 preparing build cache for export"
+                  - 'option "08:45:04 PM #17 sending cache export" [ref=f27e3434]':
+                    - time [ref=f27e3442]: 08:45:04 PM
+                    - generic [ref=f27e3444]: "#17 sending cache export"
+                  - 'option "08:45:09 PM #17 sending cache export 5.0s done" [ref=f27e3446]':
+                    - time [ref=f27e3454]: 08:45:09 PM
+                    - generic [ref=f27e3456]: "#17 sending cache export 5.0s done"
+                  - 'option "08:45:09 PM #17 DONE 12.3s" [ref=f27e3458]':
+                    - time [ref=f27e3466]: 08:45:09 PM
+                    - generic [ref=f27e3468]: "#17 DONE 12.3s"
+                  - option "08:45:10 PM ==> Deploying..." [ref=f27e3470]:
+                    - time [ref=f27e3478]: 08:45:10 PM
+                    - generic [ref=f27e3480]: ==> Deploying...
+                  - option "08:45:10 PM ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance" [ref=f27e3482]:
+                    - time [ref=f27e3490]: 08:45:10 PM
+                    - generic [ref=f27e3492]: ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+                  - 'option "08:45:18 PM [npt84] warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]" [ref=f27e3494]':
+                    - generic [ref=f27e3495]:
+                      - time [ref=f27e3503]: 08:45:18 PM
+                      - generic [ref=f27e3504]: "[npt84]"
+                    - generic [ref=f27e3508]: "warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]"
+                  - option "08:45:18 PM [npt84] Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning" [ref=f27e3510]:
+                    - generic [ref=f27e3511]:
+                      - time [ref=f27e3518]: 08:45:18 PM
+                      - generic [ref=f27e3519]: "[npt84]"
+                    - generic [ref=f27e3525]:
+                      - text: Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to
+                      - link "https://aka.ms/aspnet/dataprotectionwarning" [ref=f27e3526] [cursor=pointer]:
+                        - /url: https://aka.ms/aspnet/dataprotectionwarning
+                  - 'option "08:45:18 PM [npt84] warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]" [ref=f27e3527]':
+                    - generic [ref=f27e3528]:
+                      - time [ref=f27e3536]: 08:45:18 PM
+                      - generic [ref=f27e3537]: "[npt84]"
+                    - generic [ref=f27e3541]: "warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]"
+                  - 'option "08:45:18 PM [npt84] No XML encryptor configured. Key {184b5068-22fd-4d80-add9-5fa451307998} may be persisted to storage in unencrypted form." [ref=f27e3543]':
+                    - generic [ref=f27e3544]:
+                      - time [ref=f27e3551]: 08:45:18 PM
+                      - generic [ref=f27e3552]: "[npt84]"
+                    - generic [ref=f27e3556]: "No XML encryptor configured. Key {184b5068-22fd-4d80-add9-5fa451307998} may be persisted to storage in unencrypted form."
+                  - 'option "08:45:19 PM [npt84] info: Microsoft.Hosting.Lifetime[14]" [ref=f27e3558]':
+                    - generic [ref=f27e3559]:
+                      - time [ref=f27e3566]: 08:45:19 PM
+                      - generic [ref=f27e3567]: "[npt84]"
+                    - generic [ref=f27e3571]: "info: Microsoft.Hosting.Lifetime[14]"
+                  - 'option "08:45:19 PM [npt84] Now listening on: http://[::]:8080" [ref=f27e3573]':
+                    - generic [ref=f27e3574]:
+                      - time [ref=f27e3581]: 08:45:19 PM
+                      - generic [ref=f27e3582]: "[npt84]"
+                    - generic [ref=f27e3586]: "Now listening on: http://[::]:8080"
+                  - 'option "08:45:19 PM [npt84] info: Microsoft.Hosting.Lifetime[0]" [ref=f27e3588]':
+                    - generic [ref=f27e3589]:
+                      - time [ref=f27e3596]: 08:45:19 PM
+                      - generic [ref=f27e3597]: "[npt84]"
+                    - generic [ref=f27e3601]: "info: Microsoft.Hosting.Lifetime[0]"
+                  - option "08:45:19 PM [npt84] Application started. Press Ctrl+C to shut down." [ref=f27e3603]:
+                    - generic [ref=f27e3604]:
+                      - time [ref=f27e3611]: 08:45:19 PM
+                      - generic [ref=f27e3612]: "[npt84]"
+                    - generic [ref=f27e3616]: Application started. Press Ctrl+C to shut down.
+                  - 'option "08:45:19 PM [npt84] info: Microsoft.Hosting.Lifetime[0]" [ref=f27e3618]':
+                    - generic [ref=f27e3619]:
+                      - time [ref=f27e3626]: 08:45:19 PM
+                      - generic [ref=f27e3627]: "[npt84]"
+                    - generic [ref=f27e3631]: "info: Microsoft.Hosting.Lifetime[0]"
+                  - 'option "08:45:19 PM [npt84] Hosting environment: Production" [ref=f27e3633]':
+                    - generic [ref=f27e3634]:
+                      - time [ref=f27e3641]: 08:45:19 PM
+                      - generic [ref=f27e3642]: "[npt84]"
+                    - generic [ref=f27e3646]: "Hosting environment: Production"
+                  - 'option "08:45:19 PM [npt84] info: Microsoft.Hosting.Lifetime[0]" [ref=f27e3648]':
+                    - generic [ref=f27e3649]:
+                      - time [ref=f27e3656]: 08:45:19 PM
+                      - generic [ref=f27e3657]: "[npt84]"
+                    - generic [ref=f27e3661]: "info: Microsoft.Hosting.Lifetime[0]"
+                  - 'option "08:45:19 PM [npt84] Content root path: /app" [ref=f27e3663]':
+                    - generic [ref=f27e3664]:
+                      - time [ref=f27e3671]: 08:45:19 PM
+                      - generic [ref=f27e3672]: "[npt84]"
+                    - generic [ref=f27e3676]: "Content root path: /app"
+                  - 'option "08:45:21 PM [npt84] warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]" [ref=f27e3678]':
+                    - generic [ref=f27e3679]:
+                      - time [ref=f27e3687]: 08:45:21 PM
+                      - generic [ref=f27e3688]: "[npt84]"
+                    - generic [ref=f27e3692]: "warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]"
+                  - option "08:45:21 PM [npt84] Failed to determine the https port for redirect." [ref=f27e3694]:
+                    - generic [ref=f27e3695]:
+                      - time [ref=f27e3702]: 08:45:21 PM
+                      - generic [ref=f27e3703]: "[npt84]"
+                    - generic [ref=f27e3707]: Failed to determine the https port for redirect.
+              - paragraph [ref=f27e3203]:
+                - text: Need better ways to work with logs? Try the
+                - link "Render CLI" [ref=f27e3204] [cursor=pointer]:
+                  - /url: https://render.com/docs/cli
+                - text: ","
+                - link "Render MCP Server" [ref=f27e3208] [cursor=pointer]:
+                  - /url: https://render.com/docs/mcp-server
+                - text: ", or set up a"
+                - link "log stream integration" [ref=f27e3209] [cursor=pointer]:
+                  - /url: https://render.com/docs/log-streams
+    - generic [aria-hidden]:
+      - generic:
+        - generic: "0 services selected:"
+        - generic:
+          - generic:
+            - button:
+              - generic: Move
+      - generic:
+        - separator
+        - generic:
+          - generic:
+            - button
+  - iframe [aria-hidden] [ref=f27e121]

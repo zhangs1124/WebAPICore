@@ -28,6 +28,11 @@ public class User
     public string Role { get; set; } = "Warehouse";
 
     /// <summary>
+    /// 所屬單位/部門代碼 (例如：總務課、製造課、研發課、資材課)
+    /// </summary>
+    public string Department { get; set; } = "總務課";
+
+    /// <summary>
     /// 帳號是否啟用
     /// </summary>
     public bool IsActive { get; set; } = true;

@@ -1,53 +1,127 @@
-﻿<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark" style="width: 240px;">
+<aside class="navbar navbar-vertical navbar-expand-lg bg-dark text-white" id="mainSidebar" data-bs-theme="dark" style="width: 250px;">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <h1 class="navbar-brand navbar-brand-autodark">
-            <a href="/" class="d-flex align-items-center text-decoration-none">
+        <!-- 頂部品牌與收折按鈕 -->
+        <div class="d-flex align-items-center justify-content-between w-100 py-2 border-bottom border-secondary border-opacity-25">
+            <a href="javascript:void(0);" onclick="switchView('dashboard')" class="d-flex align-items-center text-decoration-none text-white">
                 <i class="ti ti-packages fs-1 text-primary me-2"></i>
-                <span class="fw-bold tracking-tight">智庫存 ERP</span>
+                <span class="fw-bold tracking-tight fs-3">智庫存 ERP</span>
             </a>
-        </h1>
-        <div class="collapse navbar-collapse" id="sidebar-menu">
+            <button type="button" class="btn btn-sm btn-ghost-light p-1" title="收折側邊選單" onclick="toggleSidebarMenu()">
+                <i class="ti ti-layout-sidebar-left-collapse fs-2"></i>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse show" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
+                <!-- 第一層：營運總覽儀表板 (單純項目) -->
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="ti ti-dashboard"></i>
+                    <a class="nav-link nav-menu-link active" href="javascript:void(0);" id="navItem-dashboard" onclick="switchView('dashboard')">
+                        <span class="nav-link-icon d-inline-block">
+                            <i class="ti ti-dashboard text-primary"></i>
                         </span>
-                        <span class="nav-link-title">營運儀表板</span>
+                        <span class="nav-link-title fw-semibold">營運總覽</span>
                     </a>
                 </li>
+
+                <!-- 第一層：庫存管理 (二層摺疊手風琴) -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#productsSection">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="ti ti-box"></i>
+                    <a class="nav-link" href="#menuInventory" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="menuInventory">
+                        <span class="nav-link-icon d-inline-block">
+                            <i class="ti ti-box text-azure"></i>
                         </span>
-                        <span class="nav-link-title">商品品項管理</span>
+                        <span class="nav-link-title fw-semibold">庫存管理</span>
+                        <span class="ms-auto"><i class="ti ti-chevron-down fs-4"></i></span>
                     </a>
+                    <div class="collapse show" id="menuInventory">
+                        <ul class="nav nav-pills flex-column ps-3 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link nav-menu-link py-1 small" href="javascript:void(0);" id="navItem-products" onclick="switchView('products')">
+                                    <i class="ti ti-list-details me-2"></i>商品即時庫存
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-menu-link py-1 small" href="javascript:void(0);" id="navItem-low-stock" onclick="switchView('low-stock')">
+                                    <i class="ti ti-alert-triangle text-warning me-2"></i>安全庫存預警
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#lowStockSection">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="ti ti-alert-triangle text-warning"></i>
+
+                <!-- 第一層：採購進貨 (二層摺疊手風琴) -->
+                <li class="nav-item role-purchaser-only">
+                    <a class="nav-link" href="#menuPurchase" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="menuPurchase">
+                        <span class="nav-link-icon d-inline-block">
+                            <i class="ti ti-shopping-cart text-warning"></i>
                         </span>
-                        <span class="nav-link-title">安全庫存預警</span>
+                        <span class="nav-link-title fw-semibold">採購進貨</span>
+                        <span class="ms-auto"><i class="ti ti-chevron-down fs-4"></i></span>
                     </a>
+                    <div class="collapse show" id="menuPurchase">
+                        <ul class="nav nav-pills flex-column ps-3 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link nav-menu-link py-1 small" href="javascript:void(0);" id="navItem-purchases" onclick="switchView('purchases')">
+                                    <i class="ti ti-file-text me-2"></i>採購單列表 (PO)
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/scalar/v1" target="_blank">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="ti ti-api text-info"></i>
+
+                <!-- 第一層：廠商管理 (二層摺疊手風琴) -->
+                <li class="nav-item role-purchaser-only">
+                    <a class="nav-link" href="#menuSuppliers" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="menuSuppliers">
+                        <span class="nav-link-icon d-inline-block">
+                            <i class="ti ti-building-store text-info"></i>
                         </span>
-                        <span class="nav-link-title">Scalar API 文件 <i class="ti ti-external-link ms-1 fs-4"></i></span>
+                        <span class="nav-link-title fw-semibold">廠商主檔</span>
+                        <span class="ms-auto"><i class="ti ti-chevron-down fs-4"></i></span>
+                    </a>
+                    <div class="collapse show" id="menuSuppliers">
+                        <ul class="nav nav-pills flex-column ps-3 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link nav-menu-link py-1 small" href="javascript:void(0);" id="navItem-suppliers" onclick="switchView('suppliers')">
+                                    <i class="ti ti-address-book me-2"></i>供應商資料維護
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 第一層：系統管理 (二層摺疊手風琴，Admin 專屬) -->
+                <li class="nav-item role-admin-only">
+                    <a class="nav-link" href="#menuSystem" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="menuSystem">
+                        <span class="nav-link-icon d-inline-block">
+                            <i class="ti ti-shield-lock text-danger"></i>
+                        </span>
+                        <span class="nav-link-title fw-semibold">系統設定</span>
+                        <span class="ms-auto"><i class="ti ti-chevron-down fs-4"></i></span>
+                    </a>
+                    <div class="collapse show" id="menuSystem">
+                        <ul class="nav nav-pills flex-column ps-3 mt-1">
+                            <li class="nav-item">
+                                <a class="nav-link nav-menu-link py-1 small" href="javascript:void(0);" id="navItem-users" onclick="switchView('users')">
+                                    <i class="ti ti-users-group me-2"></i>帳號與部門權限
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- API 文件外連 -->
+                <li class="nav-item mt-2">
+                    <a class="nav-link py-1 small text-muted" href="/scalar/v1" target="_blank">
+                        <span class="nav-link-icon"><i class="ti ti-api text-secondary"></i></span>
+                        <span class="nav-link-title">Scalar API 文件 <i class="ti ti-external-link ms-1"></i></span>
                     </a>
                 </li>
             </ul>
-            <div class="mt-auto p-3 text-muted small">
-                <div class="d-flex align-items-center mb-2">
+
+            <!-- 底部資料庫連線標示 -->
+            <div class="mt-auto p-3 text-muted small border-top border-secondary border-opacity-25">
+                <div class="d-flex align-items-center mb-1">
                     <span class="status-dot status-dot-animated bg-green me-2"></span>
-                    <span>Supabase 雲端已連線</span>
+                    <span class="text-white-50">Supabase 雲端連線</span>
                 </div>
                 <div class="text-secondary opacity-75">ASP.NET Core 9 + Npgsql</div>
             </div>

@@ -18,6 +18,16 @@ public class PurchaseOrder
     public string SupplierName { get; set; } = string.Empty;
 
     /// <summary>
+    /// 關聯之供應商主檔 ID (選填)
+    /// </summary>
+    public Guid? SupplierId { get; set; }
+
+    /// <summary>
+    /// 申請單位/部門代碼 (例如：總務課、製造課、研發課)
+    /// </summary>
+    public string Department { get; set; } = "總務課";
+
+    /// <summary>
     /// 採購單狀態：Draft(草稿/待審), Approved(已核准下單), Completed(全數到貨結案), Cancelled(作廢)
     /// </summary>
     public string Status { get; set; } = "Draft";
@@ -52,6 +62,7 @@ public class PurchaseOrder
     /// </summary>
     public DateTime? ApprovedAt { get; set; }
 
-    // 導覽屬性：單身明細
+    // 導覽屬性：單身明細與供應商
+    public Supplier? Supplier { get; set; }
     public ICollection<PurchaseOrderItem> Items { get; set; } = new List<PurchaseOrderItem>();
 }

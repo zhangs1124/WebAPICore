@@ -9,25 +9,33 @@
     var currentRole = currentSession?.Role ?? "Warehouse";
     var displayName = currentSession?.DisplayName ?? "現場倉管員";
     var username = currentSession?.Username ?? "warehouse";
+    var department = currentSession?.Department ?? "總務課";
 }
-<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none border-bottom sticky-top">
-    <div class="container-xl">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-            <span class="navbar-toggler-icon"></span>
+<header class="navbar navbar-expand-md d-print-none border-bottom sticky-top bg-white">
+    <div class="container-fluid px-3">
+        <!-- 側邊欄摺疊/展開漢堡按鈕 -->
+        <button type="button" class="btn btn-outline-secondary btn-icon me-3" id="btnToggleSidebarHeader" title="收折/展開左側選單" onclick="toggleSidebarMenu()">
+            <i class="ti ti-layout-sidebar text-dark fs-2"></i>
         </button>
-        <div class="navbar-nav flex-row order-md-last align-items-center">
-            <!-- 採購抽屜快捷鍵 (Purchaser, Manager, Admin) -->
-            <button type="button" class="btn btn-outline-warning btn-sm me-2 role-purchaser-only" data-bs-toggle="offcanvas" data-bs-target="#purchaseDrawer" onclick="loadPurchaseOrders()">
-                <i class="ti ti-shopping-cart me-1"></i>採購管理 (PO)
-            </button>
 
-            <!-- 帳號管理抽屜快捷鍵 (Admin 專屬) -->
-            <button type="button" class="btn btn-outline-primary btn-sm me-3 role-admin-only" data-bs-toggle="offcanvas" data-bs-target="#userDrawer" onclick="loadUsersList()">
-                <i class="ti ti-users-group me-1"></i>帳號權限
-            </button>
+        <div class="d-none d-md-flex align-items-center">
+            <span class="fs-4 fw-bold text-dark me-2" id="currentViewTitle">營運總覽儀表板</span>
+            <span class="badge bg-purple-lt small" title="所屬部門">@department</span>
+        </div>
+
+        <div class="navbar-nav flex-row ms-auto align-items-center">
+            <!-- 搜尋框快捷鍵 -->
+            <div class="d-none d-lg-block me-3">
+                <div class="input-icon" style="width: 260px;">
+                    <span class="input-icon-addon">
+                        <i class="ti ti-search"></i>
+                    </span>
+                    <input type="text" id="globalSearchInput" class="form-control form-control-sm" placeholder="搜尋商品 SKU、品名... (Ctrl+K)" aria-label="Search">
+                </div>
+            </div>
 
             <!-- 深淺主題切換按鈕 -->
-            <div class="d-none d-md-flex me-3">
+            <div class="d-flex me-3">
                 <a href="javascript:void(0);" class="nav-link px-0 hide-theme-dark" title="切換為暗黑模式" onclick="toggleTablerTheme('dark')">
                     <i class="ti ti-moon fs-2"></i>
                 </a>
@@ -40,7 +48,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                     <span class="avatar avatar-sm bg-primary-lt fw-bold">@username.Substring(0, Math.Min(2, username.Length)).ToUpperInvariant()</span>
-                    <div class="d-none d-xl-block ps-2">
+                    <div class="d-none d-xl-block ps-2 text-start">
                         <div class="fw-bold">@displayName</div>
                         <div class="mt-1 small">
                             @if (currentRole == "Admin")
@@ -63,28 +71,16 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <div class="dropdown-header">登入身分：@currentRole</div>
-                    <a href="javascript:void(0);" class="dropdown-item" onclick="refreshDashboard()"><i class="ti ti-refresh me-2"></i>重新整理數據</a>
-                    <a href="javascript:void(0);" class="dropdown-item role-purchaser-only" data-bs-toggle="offcanvas" data-bs-target="#purchaseDrawer" onclick="loadPurchaseOrders()"><i class="ti ti-shopping-cart me-2"></i>開啟採購抽屜</a>
-                    <a href="javascript:void(0);" class="dropdown-item role-admin-only" data-bs-toggle="offcanvas" data-bs-target="#userDrawer" onclick="loadUsersList()"><i class="ti ti-users-group me-2"></i>開啟帳號權限抽屜</a>
+                    <div class="dropdown-header">登入身分：@currentRole (@department)</div>
+                    <a href="javascript:void(0);" class="dropdown-item" onclick="switchView('dashboard')"><i class="ti ti-dashboard me-2"></i>營運總覽</a>
+                    <a href="javascript:void(0);" class="dropdown-item" onclick="switchView('products')"><i class="ti ti-box me-2"></i>商品庫存</a>
+                    <a href="javascript:void(0);" class="dropdown-item role-purchaser-only" onclick="switchView('purchases')"><i class="ti ti-shopping-cart me-2"></i>採購管理</a>
+                    <a href="javascript:void(0);" class="dropdown-item role-purchaser-only" onclick="switchView('suppliers')"><i class="ti ti-building-store me-2"></i>供應商主檔</a>
+                    <a href="javascript:void(0);" class="dropdown-item role-admin-only" onclick="switchView('users')"><i class="ti ti-users-group me-2"></i>帳號權限</a>
                     <div class="dropdown-divider"></div>
                     <a href="/scalar/v1" target="_blank" class="dropdown-item"><i class="ti ti-code me-2"></i>Scalar API 測試</a>
                     <div class="dropdown-divider"></div>
                     <a href="/Account/Logout" class="dropdown-item text-danger"><i class="ti ti-logout me-2"></i>登出系統</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbar-menu">
-            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                <div class="input-icon">
-                    <span class="input-icon-addon">
-                        <i class="ti ti-search"></i>
-                    </span>
-                    <input type="text" id="globalSearchInput" class="form-control" placeholder="搜尋商品 SKU、品名... (按 Enter 搜尋)" aria-label="Search in website">
-                    <span class="input-icon-addon">
-                        <kbd class="kbd">Ctrl + K</kbd>
-                    </span>
                 </div>
             </div>
         </div>

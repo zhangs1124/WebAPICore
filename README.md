@@ -1,4 +1,4 @@
-﻿# 📦 WebAPICore - 雲端現代化進銷存與倉儲管理系統 (ERP)
+# 📦 WebAPICore - 雲端現代化進銷存與倉儲管理系統 (ERP)
 
 [![.NET 9](https://img.shields.io/badge/.NET-9.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Database](https://img.shields.io/badge/Database-Supabase%20PostgreSQL-3ECF8E.svg)](https://supabase.com/)

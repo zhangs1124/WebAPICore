@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebAPICore.Api.Dtos;
 
@@ -21,6 +21,7 @@ public record LoginResponse(
     string Username,
     string DisplayName,
     string Role,
+    string Department,
     string Token
 );
 
@@ -41,5 +42,8 @@ public record CreateUserRequest(
     string DisplayName,
 
     [Required(ErrorMessage = "角色不可為空")]
-    string Role
+    string Role,
+
+    string? Department = "總務課"
 );
+

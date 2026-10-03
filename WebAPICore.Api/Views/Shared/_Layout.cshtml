@@ -14,7 +14,7 @@
         })();
     </script>
 
-    <!-- Google Fonts Inter 字體 (開啟 OpenType 數字排版特性) -->
+    <!-- Google Fonts Inter 字體 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -34,6 +34,31 @@
         .modal-blur {
             backdrop-filter: blur(4px);
         }
+
+        /* 側邊欄平滑手風琴收折動畫 */
+        #mainSidebar {
+            transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1020;
+        }
+
+        body.sidebar-collapsed #mainSidebar {
+            margin-left: -250px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .page-wrapper {
+            transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+        }
+
+        .nav-menu-link.active {
+            background-color: rgba(32, 107, 196, 0.2) !important;
+            color: #4299e1 !important;
+            font-weight: 600 !important;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="layout-fluid">
@@ -47,7 +72,7 @@
 
             <!-- 主內容區 -->
             <main class="page-body">
-                <div class="container-xl">
+                <div class="container-fluid px-4 py-3">
                     @RenderBody()
                 </div>
             </main>
@@ -59,6 +84,7 @@
 
     <!-- 右側滑出抽屜 (Offcanvas Drawers) -->
     <partial name="_UserDrawer" />
+    <partial name="_SupplierDrawer" />
     <partial name="_PurchaseDrawer" />
     <partial name="_StocktakeDrawer" />
 
@@ -72,10 +98,16 @@
         var laySession = LayoutHttpAccessor.HttpContext?.Session.GetString("UserSession");
         var layRole = "Warehouse";
         var layName = "現場倉管員";
+        var layDept = "總務課";
         if (!string.IsNullOrEmpty(laySession))
         {
             var s = System.Text.Json.JsonSerializer.Deserialize<WebAPICore.Api.Models.UserSession>(laySession);
-            if (s != null) { layRole = s.Role; layName = s.DisplayName; }
+            if (s != null)
+            {
+                layRole = s.Role;
+                layName = s.DisplayName;
+                layDept = s.Department;
+            }
         }
     }
 
@@ -83,6 +115,21 @@
     <script>
         window.currentUserRole = '@layRole';
         window.currentUserName = '@layName';
+        window.currentUserDept = '@layDept';
+
+        // 側邊欄收折手風琴控制
+        function toggleSidebarMenu() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const isCollapsed = document.body.classList.contains('sidebar-collapsed');
+            localStorage.setItem('tabler-sidebar-collapsed', isCollapsed ? '1' : '0');
+        }
+
+        // 初始化側邊欄狀態
+        (function() {
+            if (localStorage.getItem('tabler-sidebar-collapsed') === '1') {
+                document.body.classList.add('sidebar-collapsed');
+            }
+        })();
 
         function toggleTablerTheme(theme) {
             localStorage.setItem('tabler-theme', theme);
@@ -121,7 +168,7 @@
                 el.style.display = (role === 'Manager' || role === 'Admin') ? '' : 'none';
             });
 
-            // 3. Purchaser 專屬控制項 (填寫採購單)
+            // 3. Purchaser 專屬控制項 (填寫採購單、供應商管理)
             document.querySelectorAll('.role-purchaser-only').forEach(el => {
                 el.style.display = (role !== 'Warehouse') ? '' : 'none';
             });

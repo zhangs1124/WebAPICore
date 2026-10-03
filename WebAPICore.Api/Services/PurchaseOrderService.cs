@@ -44,6 +44,8 @@ public class PurchaseOrderService : IPurchaseOrderService
             Id = Guid.NewGuid(),
             PoNumber = poNumber,
             SupplierName = request.SupplierName,
+            SupplierId = request.SupplierId,
+            Department = string.IsNullOrWhiteSpace(request.Department) ? "總務課" : request.Department,
             Status = "Draft",
             Remark = request.Remark,
             CreatedBy = request.CreatedBy,
@@ -244,6 +246,8 @@ public class PurchaseOrderService : IPurchaseOrderService
             po.Id,
             po.PoNumber,
             po.SupplierName,
+            po.SupplierId,
+            po.Department,
             po.Status,
             po.TotalAmount,
             po.Remark,
@@ -256,7 +260,7 @@ public class PurchaseOrderService : IPurchaseOrderService
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<PurchaseOrderResponse>> GetAllAsync(string? status = null, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<PurchaseOrderResponse>> GetAllAsync(string? status = null, string? department = null, CancellationToken cancellationToken = default)
     {
         var query = _dbContext.PurchaseOrders
             .AsNoTracking()
@@ -269,6 +273,12 @@ public class PurchaseOrderService : IPurchaseOrderService
             query = query.Where(p => p.Status == status);
         }
 
+        // 資料級權限過濾：若指定部門則只查該部門
+        if (!string.IsNullOrWhiteSpace(department))
+        {
+            query = query.Where(p => p.Department == department);
+        }
+
         var list = await query
             .OrderByDescending(p => p.CreatedAt)
             .ToListAsync(cancellationToken);
@@ -277,6 +287,8 @@ public class PurchaseOrderService : IPurchaseOrderService
             po.Id,
             po.PoNumber,
             po.SupplierName,
+            po.SupplierId,
+            po.Department,
             po.Status,
             po.TotalAmount,
             po.Remark,
@@ -319,6 +331,8 @@ public class PurchaseOrderService : IPurchaseOrderService
             po.Id,
             po.PoNumber,
             po.SupplierName,
+            po.SupplierId,
+            po.Department,
             po.Status,
             po.TotalAmount,
             po.Remark,

@@ -45,6 +45,7 @@ public class AuthService : IAuthService
             PasswordHash = HashPassword(request.Password),
             DisplayName = request.DisplayName.Trim(),
             Role = request.Role,
+            Department = string.IsNullOrWhiteSpace(request.Department) ? "總務課" : request.Department.Trim(),
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
@@ -52,7 +53,7 @@ public class AuthService : IAuthService
         _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation("成功註冊使用者帳號: {Username}, 角色: {Role}", user.Username, user.Role);
+        _logger.LogInformation("成功註冊使用者帳號: {Username}, 角色: {Role}, 部門: {Department}", user.Username, user.Role, user.Department);
         return user;
     }
 
@@ -80,6 +81,7 @@ public class AuthService : IAuthService
             user.Username,
             user.DisplayName,
             user.Role,
+            user.Department,
             token
         );
     }
@@ -113,3 +115,4 @@ public class AuthService : IAuthService
         return string.Equals(hash, storedHash, StringComparison.OrdinalIgnoreCase);
     }
 }
+

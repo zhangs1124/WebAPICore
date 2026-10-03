@@ -9,5 +9,6 @@ public class UserSession
     public string Username { get; set; } = string.Empty;
     public string DisplayName { get; set; } = string.Empty;
     public string Role { get; set; } = "Warehouse"; // Admin, Manager, Purchaser, Warehouse
+    public string Department { get; set; } = "總務課";
     public DateTime LoginTime { get; set; } = DateTime.UtcNow;
 }

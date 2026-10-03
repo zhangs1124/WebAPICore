@@ -1,62 +1,67 @@
-<!-- 採購訂購單右側滑出抽屜 (Offcanvas Drawer) -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="purchaseDrawer" aria-labelledby="purchaseDrawerLabel" style="width: 650px;">
+<!-- 建立採購訂購單右側滑出抽屜 (Offcanvas Drawer) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="purchaseDrawer" aria-labelledby="purchaseDrawerLabel" style="width: 580px;">
     <div class="offcanvas-header bg-dark text-white">
         <h2 class="offcanvas-title fw-bold" id="purchaseDrawerLabel">
-            <i class="ti ti-shopping-cart text-warning me-2"></i>採購訂購單管理 (PO)
+            <i class="ti ti-file-plus text-warning me-2"></i>建立採購訂購單 (PO)
         </h2>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-4">
-        <!-- 採購員填單區塊 (Purchaser / Manager / Admin 可見) -->
-        <div class="card mb-4 border shadow-sm role-purchaser-only">
-            <div class="card-header bg-light py-2 d-flex justify-content-between align-items-center">
-                <h4 class="card-title fw-bold m-0"><i class="ti ti-file-plus text-primary me-1"></i>建立採購單 (請購訂購二合一)</h4>
-            </div>
-            <div class="card-body">
-                <form id="formCreatePO" autocomplete="off">
-                    <div class="row g-2 mb-2">
-                        <div class="col-6">
-                            <label class="form-label required small">供應商名稱</label>
-                            <input type="text" class="form-control form-control-sm" id="poSupplier" placeholder="例如：聯強國際" required />
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label small">備註說明</label>
-                            <input type="text" class="form-control form-control-sm" id="poRemark" placeholder="選填" />
-                        </div>
-                    </div>
-                    <div class="row g-2 mb-3">
-                        <div class="col-5">
-                            <label class="form-label required small">採購商品</label>
-                            <select class="form-select form-select-sm" id="poProductSelect" required>
-                                <option value="">載入商品中...</option>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <label class="form-label required small">採購數量</label>
-                            <input type="number" class="form-control form-control-sm" id="poQuantity" min="1" value="10" required />
-                        </div>
-                        <div class="col-4">
-                            <label class="form-label required small">進貨單價 ($)</label>
-                            <input type="number" class="form-control form-control-sm" id="poUnitPrice" min="0.01" step="0.01" placeholder="單價" required />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-sm w-100 fw-bold" id="btnSubmitPO">
-                        <i class="ti ti-send me-1"></i>建立並送審採購單 (Draft)
-                    </button>
-                </form>
+        <!-- 說明卡 -->
+        <div class="alert alert-warning border-0 shadow-sm mb-4">
+            <div class="d-flex">
+                <i class="ti ti-info-circle fs-2 me-2"></i>
+                <div class="small">
+                    <strong>請購訂購二合一流程：</strong><br />
+                    • 送出後進入「草稿待審」狀態。<br />
+                    • 經主管核准後自動轉為「已核准在途」，商品自動累加至在途量。<br />
+                    • 現場倉管員貨到驗收後即可入庫。
+                </div>
             </div>
         </div>
 
-        <!-- 採購單清單 -->
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h4 class="fw-bold m-0"><i class="ti ti-clipboard-list text-secondary me-1"></i>採購單列表與履約進度</h4>
-            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="loadPurchaseOrders()">
-                <i class="ti ti-refresh me-1"></i>刷新清單
-            </button>
-        </div>
+        <form id="formCreatePO" autocomplete="off">
+            <div class="mb-3">
+                <label class="form-label required small d-flex justify-content-between">
+                    <span>合作供應商</span>
+                    <a href="javascript:void(0);" onclick="openCreateSupplierDrawer()" class="small text-decoration-none">
+                        <i class="ti ti-plus"></i> 新增供應商主檔
+                    </a>
+                </label>
+                <select class="form-select" id="poSupplierSelect" required>
+                    <option value="">-- 請選擇合作供應商 --</option>
+                </select>
+            </div>
 
-        <div id="poListContainer">
-            <div class="text-center text-muted py-4">載入採購單中...</div>
-        </div>
+            <div class="row g-2 mb-3">
+                <div class="col-7">
+                    <label class="form-label required small">採購商品品項</label>
+                    <select class="form-select" id="poProductSelect" required>
+                        <option value="">載入商品中...</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label class="form-label required small">採購數量</label>
+                    <input type="number" class="form-control" id="poQuantity" min="1" value="10" required />
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label required small">進貨成本單價 (NT$)</label>
+                    <input type="number" class="form-control" id="poUnitPrice" min="0.01" step="0.01" placeholder="單價" required />
+                </div>
+                <div class="col-6">
+                    <label class="form-label small">備註說明 (選填)</label>
+                    <input type="text" class="form-control" id="poRemark" placeholder="專案或急件說明" />
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-warning w-100 fw-bold" id="btnSubmitPO">
+                    <i class="ti ti-send me-1"></i>確認送出採購單審核
+                </button>
+            </div>
+        </form>
     </div>
 </div>

@@ -53,13 +53,14 @@ public class AccountController : Controller
                 Username = loginResult.Username,
                 DisplayName = loginResult.DisplayName,
                 Role = loginResult.Role,
+                Department = loginResult.Department,
                 LoginTime = DateTime.UtcNow
             };
 
             // 寫入 Session
             HttpContext.Session.SetString("UserSession", JsonSerializer.Serialize(userSession));
 
-            _logger.LogInformation("使用者 {Username} ({Role}) 成功登入系統", userSession.Username, userSession.Role);
+            _logger.LogInformation("使用者 {Username} ({Role} - {Department}) 成功登入系統", userSession.Username, userSession.Role, userSession.Department);
 
             return Json(new
             {
@@ -67,6 +68,7 @@ public class AccountController : Controller
                 message = "登入成功！正在進入系統...",
                 displayName = userSession.DisplayName,
                 role = userSession.Role,
+                department = userSession.Department,
                 redirectUrl = Url.Action("Index", "Home")
             });
         }
@@ -118,7 +120,9 @@ public class AccountController : Controller
             userId = session?.UserId,
             username = session?.Username,
             displayName = session?.DisplayName,
-            role = session?.Role
+            role = session?.Role,
+            department = session?.Department
         });
     }
 }
+

@@ -23,9 +23,9 @@ public interface IPurchaseOrderService
     Task<PurchaseOrderResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 查詢採購單清單（可依狀態過濾）
+    /// 查詢採購單清單（可依狀態與部門過濾，支援資料權限隔離）
     /// </summary>
-    Task<IReadOnlyList<PurchaseOrderResponse>> GetAllAsync(string? status = null, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<PurchaseOrderResponse>> GetAllAsync(string? status = null, string? department = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 針對採購單進行到貨驗收入庫（更新已到貨量、扣減在途量、增加入庫現有庫存；到齊自動結案）

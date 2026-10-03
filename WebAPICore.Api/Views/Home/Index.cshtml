@@ -1,213 +1,448 @@
 @{
-    ViewData["Title"] = "營運總覽儀表板";
+    ViewData["Title"] = "企業級進銷存管理";
 }
 
-<!-- 頁面標題列 -->
-<div class="page-header d-print-none mb-3">
-    <div class="row g-2 align-items-center">
-        <div class="col">
-            <div class="page-pretitle text-secondary">INVENTORY MANAGEMENT SYSTEM</div>
-            <h2 class="page-title fw-bold">
-                <i class="ti ti-building-warehouse text-primary me-2"></i>倉儲進銷存營運總覽
-            </h2>
-        </div>
-        <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-                <button type="button" class="btn btn-outline-secondary" onclick="refreshDashboard()">
-                    <i class="ti ti-refresh me-1"></i>重新整理
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
-                    <i class="ti ti-plus me-1"></i>新增商品
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 4 欄式 KPI 營運指標卡 (Metric Strips) -->
-<div class="row row-deck row-cards mb-4">
-    <div class="col-sm-6 col-lg-3">
-        <div class="card card-sm border-0 shadow-sm">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <span class="bg-primary text-white avatar fs-2">
-                            <i class="ti ti-box"></i>
-                        </span>
-                    </div>
-                    <div class="col">
-                        <div class="font-weight-medium text-secondary small">商品總品項數</div>
-                        <div class="text-reset fw-bold fs-1" id="kpiTotalProducts">0</div>
+<!-- ======================================================== -->
+<!-- 視圖 1：營運總覽儀表板 (View: Dashboard) -->
+<!-- ======================================================== -->
+<div id="view-dashboard" class="erp-view">
+    <!-- 4 欄式 KPI 營運指標卡 (Metric Strips) -->
+    <div class="row row-deck row-cards mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-primary text-white avatar fs-2">
+                                <i class="ti ti-box"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium text-secondary small">商品總品項數</div>
+                            <div class="text-reset fw-bold fs-1" id="kpiTotalProducts">0</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="card card-sm border-0 shadow-sm">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <span class="bg-green text-white avatar fs-2">
-                            <i class="ti ti-packages"></i>
-                        </span>
-                    </div>
-                    <div class="col">
-                        <div class="font-weight-medium text-secondary small">在庫現存總件數</div>
-                        <div class="text-reset fw-bold fs-1" id="kpiTotalStock">0</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="card card-sm border-0 shadow-sm">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <span class="bg-warning text-white avatar fs-2">
-                            <i class="ti ti-alert-triangle"></i>
-                        </span>
-                    </div>
-                    <div class="col">
-                        <div class="font-weight-medium text-secondary small">安全庫存警戒數</div>
-                        <div class="text-reset fw-bold fs-1" id="kpiLowStockCount">0</div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-green text-white avatar fs-2">
+                                <i class="ti ti-packages"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium text-secondary small">在庫現存總件數</div>
+                            <div class="text-reset fw-bold fs-1" id="kpiTotalStock">0</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6 col-lg-3">
-        <div class="card card-sm border-0 shadow-sm">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <span class="bg-purple text-white avatar fs-2">
-                            <i class="ti ti-server"></i>
-                        </span>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-warning text-white avatar fs-2">
+                                <i class="ti ti-alert-triangle"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium text-secondary small">安全庫存警戒數</div>
+                            <div class="text-reset fw-bold fs-1" id="kpiLowStockCount">0</div>
+                        </div>
                     </div>
-                    <div class="col">
-                        <div class="font-weight-medium text-secondary small">雲端資料庫狀態</div>
-                        <div class="text-reset fw-bold fs-2 text-success">
-                            <span class="status-dot status-dot-animated bg-green me-1"></span>正常
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-purple text-white avatar fs-2">
+                                <i class="ti ti-server"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium text-secondary small">雲端資料庫狀態</div>
+                            <div class="text-reset fw-bold fs-2 text-success">
+                                <span class="status-dot status-dot-animated bg-green me-1"></span>正常
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- 即時商品庫存數據表格 -->
-<div class="card border-0 shadow-sm" id="productsSection">
-    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <h3 class="card-title fw-bold">
-            <i class="ti ti-table me-1"></i>商品即時庫存明細
-        </h3>
-        <div class="d-flex gap-2">
-            <input type="text" id="filterSearch" class="form-control form-control-sm" placeholder="搜尋 SKU 或名稱..." style="width: 200px;" onkeyup="handleFilterKey(event)">
-            <select id="filterCategory" class="form-select form-select-sm" style="width: 140px;" onchange="loadProducts()">
-                <option value="">全部類別</option>
-                <option value="電腦周邊">電腦周邊</option>
-                <option value="辦公設備">辦公設備</option>
-                <option value="生活家電">生活家電</option>
-                <option value="耗材配件">耗材配件</option>
-            </select>
-            <button class="btn btn-sm btn-primary" onclick="loadProducts()">
-                <i class="ti ti-search me-1"></i>查詢
-            </button>
+    <!-- 儀表板快速跳轉與概覽 -->
+    <div class="row row-cards">
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title fw-bold"><i class="ti ti-bell-ringing text-warning me-2"></i>即時庫存警戒摘要</h3>
+                    <button class="btn btn-sm btn-link text-decoration-none" onclick="switchView('low-stock')">查看完整預警 &rarr;</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table table-sm">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>商品名稱</th>
+                                <th>現存數量</th>
+                                <th>安全水位</th>
+                                <th class="text-end">動作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashLowStockTbody">
+                            <tr><td colspan="5" class="text-center text-muted py-3">載入中...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title fw-bold"><i class="ti ti-truck-delivery text-primary me-2"></i>最新採購與在途追蹤</h3>
+                    <button class="btn btn-sm btn-link text-decoration-none role-purchaser-only" onclick="switchView('purchases')">完整採購單 &rarr;</button>
+                </div>
+                <div class="card-body p-3" id="dashPoSummaryContainer">
+                    <div class="text-center text-muted py-3">載入中...</div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-vcenter card-table table-hover">
-            <thead>
-                <tr>
-                    <th>商品貨號 (SKU)</th>
-                    <th>商品名稱</th>
-                    <th>分類</th>
-                    <th class="text-end">銷售單價</th>
-                    <th style="min-width: 160px;">現有庫存狀況</th>
-                    <th class="text-center">安全庫存線</th>
-                    <th class="text-center">狀態</th>
-                    <th class="text-end">快速出入庫</th>
-                </tr>
-            </thead>
-            <tbody id="productsTableBody">
-                <tr>
-                    <td colspan="8" class="text-center py-4 text-muted">
-                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
-                        正在向 Supabase 雲端讀取庫存資料...
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="card-footer d-flex align-items-center py-2" id="tablePagination">
-        <p class="m-0 text-secondary small" id="paginationInfo">顯示第 0 筆至 0 筆，共 0 筆</p>
+</div>
+
+<!-- ======================================================== -->
+<!-- 視圖 2：商品即時庫存完整大表 (View: Products) -->
+<!-- ======================================================== -->
+<div id="view-products" class="erp-view d-none">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h3 class="card-title fw-bold m-0"><i class="ti ti-box text-primary me-2"></i>商品即時庫存總表</h3>
+                <div class="text-muted small">即時掌握現有量、在途進貨量與安全庫存防線</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <input type="text" id="filterSearch" class="form-control form-control-sm" placeholder="搜尋 SKU 或品名..." style="width: 200px;" onkeyup="handleFilterKey(event)">
+                <select id="filterCategory" class="form-select form-select-sm" style="width: 130px;" onchange="loadProducts()">
+                    <option value="">全部類別</option>
+                    <option value="電腦周邊">電腦周邊</option>
+                    <option value="辦公設備">辦公設備</option>
+                    <option value="生活家電">生活家電</option>
+                    <option value="耗材配件">耗材配件</option>
+                </select>
+                <button class="btn btn-sm btn-primary" onclick="loadProducts()">
+                    <i class="ti ti-search me-1"></i>查詢
+                </button>
+                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#productModal">
+                    <i class="ti ti-plus me-1"></i>新增商品
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table table-hover">
+                <thead>
+                    <tr>
+                        <th>商品貨號 (SKU)</th>
+                        <th>商品名稱</th>
+                        <th>分類</th>
+                        <th class="text-end">銷售單價</th>
+                        <th style="min-width: 180px;">現有庫存 / 在途採購</th>
+                        <th class="text-center">安全庫存線</th>
+                        <th class="text-center">庫存狀態</th>
+                        <th class="text-end">快速操作</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <tr><td colspan="8" class="text-center py-4 text-muted">正在載入商品數據...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer d-flex align-items-center py-2">
+            <p class="m-0 text-secondary small" id="paginationInfo">共 0 筆商品品項</p>
+        </div>
     </div>
 </div>
 
-<!-- 低於安全庫存預警區塊 -->
-<div class="card border-0 shadow-sm mt-4 border-start border-warning border-3" id="lowStockSection">
-    <div class="card-header bg-warning-lt py-2">
-        <h4 class="card-title text-warning fw-bold m-0">
-            <i class="ti ti-bell-ringing me-1"></i>急需補貨商品警戒區 (現有庫存 &le; 安全庫存)
-        </h4>
-    </div>
-    <div class="card-body p-0">
+<!-- ======================================================== -->
+<!-- 視圖 3：安全庫存警戒專區 (View: Low Stock) -->
+<!-- ======================================================== -->
+<div id="view-low-stock" class="erp-view d-none">
+    <div class="card border-0 shadow-sm border-start border-warning border-3">
+        <div class="card-header bg-warning-lt d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="card-title text-warning fw-bold m-0"><i class="ti ti-bell-ringing me-2"></i>急需補貨商品警戒區 (現有庫存 &le; 安全庫存)</h3>
+                <div class="text-muted small">系統自動試算補貨量，可立即開立請購單採購補充</div>
+            </div>
+            <button class="btn btn-sm btn-outline-warning" onclick="loadLowStock()">
+                <i class="ti ti-refresh me-1"></i>重新整理
+            </button>
+        </div>
         <div class="table-responsive">
-            <table class="table table-vcenter card-table table-sm">
+            <table class="table table-vcenter card-table">
                 <thead>
                     <tr>
-                        <th>SKU</th>
+                        <th>商品貨號 (SKU)</th>
                         <th>品名</th>
                         <th>現存數量</th>
                         <th>安全警戒線</th>
                         <th>建議採購補貨量</th>
-                        <th class="text-end">動作</th>
+                        <th class="text-end">快速作業</th>
                     </tr>
                 </thead>
                 <tbody id="lowStockTableBody">
-                    <tr><td colspan="6" class="text-center text-muted py-3">載入中...</td></tr>
+                    <tr><td colspan="6" class="text-center text-muted py-4">載入預警數據中...</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- 嵌入 Partial View 彈窗 -->
+<!-- ======================================================== -->
+<!-- 視圖 4：採購訂購單管理完整大表 (View: Purchases) -->
+<!-- ======================================================== -->
+<div id="view-purchases" class="erp-view d-none">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h3 class="card-title fw-bold m-0"><i class="ti ti-shopping-cart text-warning me-2"></i>採購訂購單管理大表 (PO)</h3>
+                <div class="text-muted small">二合一請購訂購、主管線上審批、在庫在途聯動與貨到驗收入庫</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <!-- 部門篩選 (主管/Admin 專用) -->
+                <select class="form-select form-select-sm role-manager-only" id="filterPoDepartment" style="width: 130px;" onchange="loadPurchaseOrdersTable()">
+                    <option value="">全部部門</option>
+                    <option value="總務課">總務課</option>
+                    <option value="資材部">資材部</option>
+                    <option value="製造部">製造部</option>
+                    <option value="營運處">營運處</option>
+                    <option value="資訊部">資訊部</option>
+                </select>
+                <select class="form-select form-select-sm" id="filterPoStatus" style="width: 120px;" onchange="loadPurchaseOrdersTable()">
+                    <option value="">全部狀態</option>
+                    <option value="Draft">草稿 / 待審</option>
+                    <option value="Approved">已核准在途</option>
+                    <option value="Completed">已全到結案</option>
+                </select>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadPurchaseOrdersTable()">
+                    <i class="ti ti-refresh me-1"></i>刷新
+                </button>
+                <button type="button" class="btn btn-sm btn-warning fw-bold text-dark role-purchaser-only" onclick="openCreatePODrawer()">
+                    <i class="ti ti-plus me-1"></i>建立採購單
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table table-hover">
+                <thead>
+                    <tr>
+                        <th>採購單號 (PO)</th>
+                        <th>請購部門</th>
+                        <th>合作供應商</th>
+                        <th>採購品項與進度</th>
+                        <th class="text-end">採購總額</th>
+                        <th class="text-center">狀態</th>
+                        <th>建單人 / 日期</th>
+                        <th class="text-end">操作處理</th>
+                    </tr>
+                </thead>
+                <tbody id="poTableBody">
+                    <tr><td colspan="8" class="text-center py-4 text-muted">載入採購單數據中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- 視圖 5：供應商主檔資料維護完整大表 (View: Suppliers) -->
+<!-- ======================================================== -->
+<div id="view-suppliers" class="erp-view d-none">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h3 class="card-title fw-bold m-0"><i class="ti ti-building-store text-info me-2"></i>供應商主檔資料維護</h3>
+                <div class="text-muted small">廠商代碼、聯絡窗口、電話地址維護，採購開單自動帶入</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <select class="form-select form-select-sm" id="filterSupStatus" style="width: 120px;" onchange="loadSuppliersTable()">
+                    <option value="">全部狀態</option>
+                    <option value="true">合作中</option>
+                    <option value="false">暫停合作</option>
+                </select>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadSuppliersTable()">
+                    <i class="ti ti-refresh me-1"></i>刷新
+                </button>
+                <button type="button" class="btn btn-sm btn-info text-white fw-bold role-purchaser-only" onclick="openCreateSupplierDrawer()">
+                    <i class="ti ti-plus me-1"></i>新增供應商
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table table-hover">
+                <thead>
+                    <tr>
+                        <th>供應商代碼</th>
+                        <th>公司名稱</th>
+                        <th>主要聯絡窗口</th>
+                        <th>聯絡電話</th>
+                        <th>公司地址</th>
+                        <th class="text-center">合作狀態</th>
+                        <th class="text-end">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="suppliersTableBody">
+                    <tr><td colspan="7" class="text-center py-4 text-muted">載入供應商清單中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- 視圖 6：系統使用者與部門權限管理完整大表 (View: Users) -->
+<!-- ======================================================== -->
+<div id="view-users" class="erp-view d-none">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h3 class="card-title fw-bold m-0"><i class="ti ti-users-group text-primary me-2"></i>系統使用者與權限管理</h3>
+                <div class="text-muted small">RBAC 四級角色權限防護、部門單位資料隔離防線</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadUsersTable()">
+                    <i class="ti ti-refresh me-1"></i>刷新
+                </button>
+                <button type="button" class="btn btn-sm btn-primary fw-bold role-admin-only" onclick="openCreateUserDrawer()">
+                    <i class="ti ti-user-plus me-1"></i>建立新帳號
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table table-hover">
+                <thead>
+                    <tr>
+                        <th>登入帳號</th>
+                        <th>顯示姓名</th>
+                        <th>角色身分</th>
+                        <th>所屬部門 / 單位 (資料隔離)</th>
+                        <th>帳號狀態</th>
+                        <th>建立日期</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr><td colspan="6" class="text-center py-4 text-muted">載入使用者清單中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 彈窗組件 (Modals) -->
 <partial name="_ProductModal" />
 <partial name="_StockModal" />
 
 @section Scripts {
 <script>
     let currentProductsList = [];
+    let cachedSuppliers = [];
+    let currentActiveView = 'dashboard';
 
     document.addEventListener("DOMContentLoaded", () => {
         refreshDashboard();
+        // 預設載入供應商清單備用
+        loadSuppliersForPO();
     });
 
-    // 重新載入所有儀表板資料
+    // ==========================================
+    // 1. SPA 視圖切換引擎 (View Switcher)
+    // ==========================================
+    function switchView(viewName) {
+        currentActiveView = viewName;
+
+        // 隱藏所有視圖
+        document.querySelectorAll('.erp-view').forEach(v => v.classList.add('d-none'));
+
+        // 顯示目標視圖
+        const target = document.getElementById(`view-${viewName}`);
+        if (target) target.classList.remove('d-none');
+
+        // 更新側邊欄 active 標示
+        document.querySelectorAll('.nav-menu-link').forEach(a => a.classList.remove('active'));
+        const navEl = document.getElementById(`navItem-${viewName}`);
+        if (navEl) navEl.classList.add('active');
+
+        // 更新 Header 標題文字
+        const titleMap = {
+            'dashboard': '營運總覽儀表板',
+            'products': '商品即時庫存總表',
+            'low-stock': '安全庫存急需補貨警戒區',
+            'purchases': '採購訂購單管理大表 (PO)',
+            'suppliers': '合作供應商主檔資料維護',
+            'users': '系統使用者與部門權限管理'
+        };
+        const titleEl = document.getElementById('currentViewTitle');
+        if (titleEl && titleMap[viewName]) {
+            titleEl.innerText = titleMap[viewName];
+        }
+
+        // 依據進入的視圖觸發對應的大表加載
+        if (viewName === 'dashboard') refreshDashboard();
+        else if (viewName === 'products') loadProducts();
+        else if (viewName === 'low-stock') loadLowStock();
+        else if (viewName === 'purchases') loadPurchaseOrdersTable();
+        else if (viewName === 'suppliers') loadSuppliersTable();
+        else if (viewName === 'users') loadUsersTable();
+
+        applyRolePermissions();
+    }
+
+    // 重新整理儀表板數據
     async function refreshDashboard() {
         await Promise.all([
-            loadProducts(),
-            loadLowStock()
+            loadProductsSummary(),
+            loadLowStock(),
+            loadPoSummary()
         ]);
     }
 
     function handleFilterKey(e) {
-        if (e.key === "Enter") {
-            loadProducts();
+        if (e.key === "Enter") loadProducts();
+    }
+
+    // ==========================================
+    // 2. 商品即時庫存大表與 KPI (Products)
+    // ==========================================
+    async function loadProductsSummary() {
+        try {
+            const res = await fetch('/api/v1/products?pageNumber=1&pageSize=100');
+            if (!res.ok) return;
+            const data = await res.json();
+            currentProductsList = data.items;
+
+            document.getElementById("kpiTotalProducts").innerText = data.totalCount;
+            let totalStock = 0;
+            currentProductsList.forEach(p => totalStock += p.currentQty);
+            document.getElementById("kpiTotalStock").innerText = totalStock.toLocaleString();
+        } catch (e) {
+            console.error(e);
         }
     }
 
-    // 1. 取得商品清單 (呼叫 GET /api/v1/products)
     async function loadProducts() {
         const search = document.getElementById("filterSearch").value.trim();
         const category = document.getElementById("filterCategory").value;
         const tbody = document.getElementById("productsTableBody");
 
-        let url = `/api/v1/products?pageNumber=1&pageSize=50`;
+        let url = `/api/v1/products?pageNumber=1&pageSize=100`;
         if (search) url += `&search=${encodeURIComponent(search)}`;
         if (category) url += `&category=${encodeURIComponent(category)}`;
 
@@ -217,13 +452,7 @@
             const data = await res.json();
             currentProductsList = data.items;
 
-            // 計算 KPI
-            document.getElementById("kpiTotalProducts").innerText = data.totalCount;
-            let totalStock = 0;
-            currentProductsList.forEach(p => totalStock += p.currentQty);
-            document.getElementById("kpiTotalStock").innerText = totalStock.toLocaleString();
-
-            document.getElementById("paginationInfo").innerText = `共 ${data.totalCount} 筆商品品項`;
+            document.getElementById("paginationInfo").innerText = `顯示第 1 至 ${currentProductsList.length} 筆，共 ${data.totalCount} 筆商品品項`;
 
             if (currentProductsList.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">目前暫無商品，請點擊上方「+ 新增商品」建立第一筆資料！</td></tr>`;
@@ -249,7 +478,7 @@
                     <td>
                         <div class="d-flex align-items-center">
                             <span class="me-2 fw-bold font-monospace">${p.currentQty} 件</span>
-                            ${p.onOrderQty > 0 ? `<span class="badge bg-purple-lt ms-1" title="已核准但尚未到貨之在途量"><i class="ti ti-truck-delivery me-1"></i>在途:${p.onOrderQty}</span>` : ''}
+                            ${p.onOrderQty > 0 ? `<span class="badge bg-purple-lt ms-1" title="在途量"><i class="ti ti-truck-delivery me-1"></i>在途:${p.onOrderQty}</span>` : ''}
                             <div class="progress progress-sm flex-grow-1 ms-2" style="height: 6px;">
                                 <div class="progress-bar ${progressColor}" style="width: ${ratio}%"></div>
                             </div>
@@ -264,7 +493,7 @@
                         <button class="btn btn-sm btn-outline-danger me-1" onclick="openStockModal('${p.id}', 'OUTBOUND')">
                             <i class="ti ti-minus"></i> 出庫
                         </button>
-                        <button class="btn btn-sm btn-outline-info role-manager-only" onclick="openStocktake('${p.id}', '${p.name.replace(/'/g, "\\'")}', ${p.currentQty})" data-bs-toggle="offcanvas" data-bs-target="#stocktakeDrawer" title="主管盤點校正">
+                        <button class="btn btn-sm btn-outline-info role-manager-only" onclick="openStocktakeDrawer('${p.id}', '${p.name.replace(/'/g, "\\'")}', ${p.currentQty})" title="主管盤點校正">
                             <i class="ti ti-adjustments-alt"></i> 盤點
                         </button>
                     </td>
@@ -272,29 +501,33 @@
             });
             tbody.innerHTML = rows;
             applyRolePermissions();
-
         } catch (err) {
-            console.error(err);
-            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger"><i class="ti ti-x me-1"></i>連線至資料庫失敗，請確認網路環境或 Supabase 狀態。</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger"><i class="ti ti-x me-1"></i>連線失敗：${err.message}</td></tr>`;
         }
     }
 
-    // 2. 取得低於安全庫存商品 (呼叫 GET /api/v1/inventory/low-stock)
+    // ==========================================
+    // 3. 安全庫存預警 (Low Stock)
+    // ==========================================
     async function loadLowStock() {
         const tbody = document.getElementById("lowStockTableBody");
+        const dashTbody = document.getElementById("dashLowStockTbody");
         try {
             const res = await fetch("/api/v1/inventory/low-stock");
-            if (!res.ok) throw new Error("讀取預警失敗");
+            if (!res.ok) return;
             const data = await res.json();
 
             document.getElementById("kpiLowStockCount").innerText = data.length;
 
             if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-3 text-success"><i class="ti ti-circle-check me-1"></i>太棒了！目前所有商品庫存皆在安全水位以上，無需急迫採購。</td></tr>`;
+                const emptyHtml = `<tr><td colspan="6" class="text-center py-3 text-success"><i class="ti ti-circle-check me-1"></i>所有商品庫存皆在安全水位以上，無需急迫採購。</td></tr>`;
+                if (tbody) tbody.innerHTML = emptyHtml;
+                if (dashTbody) dashTbody.innerHTML = `<tr><td colspan="5" class="text-center py-3 text-success">庫存安全水位充足</td></tr>`;
                 return;
             }
 
             let rows = "";
+            let dashRows = "";
             data.forEach(p => {
                 const suggestBuy = Math.max(10, (p.safetyStock * 2) - p.currentQty);
                 rows += `
@@ -310,327 +543,378 @@
                         </button>
                     </td>
                 </tr>`;
+
+                dashRows += `
+                <tr>
+                    <td class="font-monospace text-danger">${p.sku}</td>
+                    <td>${p.name}</td>
+                    <td class="text-danger fw-bold">${p.currentQty}</td>
+                    <td class="text-muted">${p.safetyStock}</td>
+                    <td class="text-end">
+                        <button class="btn btn-xs btn-outline-success py-0 px-2" onclick="openStockModal('${p.id}', 'INBOUND')">補貨</button>
+                    </td>
+                </tr>`;
             });
-            tbody.innerHTML = rows;
+            if (tbody) tbody.innerHTML = rows;
+            if (dashTbody) dashTbody.innerHTML = dashRows;
         } catch (err) {
             console.error(err);
         }
     }
 
-    // 3. 處理新增商品 (POST /api/v1/products)
-    async function handleCreateProduct(e) {
-        e.preventDefault();
-        const btn = document.getElementById("btnSaveProduct");
-        btn.disabled = true;
-
-        const payload = {
-            sku: document.getElementById("prodSku").value.trim(),
-            name: document.getElementById("prodName").value.trim(),
-            category: document.getElementById("prodCategory").value,
-            unitPrice: parseFloat(document.getElementById("prodPrice").value),
-            safetyStock: parseInt(document.getElementById("prodSafety").value),
-            initialStock: parseInt(document.getElementById("prodInitialStock").value) || 0
-        };
-
-        try {
-            const res = await fetch("/api/v1/products", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.detail || "建立失敗");
-            }
-
-            // 關閉 Modal
-            const modalEl = document.getElementById("productModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalEl);
-            if (modalInstance) modalInstance.hide();
-            document.getElementById("createProductForm").reset();
-
-            Toast.fire({
-                icon: "success",
-                title: "商品建立成功！已同步至 Supabase"
-            });
-
-            // 重新整理表格
-            await refreshDashboard();
-
-        } catch (err) {
-            Swal.fire({
-                icon: "error",
-                title: "建立失敗",
-                text: err.message
-            });
-        } finally {
-            btn.disabled = false;
-        }
-    }
-
-    // 4. 打開出入庫作業 Modal
-    function openStockModal(productId, defaultType) {
-        const prod = currentProductsList.find(p => p.id === productId);
-        if (!prod) return;
-
-        document.getElementById("stockProductId").value = prod.id;
-        document.getElementById("stockModalProdName").innerText = prod.name;
-        document.getElementById("stockModalProdSku").innerText = `SKU: ${prod.sku}`;
-        document.getElementById("stockModalCurrentQty").innerText = `${prod.currentQty} 件`;
-
-        // 設定 Radio
-        const radio = document.querySelector(`input[name="movementType"][value="${defaultType}"]`);
-        if (radio) {
-            radio.checked = true;
-            updateStockModalMode(defaultType);
-        }
-
-        document.getElementById("stockQty").value = "";
-        document.getElementById("stockReason").value = "";
-
-        const modal = new bootstrap.Modal(document.getElementById("stockModal"));
-        modal.show();
-    }
-
-    function updateStockModalMode(type) {
-        const btn = document.getElementById("btnSubmitStock");
-        const hint = document.getElementById("stockQtyHint");
-        if (type === "INBOUND") {
-            btn.className = "btn btn-success ms-auto";
-            btn.innerHTML = `<i class="ti ti-arrow-down-left me-1"></i>確認進貨入庫`;
-            hint.innerText = "增加現有庫存量。";
-        } else {
-            btn.className = "btn btn-danger ms-auto";
-            btn.innerHTML = `<i class="ti ti-arrow-up-right me-1"></i>確認銷貨出庫`;
-            hint.innerText = "扣減庫存量（系統自動啟動防超賣檢查與資料庫交易）。";
-        }
-    }
-
-    // 5. 提交出入庫異動 (呼叫 /api/v1/inventory/inbound 或 outbound)
-    async function handleStockOperation(e) {
-        e.preventDefault();
-        const btn = document.getElementById("btnSubmitStock");
-        btn.disabled = true;
-
-        const productId = document.getElementById("stockProductId").value;
-        const movementType = document.querySelector('input[name="movementType"]:checked').value;
-        const quantity = parseInt(document.getElementById("stockQty").value);
-        const reason = document.getElementById("stockReason").value.trim();
-        const op = document.getElementById("stockOperator").value.trim() || "Warehouse_Staff";
-
-        const endpoint = movementType === "INBOUND" ? "/api/v1/inventory/inbound" : "/api/v1/inventory/outbound";
-        const payload = {
-            productId: productId,
-            quantity: quantity,
-            reason: reason,
-            operator: op
-        };
-
-        try {
-            const res = await fetch(endpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.detail || "操作失敗");
-            }
-
-            const data = await res.json();
-
-            // 關閉 Modal
-            const modalEl = document.getElementById("stockModal");
-            const modalInstance = bootstrap.Modal.getInstance(modalEl);
-            if (modalInstance) modalInstance.hide();
-
-            Toast.fire({
-                icon: "success",
-                title: movementType === "INBOUND"
-                    ? `入庫成功！新庫存: ${data.newQty} 件`
-                    : `出庫成功！剩餘庫存: ${data.newQty} 件`
-            });
-
-            await refreshDashboard();
-
-        } catch (err) {
-            Swal.fire({
-                icon: "error",
-                title: movementType === "OUTBOUND" ? "出庫被阻止 (防超賣保護)" : "作業失敗",
-                text: err.message
-            });
-        } finally {
-            btn.disabled = false;
-        }
-    }
-
     // ==========================================
-    // 6. 右側抽屜業務邏輯：系統使用者管理 (User Drawer)
+    // 4. 採購單管理全寬大表 (Purchases)
     // ==========================================
-    async function loadUsersList() {
-        const tbody = document.getElementById("userListTbody");
-        tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm me-1"></span>載入中...</td></tr>`;
+    async function loadPurchaseOrdersTable() {
+        const tbody = document.getElementById("poTableBody");
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-1"></span>載入採購單數據中...</td></tr>`;
 
         try {
-            const res = await fetch("/api/v1/auth/users");
-            if (!res.ok) throw new Error("讀取使用者清單失敗");
-            const users = await res.json();
+            let url = "/api/v1/purchase-orders";
+            const filterDeptSelect = document.getElementById("filterPoDepartment");
+            const filterStatusSelect = document.getElementById("filterPoStatus");
+            const params = [];
+            if (filterDeptSelect && filterDeptSelect.value) params.push(`department=${encodeURIComponent(filterDeptSelect.value)}`);
+            if (filterStatusSelect && filterStatusSelect.value) params.push(`status=${encodeURIComponent(filterStatusSelect.value)}`);
+            if (params.length > 0) url += `?${params.join('&')}`;
 
-            if (users.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-3">尚無自訂使用者</td></tr>`;
-                return;
-            }
-
-            let html = "";
-            users.forEach(u => {
-                let badgeClass = "bg-secondary-lt";
-                let roleName = u.role;
-                if (u.role === "Admin") { badgeClass = "bg-red-lt"; roleName = "👑 管理員"; }
-                else if (u.role === "Manager") { badgeClass = "bg-yellow-lt"; roleName = "👔 主管"; }
-                else if (u.role === "Purchaser") { badgeClass = "bg-blue-lt"; roleName = "👤 採購"; }
-                else if (u.role === "Warehouse") { badgeClass = "bg-green-lt"; roleName = "👷 倉管"; }
-
-                html += `
-                <tr>
-                    <td>
-                        <div class="fw-bold">${u.displayName}</div>
-                        <div class="small text-secondary">${u.username}</div>
-                    </td>
-                    <td><span class="badge ${badgeClass}">${roleName}</span></td>
-                    <td>
-                        <span class="badge ${u.isActive ? "bg-success" : "bg-danger"} badge-dot me-1"></span>
-                        <span class="small">${u.isActive ? "正常" : "停用"}</span>
-                    </td>
-                </tr>`;
-            });
-            tbody.innerHTML = html;
-        } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger py-3">${err.message}</td></tr>`;
-        }
-    }
-
-    document.getElementById("formCreateUser")?.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const btn = document.getElementById("btnSubmitUser");
-        btn.disabled = true;
-
-        const payload = {
-            username: document.getElementById("newUsername").value.trim(),
-            displayName: document.getElementById("newDisplayName").value.trim(),
-            password: document.getElementById("newPassword").value,
-            role: document.getElementById("newRole").value
-        };
-
-        try {
-            const res = await fetch("/api/v1/auth/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) {
-                const err = await res.json();
-                throw new Error(err.detail || "建立失敗");
-            }
-
-            Toast.fire({ icon: "success", title: "使用者建立成功！" });
-            document.getElementById("formCreateUser").reset();
-            await loadUsersList();
-        } catch (err) {
-            Swal.fire({ icon: "error", title: "建立帳號失敗", text: err.message });
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    // ==========================================
-    // 7. 右側抽屜業務邏輯：採購訂購單 (Purchase Drawer)
-    // ==========================================
-    async function loadPurchaseOrders() {
-        const container = document.getElementById("poListContainer");
-        container.innerHTML = `<div class="text-center text-muted py-4"><span class="spinner-border spinner-border-sm me-1"></span>載入採購單中...</div>`;
-
-        // 同步填充下拉選單
-        const select = document.getElementById("poProductSelect");
-        if (select && currentProductsList.length > 0) {
-            select.innerHTML = `<option value="">-- 請選擇欲採購的商品 --</option>` +
-                currentProductsList.map(p => `<option value="${p.id}" data-price="${p.unitPrice}">${p.sku} - ${p.name} (在庫: ${p.currentQty})</option>`).join("");
-            select.onchange = function() {
-                const opt = select.selectedOptions[0];
-                if (opt && opt.dataset.price) document.getElementById("poUnitPrice").value = opt.dataset.price;
-            };
-        }
-
-        try {
-            const res = await fetch("/api/v1/purchase-orders");
+            const res = await fetch(url);
             if (!res.ok) throw new Error("讀取採購單失敗");
             const pos = await res.json();
 
             if (pos.length === 0) {
-                container.innerHTML = `<div class="text-center text-muted py-4">目前尚無採購單，請填寫上方表單送審！</div>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">目前暫無採購單，請點擊右上角「+ 建立採購單」進行送審！</td></tr>`;
                 return;
             }
 
             let html = "";
             pos.forEach(po => {
                 let statusBadge = "";
-                let actionBtn = "";
+                let actionBtns = "";
 
                 if (po.status === "Draft") {
-                    statusBadge = `<span class="badge bg-secondary-lt">草稿 / 待審核</span>`;
-                    actionBtn = `<button class="btn btn-sm btn-outline-success role-manager-only" onclick="approvePO('${po.id}')"><i class="ti ti-check me-1"></i>核准下單</button>`;
+                    statusBadge = `<span class="badge bg-secondary-lt">草稿 / 待審</span>`;
+                    actionBtns = `<button class="btn btn-sm btn-outline-success role-manager-only me-1" onclick="approvePO('${po.id}')"><i class="ti ti-check me-1"></i>核准</button>`;
                 } else if (po.status === "Approved") {
-                    statusBadge = `<span class="badge bg-warning-lt">已核准 / 在途等貨</span>`;
-                    actionBtn = `<button class="btn btn-sm btn-success" onclick="receiveAllPO('${po.id}')"><i class="ti ti-truck-delivery me-1"></i>到貨驗收入庫</button>`;
+                    statusBadge = `<span class="badge bg-warning-lt">已核准在途</span>`;
+                    actionBtns = `<button class="btn btn-sm btn-success me-1" onclick="receiveAllPO('${po.id}')"><i class="ti ti-truck-delivery me-1"></i>到貨驗收</button>`;
                 } else if (po.status === "Completed") {
-                    statusBadge = `<span class="badge bg-success-lt">已全數到貨結案</span>`;
-                    actionBtn = `<span class="text-muted small"><i class="ti ti-circle-check text-success"></i> 結案完成</span>`;
+                    statusBadge = `<span class="badge bg-success-lt">已全到結案</span>`;
+                    actionBtns = `<span class="text-muted small me-2"><i class="ti ti-circle-check text-success"></i> 結案</span>`;
                 }
 
-                let itemsHtml = po.items.map(i => `
-                    <div class="d-flex justify-content-between small text-secondary py-1 border-bottom border-light">
-                        <span>${i.productName} (${i.sku})</span>
-                        <span>訂: ${i.orderedQty} | 已收: <strong class="text-dark">${i.receivedQty}</strong> | NT$ ${i.unitPrice}</span>
-                    </div>
-                `).join("");
+                // 明細摘要
+                const itemsSummary = po.items.map(i => `${i.productName} &times; ${i.orderedQty} (已收:${i.receivedQty})`).join(", ");
+                const timeStr = new Date(po.createdAt).toLocaleDateString("zh-TW");
 
                 html += `
-                <div class="card mb-3 shadow-none border">
-                    <div class="card-body p-3">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <span class="fw-bold font-monospace text-primary">${po.poNumber}</span>
-                                <span class="ms-2 text-dark">${po.supplierName}</span>
-                            </div>
-                            <div>${statusBadge}</div>
-                        </div>
-                        <div class="bg-light p-2 rounded mb-2">${itemsHtml}</div>
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <span class="small text-muted">總金額: <strong class="text-dark">NT$ ${po.totalAmount.toLocaleString()}</strong> &bull; 建單: ${po.createdBy}</span>
-                            <div>${actionBtn}</div>
-                        </div>
-                    </div>
-                </div>`;
+                <tr>
+                    <td class="font-monospace text-primary fw-bold">${po.poNumber}</td>
+                    <td><span class="badge bg-purple-lt">${po.department || "總務課"}</span></td>
+                    <td class="fw-semibold">${po.supplierName}</td>
+                    <td class="small text-secondary">${itemsSummary}</td>
+                    <td class="text-end font-monospace fw-bold price-cost-cell" data-raw-price="NT$ ${po.totalAmount.toLocaleString()}">NT$ ${po.totalAmount.toLocaleString()}</td>
+                    <td class="text-center">${statusBadge}</td>
+                    <td class="small text-muted">${po.createdBy} <span class="text-secondary">(${timeStr})</span></td>
+                    <td class="text-end">${actionBtns}</td>
+                </tr>`;
             });
 
-            container.innerHTML = html;
+            tbody.innerHTML = html;
             applyRolePermissions();
         } catch (err) {
-            container.innerHTML = `<div class="text-center text-danger py-4">${err.message}</div>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger">${err.message}</td></tr>`;
         }
     }
 
+    async function loadPoSummary() {
+        const container = document.getElementById("dashPoSummaryContainer");
+        try {
+            const res = await fetch("/api/v1/purchase-orders");
+            if (!res.ok) return;
+            const pos = await res.json();
+            const pendingPos = pos.filter(p => p.status === "Approved" || p.status === "Draft").slice(0, 3);
+
+            if (pendingPos.length === 0) {
+                container.innerHTML = `<div class="text-center text-muted py-3">目前無在途等貨中的採購單</div>`;
+                return;
+            }
+
+            let html = "";
+            pendingPos.forEach(po => {
+                html += `
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <div>
+                        <div class="fw-bold font-monospace text-primary">${po.poNumber}</div>
+                        <div class="small text-secondary">${po.supplierName} &bull; ${po.items[0]?.productName || "商品"}</div>
+                    </div>
+                    <div>
+                        ${po.status === "Approved" ? '<span class="badge bg-warning-lt">在途</span>' : '<span class="badge bg-secondary-lt">草稿</span>'}
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // ==========================================
+    // 5. 供應商主檔資料大表 (Suppliers)
+    // ==========================================
+    async function loadSuppliersTable() {
+        const tbody = document.getElementById("suppliersTableBody");
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-1"></span>載入供應商清單中...</td></tr>`;
+
+        try {
+            let url = "/api/v1/suppliers";
+            const filterSupStatus = document.getElementById("filterSupStatus");
+            if (filterSupStatus && filterSupStatus.value) {
+                url += `?activeOnly=${filterSupStatus.value === 'true'}`;
+            }
+
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("讀取供應商失敗");
+            cachedSuppliers = await res.json();
+
+            if (cachedSuppliers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-muted">目前尚無供應商資料，請點擊右上角「+ 新增供應商」建立！</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            cachedSuppliers.forEach(s => {
+                const statusBadge = s.isActive
+                    ? `<span class="badge bg-success-lt"><i class="ti ti-check me-1"></i>合作中</span>`
+                    : `<span class="badge bg-danger-lt"><i class="ti ti-ban me-1"></i>已暫停</span>`;
+
+                const toggleBtn = `<button class="btn btn-sm ${s.isActive ? "btn-outline-danger" : "btn-outline-success"} role-manager-only" onclick="toggleSupplierStatus('${s.id}')">
+                    ${s.isActive ? "暫停合作" : "恢復合作"}
+                </button>`;
+
+                html += `
+                <tr>
+                    <td class="font-monospace text-primary fw-bold">${s.code}</td>
+                    <td class="fw-semibold text-dark">${s.name}</td>
+                    <td>${s.contactPerson}</td>
+                    <td class="font-monospace text-secondary">${s.phone}</td>
+                    <td class="small text-muted">${s.address || "未提供"}</td>
+                    <td class="text-center">${statusBadge}</td>
+                    <td class="text-end">${toggleBtn}</td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = html;
+            applyRolePermissions();
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-danger">${err.message}</td></tr>`;
+        }
+    }
+
+    // ==========================================
+    // 6. 使用者與部門權限大表 (Users)
+    // ==========================================
+    async function loadUsersTable() {
+        const tbody = document.getElementById("usersTableBody");
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-1"></span>載入使用者清單中...</td></tr>`;
+
+        try {
+            const res = await fetch("/api/v1/auth/users");
+            if (!res.ok) throw new Error("讀取使用者失敗");
+            const users = await res.json();
+
+            let html = "";
+            users.forEach(u => {
+                let badgeClass = "bg-secondary-lt";
+                let roleName = u.role;
+                if (u.role === "Admin") { badgeClass = "bg-red-lt"; roleName = "👑 系統管理員"; }
+                else if (u.role === "Manager") { badgeClass = "bg-yellow-lt"; roleName = "👔 倉儲主管"; }
+                else if (u.role === "Purchaser") { badgeClass = "bg-blue-lt"; roleName = "👤 採購人員"; }
+                else if (u.role === "Warehouse") { badgeClass = "bg-green-lt"; roleName = "👷 現場倉管"; }
+
+                const timeStr = new Date(u.createdAt).toLocaleDateString("zh-TW");
+
+                html += `
+                <tr>
+                    <td class="font-monospace fw-bold text-primary">${u.username}</td>
+                    <td class="fw-semibold">${u.displayName}</td>
+                    <td><span class="badge ${badgeClass}">${roleName}</span></td>
+                    <td><span class="badge bg-purple-lt">${u.department || "總務課"}</span></td>
+                    <td>
+                        <span class="badge ${u.isActive ? "bg-success" : "bg-danger"} badge-dot me-1"></span>
+                        <span class="small">${u.isActive ? "正常" : "停用"}</span>
+                    </td>
+                    <td class="small text-muted">${timeStr}</td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = html;
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-danger">${err.message}</td></tr>`;
+        }
+    }
+
+    // ==========================================
+    // 7. 右側抽屜觸發控制器 (Offcanvas Actions)
+    // ==========================================
+    function openCreatePODrawer() {
+        loadSuppliersForPO();
+        const drawerEl = document.getElementById("purchaseDrawer");
+        const drawer = new bootstrap.Offcanvas(drawerEl);
+        drawer.show();
+    }
+
+    function openCreateSupplierDrawer() {
+        const drawerEl = document.getElementById("supplierDrawer");
+        const drawer = new bootstrap.Offcanvas(drawerEl);
+        drawer.show();
+    }
+
+    function openCreateUserDrawer() {
+        const drawerEl = document.getElementById("userDrawer");
+        const drawer = new bootstrap.Offcanvas(drawerEl);
+        drawer.show();
+    }
+
+    function openStocktakeDrawer(productId, productName, currentQty) {
+        document.getElementById("stocktakeProductId").value = productId;
+        document.getElementById("stocktakeProductName").value = productName;
+        document.getElementById("stocktakeCurrentQty").value = currentQty;
+        document.getElementById("stocktakeActualQty").value = currentQty;
+        document.getElementById("stocktakeReason").value = "";
+
+        // 載入異動流水帳
+        const historyContainer = document.getElementById("stockMovementHistory");
+        historyContainer.innerHTML = `<div class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm me-1"></span>載入歷史流水帳中...</div>`;
+
+        fetch(`/api/v1/inventory/${productId}/movements`)
+            .then(res => res.json())
+            .then(movements => {
+                if (movements.length === 0) {
+                    historyContainer.innerHTML = `<div class="text-center text-muted py-3">暫無異動歷程</div>`;
+                    return;
+                }
+                let html = '<div class="timeline">';
+                movements.forEach(m => {
+                    let badge = m.movementType === "INBOUND"
+                        ? `<span class="badge bg-success-lt">+${m.quantity} 進貨</span>`
+                        : (m.movementType === "OUTBOUND" ? `<span class="badge bg-danger-lt">${m.quantity} 出庫</span>` : `<span class="badge bg-info-lt">${m.quantity > 0 ? "+" : ""}${m.quantity} 盤點</span>`);
+                    const timeStr = new Date(m.createdAt).toLocaleString("zh-TW", { hour12: false });
+                    html += `
+                    <div class="border-bottom py-2 small">
+                        <div class="d-flex justify-content-between">
+                            <strong>${badge}</strong>
+                            <span class="text-secondary">${timeStr}</span>
+                        </div>
+                        <div class="mt-1 text-secondary">
+                            異動前: ${m.previousQty} &rarr; 異動後: <strong>${m.newQty}</strong> &bull; 人員: ${m.operator}
+                        </div>
+                        <div class="text-muted mt-1"><i class="ti ti-notes me-1"></i>${m.reason || "無說明"}</div>
+                    </div>`;
+                });
+                html += '</div>';
+                historyContainer.innerHTML = html;
+            })
+            .catch(err => {
+                historyContainer.innerHTML = `<div class="text-danger py-3 text-center">${err.message}</div>`;
+            });
+
+        const drawerEl = document.getElementById("stocktakeDrawer");
+        const drawer = new bootstrap.Offcanvas(drawerEl);
+        drawer.show();
+    }
+
+    // ==========================================
+    // 8. 業務表單提交處理 (AJAX & Toast)
+    // ==========================================
+    async function loadSuppliersForPO() {
+        const select = document.getElementById("poSupplierSelect");
+        if (!select) return;
+        try {
+            const res = await fetch("/api/v1/suppliers?activeOnly=true");
+            if (!res.ok) return;
+            const suppliers = await res.json();
+            cachedSuppliers = suppliers;
+            let html = `<option value="">-- 請選擇合作供應商 --</option>`;
+            suppliers.forEach(s => {
+                html += `<option value="${s.id}" data-name="${s.name}">[${s.code}] ${s.name} (${s.contactPerson})</option>`;
+            });
+            select.innerHTML = html;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // 建立供應商
+    document.getElementById("formCreateSupplier")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSubmitSupplier");
+        btn.disabled = true;
+
+        const payload = {
+            code: document.getElementById("newSupCode").value.trim().toUpperCase(),
+            name: document.getElementById("newSupName").value.trim(),
+            contactPerson: document.getElementById("newSupContact").value.trim(),
+            phone: document.getElementById("newSupPhone").value.trim(),
+            email: document.getElementById("newSupEmail").value.trim() || null,
+            address: document.getElementById("newSupAddress").value.trim() || null
+        };
+
+        try {
+            const res = await fetch("/api/v1/suppliers", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.detail || "建立供應商失敗");
+            }
+            Toast.fire({ icon: "success", title: "供應商建立成功！" });
+            document.getElementById("formCreateSupplier").reset();
+            const drawerEl = document.getElementById("supplierDrawer");
+            const drawer = bootstrap.Offcanvas.getInstance(drawerEl);
+            if (drawer) drawer.hide();
+
+            loadSuppliersTable();
+            loadSuppliersForPO();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "建立失敗", text: err.message });
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    async function toggleSupplierStatus(id) {
+        try {
+            const res = await fetch(`/api/v1/suppliers/${id}/toggle-active`, { method: "POST" });
+            if (!res.ok) throw new Error("更新供應商狀態失敗");
+            Toast.fire({ icon: "success", title: "供應商合作狀態已更新！" });
+            loadSuppliersTable();
+            loadSuppliersForPO();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "操作失敗", text: err.message });
+        }
+    }
+
+    // 建立採購單
     document.getElementById("formCreatePO")?.addEventListener("submit", async function (e) {
         e.preventDefault();
         const btn = document.getElementById("btnSubmitPO");
         btn.disabled = true;
 
+        const supSelect = document.getElementById("poSupplierSelect");
+        const supId = supSelect.value;
+        const supName = supSelect.selectedOptions[0]?.dataset.name || supSelect.selectedOptions[0]?.text;
         const prodId = document.getElementById("poProductSelect").value;
         const qty = parseInt(document.getElementById("poQuantity").value);
         const price = parseFloat(document.getElementById("poUnitPrice").value);
 
+        if (!supId) {
+            Swal.fire({ icon: "warning", title: "請先選擇合作供應商" });
+            btn.disabled = false;
+            return;
+        }
         if (!prodId) {
             Swal.fire({ icon: "warning", title: "請先選擇採購商品" });
             btn.disabled = false;
@@ -638,7 +922,9 @@
         }
 
         const payload = {
-            supplierName: document.getElementById("poSupplier").value.trim(),
+            supplierId: supId,
+            supplierName: supName,
+            department: window.currentUserDept || "總務課",
             remark: document.getElementById("poRemark").value.trim(),
             createdBy: window.currentUserName || "Purchaser",
             items: [{ productId: prodId, orderedQty: qty, unitPrice: price }]
@@ -650,15 +936,18 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
-
             if (!res.ok) {
                 const err = await res.json();
                 throw new Error(err.detail || "採購單建立失敗");
             }
-
             Toast.fire({ icon: "success", title: "採購單草稿建立成功！" });
             document.getElementById("formCreatePO").reset();
-            await loadPurchaseOrders();
+            const drawerEl = document.getElementById("purchaseDrawer");
+            const drawer = bootstrap.Offcanvas.getInstance(drawerEl);
+            if (drawer) drawer.hide();
+
+            loadPurchaseOrdersTable();
+            refreshDashboard();
         } catch (err) {
             Swal.fire({ icon: "error", title: "建立採購單失敗", text: err.message });
         } finally {
@@ -675,7 +964,6 @@
             confirmButtonText: "確認核准",
             cancelButtonText: "取消"
         });
-
         if (!confirm.isConfirmed) return;
 
         try {
@@ -683,10 +971,9 @@
                 method: "POST"
             });
             if (!res.ok) throw new Error("審核失敗");
-
-            Toast.fire({ icon: "success", title: "採購單已核准！在途量已自動累加" });
-            await loadPurchaseOrders();
-            await refreshDashboard();
+            Toast.fire({ icon: "success", title: "採購單已核准！在途量已累加" });
+            loadPurchaseOrdersTable();
+            refreshDashboard();
         } catch (err) {
             Swal.fire({ icon: "error", title: "審核失敗", text: err.message });
         }
@@ -696,7 +983,6 @@
         try {
             const poRes = await fetch(`/api/v1/purchase-orders/${poId}`);
             const po = await poRes.json();
-
             const itemsToReceive = po.items
                 .filter(i => i.orderedQty > i.receivedQty)
                 .map(i => ({ itemId: i.id, quantity: i.orderedQty - i.receivedQty }));
@@ -708,13 +994,12 @@
 
             const confirm = await Swal.fire({
                 title: "確認到貨驗收入庫？",
-                text: `將扣減在途量並增加在庫現有庫存。`,
+                text: `將扣減在途量並增加現有庫存。`,
                 icon: "info",
                 showCancelButton: true,
                 confirmButtonText: "確認驗收",
                 cancelButtonText: "取消"
             });
-
             if (!confirm.isConfirmed) return;
 
             const res = await fetch("/api/v1/purchase-orders/receive", {
@@ -726,67 +1011,55 @@
                     operator: window.currentUserName || "Warehouse"
                 })
             });
-
             if (!res.ok) throw new Error("驗收失敗");
-
             Toast.fire({ icon: "success", title: "到貨驗收完成！庫存已增加，在途量已扣減" });
-            await loadPurchaseOrders();
-            await refreshDashboard();
+            loadPurchaseOrdersTable();
+            refreshDashboard();
         } catch (err) {
             Swal.fire({ icon: "error", title: "驗收失敗", text: err.message });
         }
     }
 
-    // ==========================================
-    // 8. 右側抽屜業務邏輯：盤點校正與流水帳 (Stocktake Drawer)
-    // ==========================================
-    async function openStocktake(productId, productName, currentQty) {
-        document.getElementById("stocktakeProductId").value = productId;
-        document.getElementById("stocktakeProductName").value = productName;
-        document.getElementById("stocktakeCurrentQty").value = currentQty;
-        document.getElementById("stocktakeActualQty").value = currentQty;
-        document.getElementById("stocktakeReason").value = "";
+    // 建立新使用者
+    document.getElementById("formCreateUser")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSubmitUser");
+        btn.disabled = true;
 
-        // 載入歷史異動流水帳
-        const historyContainer = document.getElementById("stockMovementHistory");
-        historyContainer.innerHTML = `<div class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm me-1"></span>載入歷史流水帳中...</div>`;
+        const payload = {
+            username: document.getElementById("newUsername").value.trim(),
+            displayName: document.getElementById("newDisplayName").value.trim(),
+            password: document.getElementById("newPassword").value,
+            role: document.getElementById("newRole").value,
+            department: document.getElementById("newDepartment").value.trim() || "總務課"
+        };
 
         try {
-            const res = await fetch(`/api/v1/inventory/${productId}/movements`);
-            if (!res.ok) throw new Error("讀取流水帳失敗");
-            const movements = await res.json();
-
-            if (movements.length === 0) {
-                historyContainer.innerHTML = `<div class="text-center text-muted py-3">暫無異動歷程</div>`;
-                return;
-            }
-
-            let html = '<div class="timeline">';
-            movements.forEach(m => {
-                let badge = m.movementType === "INBOUND"
-                    ? `<span class="badge bg-success-lt">+${m.quantity} 進貨</span>`
-                    : (m.movementType === "OUTBOUND" ? `<span class="badge bg-danger-lt">${m.quantity} 出庫</span>` : `<span class="badge bg-info-lt">${m.quantity > 0 ? "+" : ""}${m.quantity} 盤點</span>`);
-
-                const timeStr = new Date(m.createdAt).toLocaleString("zh-TW", { hour12: false });
-                html += `
-                <div class="border-bottom py-2 small">
-                    <div class="d-flex justify-content-between">
-                        <strong>${badge}</strong>
-                        <span class="text-secondary">${timeStr}</span>
-                    </div>
-                    <div class="mt-1 text-secondary">
-                        異動前: ${m.previousQty} &rarr; 異動後: <strong>${m.newQty}</strong> &bull; 人員: ${m.operator}
-                    </div>
-                    <div class="text-muted mt-1"><i class="ti ti-notes me-1"></i>${m.reason || "無說明"}</div>
-                </div>`;
+            const res = await fetch("/api/v1/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
             });
-            html += '</div>';
-            historyContainer.innerHTML = html;
-        } catch (err) {
-            historyContainer.innerHTML = `<div class="text-danger py-3 text-center">${err.message}</div>`;
-        }
-    }
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.detail || "建立失敗");
+            }
+            Toast.fire({ icon: "success", title: "使用者建立成功！" });
+            document.getElementById("formCreateUser").reset();
+            document.getElementById("newDepartment").value = "總務課";
+            const drawerEl = document.getElementById("userDrawer");
+            const drawer = bootstrap.Offcanvas.getInstance(drawerEl);
+            if (drawer) drawer.hide();
 
+            loadUsersTable();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "建立帳號失敗", text: err.message });
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    // 盤點校正
     document.getElementById("formStocktake")?.addEventListener("submit", async function (e) {
         e.preventDefault();
         const btn = document.getElementById("btnSubmitStocktake");
@@ -807,23 +1080,143 @@
                     operator: window.currentUserName || "Manager"
                 })
             });
-
             if (!res.ok) {
                 const err = await res.json();
                 throw new Error(err.detail || "校正失敗");
             }
-
             Toast.fire({ icon: "success", title: "盤點校正成功！庫存已更新" });
             const drawerEl = document.getElementById("stocktakeDrawer");
             const drawer = bootstrap.Offcanvas.getInstance(drawerEl);
             if (drawer) drawer.hide();
 
-            await refreshDashboard();
+            loadProducts();
+            refreshDashboard();
         } catch (err) {
             Swal.fire({ icon: "error", title: "盤點校正失敗", text: err.message });
         } finally {
             btn.disabled = false;
         }
     });
+
+    // 出入庫作業 Modal 打開
+    function openStockModal(productId, defaultType) {
+        const prod = currentProductsList.find(p => p.id === productId);
+        if (!prod) return;
+        document.getElementById("stockProductId").value = prod.id;
+        document.getElementById("stockModalProdName").innerText = prod.name;
+        document.getElementById("stockModalProdSku").innerText = `SKU: ${prod.sku}`;
+        document.getElementById("stockModalCurrentQty").innerText = `${prod.currentQty} 件`;
+
+        const radio = document.querySelector(`input[name="movementType"][value="${defaultType}"]`);
+        if (radio) {
+            radio.checked = true;
+            updateStockModalMode(defaultType);
+        }
+        document.getElementById("stockQty").value = "";
+        document.getElementById("stockReason").value = "";
+        const modal = new bootstrap.Modal(document.getElementById("stockModal"));
+        modal.show();
+    }
+
+    function updateStockModalMode(type) {
+        const btn = document.getElementById("btnSubmitStock");
+        const hint = document.getElementById("stockQtyHint");
+        if (type === "INBOUND") {
+            btn.className = "btn btn-success ms-auto";
+            btn.innerHTML = `<i class="ti ti-arrow-down-left me-1"></i>確認進貨入庫`;
+            hint.innerText = "增加現有庫存量。";
+        } else {
+            btn.className = "btn btn-danger ms-auto";
+            btn.innerHTML = `<i class="ti ti-arrow-up-right me-1"></i>確認銷貨出庫`;
+            hint.innerText = "扣減庫存量（系統自動啟動防超賣檢查與資料庫交易）。";
+        }
+    }
+
+    async function handleStockOperation(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSubmitStock");
+        btn.disabled = true;
+
+        const productId = document.getElementById("stockProductId").value;
+        const movementType = document.querySelector('input[name="movementType"]:checked').value;
+        const quantity = parseInt(document.getElementById("stockQty").value);
+        const reason = document.getElementById("stockReason").value.trim();
+        const op = document.getElementById("stockOperator").value.trim() || window.currentUserName || "Warehouse_Staff";
+
+        const endpoint = movementType === "INBOUND" ? "/api/v1/inventory/inbound" : "/api/v1/inventory/outbound";
+        const payload = { productId, quantity, reason, operator: op };
+
+        try {
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "操作失敗");
+            }
+            const data = await res.json();
+            const modalEl = document.getElementById("stockModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            Toast.fire({
+                icon: "success",
+                title: movementType === "INBOUND"
+                    ? `入庫成功！新庫存: ${data.newQty} 件`
+                    : `出庫成功！剩餘庫存: ${data.newQty} 件`
+            });
+            loadProducts();
+            refreshDashboard();
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: movementType === "OUTBOUND" ? "出庫被阻止 (防超賣保護)" : "作業失敗",
+                text: err.message
+            });
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function handleCreateProduct(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSaveProduct");
+        btn.disabled = true;
+
+        const payload = {
+            sku: document.getElementById("prodSku").value.trim(),
+            name: document.getElementById("prodName").value.trim(),
+            category: document.getElementById("prodCategory").value,
+            unitPrice: parseFloat(document.getElementById("prodPrice").value),
+            safetyStock: parseInt(document.getElementById("prodSafety").value),
+            initialStock: parseInt(document.getElementById("prodInitialStock").value) || 0
+        };
+
+        try {
+            const res = await fetch("/api/v1/products", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "建立失敗");
+            }
+            const modalEl = document.getElementById("productModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+            document.getElementById("createProductForm").reset();
+
+            Toast.fire({ icon: "success", title: "商品建立成功！已同步至 Supabase" });
+            loadProducts();
+            refreshDashboard();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "建立失敗", text: err.message });
+        } finally {
+            btn.disabled = false;
+        }
+    }
 </script>
 }

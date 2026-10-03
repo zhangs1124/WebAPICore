@@ -24,14 +24,17 @@ public record CreatePurchaseOrderRequest(
     [MaxLength(100, ErrorMessage = "供應商名稱不可超過 100 個字元")]
     string SupplierName,
 
-    [MaxLength(255, ErrorMessage = "備註長度不可超過 255 個字元")]
-    string? Remark,
+    Guid? SupplierId = null,
+
+    [MaxLength(50, ErrorMessage = "部門名稱不可超過 50 個字元")]
+    string Department = "總務課",
+
+    string? Remark = null,
 
     [Required(ErrorMessage = "採購明細不可為空")]
     [MinLength(1, ErrorMessage = "至少需包含一項採購明細")]
-    List<CreatePurchaseOrderItemRequest> Items,
+    List<CreatePurchaseOrderItemRequest> Items = null!,
 
-    [MaxLength(50, ErrorMessage = "建單人名稱不可超過 50 個字元")]
     string CreatedBy = "Purchaser"
 );
 
@@ -56,6 +59,8 @@ public record PurchaseOrderResponse(
     Guid Id,
     string PoNumber,
     string SupplierName,
+    Guid? SupplierId,
+    string Department,
     string Status,
     decimal TotalAmount,
     string? Remark,
@@ -91,3 +96,4 @@ public record ReceivePurchaseOrderRequest(
     [MaxLength(50, ErrorMessage = "驗收操作人員不可超過 50 個字元")]
     string Operator = "Warehouse"
 );
+

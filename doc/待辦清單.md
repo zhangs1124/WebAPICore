@@ -1,0 +1,57 @@
+# 📋 WebAPICore 專案待辦清單 (Project Backlog & Roadmap)
+
+> **專案定位**：基於 ASP.NET Core 9.0、Entity Framework Core、Supabase (PostgreSQL) 與 Tabler UI 的雲端高併發進銷存 (ERP/WMS) 核心系統。
+> **建立日期**：2026-10-03
+> **最後更新**：2026-10-03 (完成二層級手風琴選單、全寬大表、供應商主檔、採購單與部門資料隔離)
+> **維護規範**：本清單由 AI 與開發者共同維護，完成之項目標註 `[x]`，並記錄完成日期。
+
+---
+
+## 🚀 當前架構已完成里程碑 (Completed Milestones)
+
+- [x] **EF Core 模型與資料庫架構** (2026-10-03)：
+  - `products` (商品主檔、SKU 唯一約束)
+  - `product_stocks` (庫存表、PostgreSQL `CHECK ("CurrentQty" >= 0)` 防超賣約束、`xmin` 樂觀鎖並發 Token、`OnOrderQty` 在途量)
+  - `stock_movements` (庫存異動流水帳、ACID 事務保證)
+  - `users` (RBAC 使用者主檔、SHA256 雜湊鹽值加密、`Department` 部門欄位)
+  - `suppliers` (供應商主檔：代碼、名稱、窗口、電話、Email、地址、合作狀態)
+  - `purchase_orders` / `purchase_order_items` (二合一採購單、狀態流轉、部門與供應商關聯)
+- [x] **雲端資料庫串接與遷移** (2026-10-03)：
+  - Supabase PostgreSQL IPv4 Pooler (`aws-0-ap-southeast-2.pooler.supabase.com:5432`)
+  - 成功執行 `AddSupplierAndDepartment` EF Core Migration 同步資料結構
+- [x] **RBAC 4 級角色權限與部門資料級隔離 (RLS)** (2026-10-03)：
+  - 角色劃分：`Admin` (管理員)、`Manager` (主管)、`Purchaser` (採購)、`Warehouse` (現場倉管)
+  - `[CustomAuth]` 授權過濾器與 Session 狀態管理 (遵循 `@mvc-session-auth`)
+  - 資料列級隔離：採購員/倉管員限定存取所屬部門單據；主管/管理員支援跨部門調閱與篩選
+  - 成本敏感遮蔽：倉管員檢視進價成本自動屏蔽為 `***`
+- [x] **企業級現代化前端佈局 (Tabler UI & SPA 體驗)** (2026-10-03)：
+  - **二層級手風琴摺疊導覽選單 (Two-level Accordion Menu)**
+  - **側邊欄整體手風琴平滑收折/隱藏切換 (100% 全螢幕展開工作區)**
+  - **全寬模組大表工作區**：營運儀表板、商品即時庫存總表、急需補貨警戒區、採購訂購大表、供應商主檔大表、使用者權限大表
+  - **Offcanvas 右側滑出抽屜**：專注於填表新增（採購單、供應商、使用者）與主管盤點校正/歷史流水帳
+- [x] **出入庫、採購履約與盤點核心業務** (2026-10-03)：
+  - 採購請購二合一開單 ➔ 主管審核累加在途量 ➔ 現場驗收轉入庫並扣減在途量
+  - 主管現場實盤校正 (Stocktake) 直接平帳並記錄盤盈盤虧差額
+  - 客退 / 領料退回入庫 (Return Inbound)
+- [x] **單元測試套件與 Playwright E2E 驗證** (2026-10-03)：
+  - `WebAPICore.Tests` 49 項單元測試 100% 綠燈通過
+  - MCP Playwright 瀏覽器自動化實測：側邊欄收折、大表切換、抽屜新增供應商、審批採購單、驗收入庫與庫存即時連動
+
+---
+
+## 📌 未來擴充待辦清單 (Future Roadmap)
+
+- [ ] **1. 多儲位/多倉庫支援 (Multi-Warehouse & Locations)**
+  - 擴充 `warehouses` (倉庫：如 台北總倉、台中物流倉) 與 `locations` (儲位：如 A-01-02-3)。
+  - 支援庫內調撥單 (Stock Transfer Order)。
+- [ ] **2. 庫存二階段預扣機制 (Available vs Reserved Stock)**
+  - 在 `product_stocks` 擴充狀態欄位：
+    - `OnHandQty` (實體在庫量)
+    - `ReservedQty` (已下單預扣量 / 揀貨鎖定中)
+    - `AvailableQty` (計算屬性：`OnHandQty - ReservedQty`，可用於銷售與下單)
+- [ ] **3. 報表匯出功能 (Export to Excel / CSV)**
+  - 整合 `ClosedXML` 或 `CsvHelper`，支援一鍵匯出採購單、供應商清冊與庫存現況表。
+- [ ] **4. 庫存警報 Email 自動通知**
+  - 當商品可用庫存低於 `SafetyStock` (安全庫存量) 時，自動觸發背景排程發送補貨建議信。
+- [ ] **5. GitHub Actions CI/CD 流水線**
+  - 在 `.github/workflows/ci.yml` 加入自動編譯與自動測試，Push 時自動部署至雲端。

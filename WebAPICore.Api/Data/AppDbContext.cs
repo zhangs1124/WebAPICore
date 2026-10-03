@@ -16,6 +16,7 @@ public class AppDbContext : DbContext
     public DbSet<ProductStock> ProductStocks => Set<ProductStock>();
     public DbSet<StockMovement> StockMovements => Set<StockMovement>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
     public DbSet<PurchaseOrderItem> PurchaseOrderItems => Set<PurchaseOrderItem>();
 
@@ -118,6 +119,11 @@ public class AppDbContext : DbContext
             entity.Property(u => u.Role)
                 .HasMaxLength(30)
                 .IsRequired();
+
+            entity.Property(u => u.Department)
+                .HasMaxLength(50)
+                .HasDefaultValue("總務課")
+                .IsRequired();
         });
 
         // 5. 採購訂購單 (單頭) 配置
@@ -137,6 +143,11 @@ public class AppDbContext : DbContext
                 .HasMaxLength(100)
                 .IsRequired();
 
+            entity.Property(po => po.Department)
+                .HasMaxLength(50)
+                .HasDefaultValue("總務課")
+                .IsRequired();
+
             entity.Property(po => po.Status)
                 .HasMaxLength(30)
                 .IsRequired();
@@ -150,6 +161,11 @@ public class AppDbContext : DbContext
 
             entity.Property(po => po.ApprovedBy)
                 .HasMaxLength(50);
+
+            entity.HasOne(po => po.Supplier)
+                .WithMany(s => s.PurchaseOrders)
+                .HasForeignKey(po => po.SupplierId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         // 6. 採購訂購單 (單身明細) 配置
@@ -170,6 +186,32 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(poi => poi.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // 7. 供應商主檔配置
+        modelBuilder.Entity<Supplier>(entity =>
+        {
+            entity.ToTable("suppliers");
+            entity.HasKey(s => s.Id);
+
+            entity.Property(s => s.Code)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            entity.HasIndex(s => s.Code)
+                .IsUnique();
+
+            entity.Property(s => s.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            entity.Property(s => s.ContactPerson)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            entity.Property(s => s.Phone)
+                .HasMaxLength(50)
+                .IsRequired();
         });
     }
 }

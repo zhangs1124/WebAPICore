@@ -1,0 +1,464 @@
+﻿@{
+    ViewData["Title"] = "營運總覽儀表板";
+}
+
+<!-- 頁面標題列 -->
+<div class="page-header d-print-none mb-3">
+    <div class="row g-2 align-items-center">
+        <div class="col">
+            <div class="page-pretitle text-secondary">INVENTORY MANAGEMENT SYSTEM</div>
+            <h2 class="page-title fw-bold">
+                <i class="ti ti-building-warehouse text-primary me-2"></i>倉儲進銷存營運總覽
+            </h2>
+        </div>
+        <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+                <button type="button" class="btn btn-outline-secondary" onclick="refreshDashboard()">
+                    <i class="ti ti-refresh me-1"></i>重新整理
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+                    <i class="ti ti-plus me-1"></i>新增商品
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4 欄式 KPI 營運指標卡 (Metric Strips) -->
+<div class="row row-deck row-cards mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card card-sm border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="bg-primary text-white avatar fs-2">
+                            <i class="ti ti-box"></i>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium text-secondary small">商品總品項數</div>
+                        <div class="text-reset fw-bold fs-1" id="kpiTotalProducts">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card card-sm border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="bg-green text-white avatar fs-2">
+                            <i class="ti ti-packages"></i>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium text-secondary small">在庫現存總件數</div>
+                        <div class="text-reset fw-bold fs-1" id="kpiTotalStock">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card card-sm border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="bg-warning text-white avatar fs-2">
+                            <i class="ti ti-alert-triangle"></i>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium text-secondary small">安全庫存警戒數</div>
+                        <div class="text-reset fw-bold fs-1" id="kpiLowStockCount">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card card-sm border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <span class="bg-purple text-white avatar fs-2">
+                            <i class="ti ti-server"></i>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium text-secondary small">雲端資料庫狀態</div>
+                        <div class="text-reset fw-bold fs-2 text-success">
+                            <span class="status-dot status-dot-animated bg-green me-1"></span>正常
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 即時商品庫存數據表格 -->
+<div class="card border-0 shadow-sm" id="productsSection">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h3 class="card-title fw-bold">
+            <i class="ti ti-table me-1"></i>商品即時庫存明細
+        </h3>
+        <div class="d-flex gap-2">
+            <input type="text" id="filterSearch" class="form-control form-control-sm" placeholder="搜尋 SKU 或名稱..." style="width: 200px;" onkeyup="handleFilterKey(event)">
+            <select id="filterCategory" class="form-select form-select-sm" style="width: 140px;" onchange="loadProducts()">
+                <option value="">全部類別</option>
+                <option value="電腦周邊">電腦周邊</option>
+                <option value="辦公設備">辦公設備</option>
+                <option value="生活家電">生活家電</option>
+                <option value="耗材配件">耗材配件</option>
+            </select>
+            <button class="btn btn-sm btn-primary" onclick="loadProducts()">
+                <i class="ti ti-search me-1"></i>查詢
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-vcenter card-table table-hover">
+            <thead>
+                <tr>
+                    <th>商品貨號 (SKU)</th>
+                    <th>商品名稱</th>
+                    <th>分類</th>
+                    <th class="text-end">銷售單價</th>
+                    <th style="min-width: 160px;">現有庫存狀況</th>
+                    <th class="text-center">安全庫存線</th>
+                    <th class="text-center">狀態</th>
+                    <th class="text-end">快速出入庫</th>
+                </tr>
+            </thead>
+            <tbody id="productsTableBody">
+                <tr>
+                    <td colspan="8" class="text-center py-4 text-muted">
+                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status"></div>
+                        正在向 Supabase 雲端讀取庫存資料...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer d-flex align-items-center py-2" id="tablePagination">
+        <p class="m-0 text-secondary small" id="paginationInfo">顯示第 0 筆至 0 筆，共 0 筆</p>
+    </div>
+</div>
+
+<!-- 低於安全庫存預警區塊 -->
+<div class="card border-0 shadow-sm mt-4 border-start border-warning border-3" id="lowStockSection">
+    <div class="card-header bg-warning-lt py-2">
+        <h4 class="card-title text-warning fw-bold m-0">
+            <i class="ti ti-bell-ringing me-1"></i>急需補貨商品警戒區 (現有庫存 &le; 安全庫存)
+        </h4>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-vcenter card-table table-sm">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>品名</th>
+                        <th>現存數量</th>
+                        <th>安全警戒線</th>
+                        <th>建議採購補貨量</th>
+                        <th class="text-end">動作</th>
+                    </tr>
+                </thead>
+                <tbody id="lowStockTableBody">
+                    <tr><td colspan="6" class="text-center text-muted py-3">載入中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 嵌入 Partial View 彈窗 -->
+<partial name="_ProductModal" />
+<partial name="_StockModal" />
+
+@section Scripts {
+<script>
+    let currentProductsList = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        refreshDashboard();
+    });
+
+    // 重新載入所有儀表板資料
+    async function refreshDashboard() {
+        await Promise.all([
+            loadProducts(),
+            loadLowStock()
+        ]);
+    }
+
+    function handleFilterKey(e) {
+        if (e.key === "Enter") {
+            loadProducts();
+        }
+    }
+
+    // 1. 取得商品清單 (呼叫 GET /api/v1/products)
+    async function loadProducts() {
+        const search = document.getElementById("filterSearch").value.trim();
+        const category = document.getElementById("filterCategory").value;
+        const tbody = document.getElementById("productsTableBody");
+
+        let url = `/api/v1/products?pageNumber=1&pageSize=50`;
+        if (search) url += `&search=${encodeURIComponent(search)}`;
+        if (category) url += `&category=${encodeURIComponent(category)}`;
+
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("讀取商品失敗");
+            const data = await res.json();
+            currentProductsList = data.items;
+
+            // 計算 KPI
+            document.getElementById("kpiTotalProducts").innerText = data.totalCount;
+            let totalStock = 0;
+            currentProductsList.forEach(p => totalStock += p.currentQty);
+            document.getElementById("kpiTotalStock").innerText = totalStock.toLocaleString();
+
+            document.getElementById("paginationInfo").innerText = `共 ${data.totalCount} 筆商品品項`;
+
+            if (currentProductsList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">目前暫無商品，請點擊上方「+ 新增商品」建立第一筆資料！</td></tr>`;
+                return;
+            }
+
+            let rows = "";
+            currentProductsList.forEach(p => {
+                const isLow = p.isLowStock;
+                const statusBadge = isLow
+                    ? `<span class="badge bg-danger-lt"><i class="ti ti-alert-circle me-1"></i>庫存吃緊</span>`
+                    : `<span class="badge bg-success-lt"><i class="ti ti-check me-1"></i>庫存充裕</span>`;
+
+                const progressColor = isLow ? "bg-danger" : "bg-primary";
+                const ratio = p.safetyStock > 0 ? Math.min(100, Math.round((p.currentQty / (p.safetyStock * 2)) * 100)) : 100;
+
+                rows += `
+                <tr>
+                    <td class="font-monospace text-primary fw-bold">${p.sku}</td>
+                    <td class="fw-semibold">${p.name}</td>
+                    <td><span class="badge bg-secondary-lt">${p.category}</span></td>
+                    <td class="text-end font-monospace">NT$ ${p.unitPrice.toFixed(2)}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2 fw-bold font-monospace">${p.currentQty} 件</span>
+                            <div class="progress progress-sm flex-grow-1" style="height: 6px;">
+                                <div class="progress-bar ${progressColor}" style="width: ${ratio}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center font-monospace text-muted">${p.safetyStock} 件</td>
+                    <td class="text-center">${statusBadge}</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-success me-1" onclick="openStockModal('${p.id}', 'INBOUND')">
+                            <i class="ti ti-plus"></i> 入庫
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="openStockModal('${p.id}', 'OUTBOUND')">
+                            <i class="ti ti-minus"></i> 出庫
+                        </button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = rows;
+
+        } catch (err) {
+            console.error(err);
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger"><i class="ti ti-x me-1"></i>連線至資料庫失敗，請確認網路環境或 Supabase 狀態。</td></tr>`;
+        }
+    }
+
+    // 2. 取得低於安全庫存商品 (呼叫 GET /api/v1/inventory/low-stock)
+    async function loadLowStock() {
+        const tbody = document.getElementById("lowStockTableBody");
+        try {
+            const res = await fetch("/api/v1/inventory/low-stock");
+            if (!res.ok) throw new Error("讀取預警失敗");
+            const data = await res.json();
+
+            document.getElementById("kpiLowStockCount").innerText = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-3 text-success"><i class="ti ti-circle-check me-1"></i>太棒了！目前所有商品庫存皆在安全水位以上，無需急迫採購。</td></tr>`;
+                return;
+            }
+
+            let rows = "";
+            data.forEach(p => {
+                const suggestBuy = Math.max(10, (p.safetyStock * 2) - p.currentQty);
+                rows += `
+                <tr>
+                    <td class="font-monospace text-danger fw-bold">${p.sku}</td>
+                    <td>${p.name}</td>
+                    <td class="font-monospace text-danger fw-bold">${p.currentQty} 件</td>
+                    <td class="font-monospace text-muted">${p.safetyStock} 件</td>
+                    <td class="font-monospace text-primary fw-semibold">+${suggestBuy} 件</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-success" onclick="openStockModal('${p.id}', 'INBOUND')">
+                            <i class="ti ti-truck-loading me-1"></i>立即補貨
+                        </button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = rows;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    // 3. 處理新增商品 (POST /api/v1/products)
+    async function handleCreateProduct(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSaveProduct");
+        btn.disabled = true;
+
+        const payload = {
+            sku: document.getElementById("prodSku").value.trim(),
+            name: document.getElementById("prodName").value.trim(),
+            category: document.getElementById("prodCategory").value,
+            unitPrice: parseFloat(document.getElementById("prodPrice").value),
+            safetyStock: parseInt(document.getElementById("prodSafety").value),
+            initialStock: parseInt(document.getElementById("prodInitialStock").value) || 0
+        };
+
+        try {
+            const res = await fetch("/api/v1/products", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "建立失敗");
+            }
+
+            // 關閉 Modal
+            const modalEl = document.getElementById("productModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+            document.getElementById("createProductForm").reset();
+
+            Toast.fire({
+                icon: "success",
+                title: "商品建立成功！已同步至 Supabase"
+            });
+
+            // 重新整理表格
+            await refreshDashboard();
+
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "建立失敗",
+                text: err.message
+            });
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // 4. 打開出入庫作業 Modal
+    function openStockModal(productId, defaultType) {
+        const prod = currentProductsList.find(p => p.id === productId);
+        if (!prod) return;
+
+        document.getElementById("stockProductId").value = prod.id;
+        document.getElementById("stockModalProdName").innerText = prod.name;
+        document.getElementById("stockModalProdSku").innerText = `SKU: ${prod.sku}`;
+        document.getElementById("stockModalCurrentQty").innerText = `${prod.currentQty} 件`;
+
+        // 設定 Radio
+        const radio = document.querySelector(`input[name="movementType"][value="${defaultType}"]`);
+        if (radio) {
+            radio.checked = true;
+            updateStockModalMode(defaultType);
+        }
+
+        document.getElementById("stockQty").value = "";
+        document.getElementById("stockReason").value = "";
+
+        const modal = new bootstrap.Modal(document.getElementById("stockModal"));
+        modal.show();
+    }
+
+    function updateStockModalMode(type) {
+        const btn = document.getElementById("btnSubmitStock");
+        const hint = document.getElementById("stockQtyHint");
+        if (type === "INBOUND") {
+            btn.className = "btn btn-success ms-auto";
+            btn.innerHTML = `<i class="ti ti-arrow-down-left me-1"></i>確認進貨入庫`;
+            hint.innerText = "增加現有庫存量。";
+        } else {
+            btn.className = "btn btn-danger ms-auto";
+            btn.innerHTML = `<i class="ti ti-arrow-up-right me-1"></i>確認銷貨出庫`;
+            hint.innerText = "扣減庫存量（系統自動啟動防超賣檢查與資料庫交易）。";
+        }
+    }
+
+    // 5. 提交出入庫異動 (呼叫 /api/v1/inventory/inbound 或 outbound)
+    async function handleStockOperation(e) {
+        e.preventDefault();
+        const btn = document.getElementById("btnSubmitStock");
+        btn.disabled = true;
+
+        const productId = document.getElementById("stockProductId").value;
+        const movementType = document.querySelector('input[name="movementType"]:checked').value;
+        const quantity = parseInt(document.getElementById("stockQty").value);
+        const reason = document.getElementById("stockReason").value.trim();
+        const op = document.getElementById("stockOperator").value.trim() || "Warehouse_Staff";
+
+        const endpoint = movementType === "INBOUND" ? "/api/v1/inventory/inbound" : "/api/v1/inventory/outbound";
+        const payload = {
+            productId: productId,
+            quantity: quantity,
+            reason: reason,
+            operator: op
+        };
+
+        try {
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.detail || "操作失敗");
+            }
+
+            const data = await res.json();
+
+            // 關閉 Modal
+            const modalEl = document.getElementById("stockModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            Toast.fire({
+                icon: "success",
+                title: movementType === "INBOUND"
+                    ? `入庫成功！新庫存: ${data.newQty} 件`
+                    : `出庫成功！剩餘庫存: ${data.newQty} 件`
+            });
+
+            await refreshDashboard();
+
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: movementType === "OUTBOUND" ? "出庫被阻止 (防超賣保護)" : "作業失敗",
+                text: err.message
+            });
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
+}

@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>@ViewData["Title"] - 智庫存 ERP 管理系統</title>
+
+    <!-- 🌓 防閃爍 (No FOUC) 機制：在 DOM 渲染前立即讀取並注入主題 -->
+    <script>
+        (function () {
+            var theme = localStorage.getItem('tabler-theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
+
+    <!-- Google Fonts Inter 字體 (開啟 OpenType 數字排版特性) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tabler Core CSS (Bootstrap 5) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/core@1.0.0-beta20/dist/css/tabler.min.css" />
+    <!-- Tabler Webfont Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <!-- SweetAlert2 現代化彈窗 / Toast -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+    <style>
+        :root {
+            --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+            font-feature-settings: "cv03", "cv04", "cv11";
+        }
+        .modal-blur {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="layout-fluid">
+    <div class="page">
+        <!-- 側邊欄導覽 (Partial View) -->
+        <partial name="_Sidebar" />
+
+        <div class="page-wrapper">
+            <!-- 頂部導覽 (Partial View) -->
+            <partial name="_Header" />
+
+            <!-- 主內容區 -->
+            <main class="page-body">
+                <div class="container-xl">
+                    @RenderBody()
+                </div>
+            </main>
+
+            <!-- 頁尾 (Partial View) -->
+            <partial name="_Footer" />
+        </div>
+    </div>
+
+    <!-- Tabler Core JS (Bootstrap 5) -->
+    <script src="https://cdn.jsdelivr.net/npm/@@tabler/core@1.0.0-beta20/dist/js/tabler.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- 全域主題切換與共用通知腳本 -->
+    <script>
+        function toggleTablerTheme(theme) {
+            localStorage.setItem('tabler-theme', theme);
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+
+        // SweetAlert2 全域 Toast
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+        // 全域鍵盤快速鍵 Ctrl + K 聚焦搜尋
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                const search = document.getElementById('globalSearchInput');
+                if (search) search.focus();
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

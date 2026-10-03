@@ -1,0 +1,58 @@
+﻿<div class="modal modal-blur fade" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title d-flex align-items-center">
+                    <i class="ti ti-plus-box text-primary me-2 fs-2"></i>新增商品品項
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="createProductForm" onsubmit="handleCreateProduct(event)">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label required">商品貨號 (SKU)</label>
+                            <input type="text" class="form-control" id="prodSku" placeholder="例如：PROD-KB-RGB01" required maxlength="50">
+                            <small class="form-hint">英數與橫線組合，系統唯一鍵。</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label required">商品名稱</label>
+                            <input type="text" class="form-control" id="prodName" placeholder="例如：極光機械式鍵盤" required maxlength="100">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">商品分類</label>
+                            <select class="form-select" id="prodCategory" required>
+                                <option value="電腦周邊">電腦周邊</option>
+                                <option value="辦公設備">辦公設備</option>
+                                <option value="生活家電">生活家電</option>
+                                <option value="耗材配件">耗材配件</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">銷售單價 (NT$)</label>
+                            <input type="number" class="form-control" id="prodPrice" placeholder="0.00" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label required">安全庫存警戒量</label>
+                            <input type="number" class="form-control" id="prodSafety" value="10" min="0" required>
+                            <small class="form-hint">庫存低於此數值將觸發預警。</small>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">初始在庫庫存量</label>
+                        <input type="number" class="form-control" id="prodInitialStock" value="0" min="0">
+                        <small class="form-hint">若有期初庫存可直接填入，系統會自動建立庫存記錄。</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary ms-auto" id="btnSaveProduct">
+                        <i class="ti ti-check me-1"></i>建立商品
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

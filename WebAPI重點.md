@@ -156,3 +156,49 @@
 4. **拆分查詢（AsSplitQuery）解決笛卡兒積爆炸**：
    - 多個 Include() 關聯集合時，單一 SQL JOIN 會產生大量重複列（Cartesian Explosion）。
    - 使用 .AsSplitQuery() 拆成多個獨立查詢，降低資料庫負擔與記憶體佔用。
+
+---
+
+## 10. 附錄：Swagger / OpenAPI 安全防禦實務與生產環境保護（資安與面試必考）
+
+### Q1：為什麼在正式環境（Production）不能任意開放 `/swagger` 或 API 互動介面？
+1. **資訊外洩與攻擊地圖公開（Reconnaissance）**：
+   - 任何人均可檢視所有後端內部路由（如 `/api/admin/roles`、`/api/internal/debug`）、參數格式、資料驗證規則。
+   - DTO 型別結構直接外洩，暴露資料庫 Schema 設計。
+2. **降低攻擊門檻（白箱攻擊與 BOLA / IDOR）**：
+   - 攻擊者無需盲測，直接在 UI 上檢視哪些端點缺少授權驗證，透過「Try it out」直接發動越權存取或注入攻擊。
+3. **套件維護與 CVE 漏洞隱患**：
+   - 舊版 `Swashbuckle.AspNetCore` 因維護停滯，若有解析漏洞易遭利用。
+
+### Q2：實務上如何落實保護？（防禦三大做法）
+
+#### 做法一：環境隔離（預設做法）
+限定僅在開發或測試環境註冊與渲染 Swagger / Scalar 路由：
+```csharp
+if (app.Environment.IsDevelopment())
+{
+    // 只有本機開發或測試機才看得到
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    // 或使用 .NET 9 原生 OpenAPI + Scalar:
+    // app.MapOpenApi();
+    // app.MapScalarApiReference();
+}
+```
+
+#### 做法二：若正式環境一定要看，必須「上鎖」
+如果正式機或 Staging 環境需要給外部合作廠商或前端查閱，**絕對不能裸奔**：
+1. **限定內網存取**：透過 Nginx / Reverse Proxy 限制只有公司 VPN 或內部 IP 可以訪問 `/swagger` 或 `/scalar`。
+2. **加上帳密保護 (Basic Auth)**：替 `/swagger` 路徑加裝 Middleware，必須輸入授權帳密才能解鎖頁面。
+
+#### 做法三：隱藏內部敏感 API
+對於一些管理員專用、內部排程或除錯 API，可以在 Controller 或 Action 上加上屬性，避免被收錄進 OpenAPI 文件：
+```csharp
+[ApiExplorerSettings(IgnoreApi = true)] // 不會在 Swagger / Scalar 上顯示
+[HttpDelete("internal/nuke-all-cache")]
+public IActionResult NukeCache()
+{
+    // 內部作業邏輯...
+    return NoContent();
+}
+```

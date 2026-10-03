@@ -6,8 +6,8 @@ using WebAPICore.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllers();
+// Add services to the container (支援 MVC Views 與 API Controllers).
+builder.Services.AddControllersWithViews();
 builder.Services.AddOpenApi();
 
 // 資料庫配置：Supabase (PostgreSQL)
@@ -39,9 +39,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
+app.UseRouting();
 app.UseAuthorization();
 
+// 預設 MVC 路由 (首頁導向 HomeController.Index)
+app.MapDefaultControllerRoute();
+
+// API 路由對應
 app.MapControllers();
 
 app.Run();

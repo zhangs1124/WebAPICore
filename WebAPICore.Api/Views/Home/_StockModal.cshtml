@@ -1,0 +1,77 @@
+﻿<div class="modal modal-blur fade" id="stockModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title d-flex align-items-center">
+                    <i class="ti ti-arrows-left-right text-info me-2 fs-2"></i>
+                    <span id="stockModalTitle">庫存異動作業</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="stockForm" onsubmit="handleStockOperation(event)">
+                <input type="hidden" id="stockProductId">
+                <div class="modal-body">
+                    <!-- 商品資訊摘要 -->
+                    <div class="card card-sm bg-body-tertiary mb-3 border-0">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <div class="fw-bold fs-3" id="stockModalProdName">---</div>
+                                    <div class="text-secondary small font-monospace" id="stockModalProdSku">SKU: ---</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="small text-muted">當前庫存</div>
+                                    <span class="badge bg-blue-lt fs-3" id="stockModalCurrentQty">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 操作類型切換 -->
+                    <div class="mb-3">
+                        <label class="form-label required">異動類型</label>
+                        <div class="form-selectgroup w-100">
+                            <label class="form-selectgroup-item w-50">
+                                <input type="radio" name="movementType" value="INBOUND" class="form-selectgroup-input" checked onchange="updateStockModalMode('INBOUND')">
+                                <span class="form-selectgroup-label text-success">
+                                    <i class="ti ti-arrow-down-left me-1"></i> 進貨入庫 (+)
+                                </span>
+                            </label>
+                            <label class="form-selectgroup-item w-50">
+                                <input type="radio" name="movementType" value="OUTBOUND" class="form-selectgroup-input" onchange="updateStockModalMode('OUTBOUND')">
+                                <span class="form-selectgroup-label text-danger">
+                                    <i class="ti ti-arrow-up-right me-1"></i> 銷貨出庫 (-)
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 異動數量 -->
+                    <div class="mb-3">
+                        <label class="form-label required">異動數量</label>
+                        <input type="number" class="form-control form-control-lg" id="stockQty" placeholder="輸入數量" min="1" max="100000" required>
+                        <small class="form-hint" id="stockQtyHint">請輸入要入庫增加的數量。</small>
+                    </div>
+
+                    <!-- 異動原因 / 單號 -->
+                    <div class="mb-3">
+                        <label class="form-label">異動原因 / 業務單號</label>
+                        <input type="text" class="form-control" id="stockReason" placeholder="例如：進貨單 #PO-20261001、線上出庫 #ORD-9901" maxlength="255">
+                    </div>
+
+                    <!-- 操作人員 -->
+                    <div class="mb-3">
+                        <label class="form-label">經手人</label>
+                        <input type="text" class="form-control" id="stockOperator" value="Warehouse_Admin" maxlength="50">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary ms-auto" id="btnSubmitStock">
+                        <i class="ti ti-send me-1"></i>確認送出
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

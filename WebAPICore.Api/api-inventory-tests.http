@@ -1,0 +1,63 @@
+﻿@baseUrl = https://localhost:7198
+
+### 1. 建立新商品（自動初始化 0 庫存）
+# @name createProduct
+POST {{baseUrl}}/api/v1/products
+Content-Type: application/json
+
+{
+  "sku": "PROD-KEYBOARD-01",
+  "name": "極光機械式鍵盤 RGB 青軸",
+  "category": "電腦周邊",
+  "unitPrice": 2490.00,
+  "safetyStock": 10,
+  "initialStock": 0
+}
+
+### 儲存商品 ID
+@productId = {{createProduct.response.body.id}}
+
+### 2. 查詢單一商品與即時庫存
+GET {{baseUrl}}/api/v1/products/{{productId}}
+
+### 3. 查詢商品列表（支援關鍵字、分類與分頁）
+GET {{baseUrl}}/api/v1/products?search=機械式&pageNumber=1&pageSize=10
+
+### 4. 執行庫存入庫作業（進貨 50 件）
+POST {{baseUrl}}/api/v1/inventory/inbound
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 50,
+  "reason": "供應商首批採購入庫",
+  "operator": "Warehouse_Manager"
+}
+
+### 5. 執行庫存出庫作業（銷貨 45 件，剩餘 5 件，低於安全庫存 10）
+POST {{baseUrl}}/api/v1/inventory/outbound
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 45,
+  "reason": "電商平台促銷出庫",
+  "operator": "Shipping_Staff"
+}
+
+### 6. 測試防超賣機制：故意出庫 100 件（當前只剩 5 件，預期回傳 400 ProblemDetails）
+POST {{baseUrl}}/api/v1/inventory/outbound
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 100,
+  "reason": "惡意超賣測試",
+  "operator": "Attacker"
+}
+
+### 7. 查詢低於安全庫存警戒線的商品（剛剛剩 5 件 <= 10 件，應會列出）
+GET {{baseUrl}}/api/v1/inventory/low-stock
+
+### 8. 查詢該商品的歷史異動流水帳（Audit Ledger 對帳記錄）
+GET {{baseUrl}}/api/v1/inventory/{{productId}}/movements

@@ -1,0 +1,74 @@
+﻿<header class="navbar navbar-expand-md d-none d-lg-flex d-print-none border-bottom sticky-top">
+    <div class="container-xl">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav flex-row order-md-last align-items-center">
+            <!-- 深淺主題切換按鈕 -->
+            <div class="d-none d-md-flex me-3">
+                <a href="javascript:void(0);" class="nav-link px-0 hide-theme-dark" title="切換為暗黑模式" onclick="toggleTablerTheme('dark')">
+                    <i class="ti ti-moon fs-2"></i>
+                </a>
+                <a href="javascript:void(0);" class="nav-link px-0 hide-theme-light" title="切換為明亮模式" onclick="toggleTablerTheme('light')">
+                    <i class="ti ti-sun fs-2 text-warning"></i>
+                </a>
+            </div>
+
+            <!-- 即時狀態通知 -->
+            <div class="nav-item dropdown me-3">
+                <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                    <i class="ti ti-bell fs-2"></i>
+                    <span class="badge bg-red badge-pill badge-blink"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">系統即時通知</h3>
+                        </div>
+                        <div class="list-group list-group-flush list-group-hoverable">
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
+                                    <div class="col text-truncate">
+                                        <span class="text-body d-block">PostgreSQL 資料庫健康</span>
+                                        <div class="d-block text-secondary text-truncate mt-n1">已連線至 Supabase 雪梨叢集</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 使用者頭像與選單 -->
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                    <span class="avatar avatar-sm bg-primary-lt fw-bold">Admin</span>
+                    <div class="d-none d-xl-block ps-2">
+                        <div>倉儲管理員</div>
+                        <div class="mt-1 small text-secondary">系統工程師</div>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <a href="javascript:void(0);" class="dropdown-item" onclick="refreshDashboard()"><i class="ti ti-refresh me-2"></i>重新整理數據</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/scalar/v1" target="_blank" class="dropdown-item"><i class="ti ti-code me-2"></i>API 測試後台</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                <div class="input-icon">
+                    <span class="input-icon-addon">
+                        <i class="ti ti-search"></i>
+                    </span>
+                    <input type="text" id="globalSearchInput" class="form-control" placeholder="搜尋商品 SKU、品名... (按 Enter 搜尋)" aria-label="Search in website">
+                    <span class="input-icon-addon">
+                        <kbd class="kbd">Ctrl + K</kbd>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

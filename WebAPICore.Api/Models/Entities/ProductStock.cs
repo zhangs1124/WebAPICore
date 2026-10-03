@@ -1,4 +1,4 @@
-﻿namespace WebAPICore.Api.Models.Entities;
+namespace WebAPICore.Api.Models.Entities;
 
 /// <summary>
 /// 商品即時庫存檔
@@ -14,6 +14,11 @@ public class ProductStock
     /// 當前可用現有庫存（受資料庫 Check 約束保護，不可小於 0）
     /// </summary>
     public int CurrentQty { get; set; }
+
+    /// <summary>
+    /// 在途採購量（已核准下單但尚未入庫之總量）
+    /// </summary>
+    public int OnOrderQty { get; set; } = 0;
 
     /// <summary>
     /// 最後異動時間

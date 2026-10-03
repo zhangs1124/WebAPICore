@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPICore.Api.Dtos;
 
@@ -39,6 +39,7 @@ public record ProductDetailResponse(
     decimal UnitPrice,
     int SafetyStock,
     int CurrentQty,
+    int OnOrderQty,
     bool IsLowStock,
     DateTime CreatedAt
 );
@@ -106,3 +107,37 @@ public record PagedResult<T>(
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
 }
+
+/// <summary>
+/// 庫存盤點調整請求 DTO (實盤覆寫校正)
+/// </summary>
+public record StocktakeAdjustmentRequest(
+    [Required(ErrorMessage = "必須指定商品 ID")]
+    Guid ProductId,
+
+    [Range(0, 1000000, ErrorMessage = "實盤數量不可為負數")]
+    int ActualQty,
+
+    [MaxLength(255, ErrorMessage = "盤點原因說明不可超過 255 個字元")]
+    string? Reason,
+
+    [MaxLength(50, ErrorMessage = "操作人員長度不可超過 50 個字元")]
+    string Operator = "Manager"
+);
+
+/// <summary>
+/// 退料入庫請求 DTO
+/// </summary>
+public record StockReturnRequest(
+    [Required(ErrorMessage = "必須指定商品 ID")]
+    Guid ProductId,
+
+    [Range(1, 100000, ErrorMessage = "退料數量必須大於 0")]
+    int Quantity,
+
+    [MaxLength(255, ErrorMessage = "退料原因不可超過 255 個字元")]
+    string? Reason,
+
+    [MaxLength(50, ErrorMessage = "操作人員長度不可超過 50 個字元")]
+    string Operator = "Warehouse"
+);

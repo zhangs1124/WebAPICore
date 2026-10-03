@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebAPICore.Api.Data;
 using WebAPICore.Api.Dtos;
 using WebAPICore.Api.Models.Entities;
@@ -171,6 +171,7 @@ public class InventoryService : IInventoryService
                 p.UnitPrice,
                 p.SafetyStock,
                 p.Stock != null ? p.Stock.CurrentQty : 0,
+                p.Stock != null ? p.Stock.OnOrderQty : 0,
                 true,
                 p.CreatedAt
             ))
@@ -200,5 +201,79 @@ public class InventoryService : IInventoryService
             .ToListAsync(cancellationToken);
 
         return movements;
+    }
+
+    /// <inheritdoc />
+    public async Task<StockMovementResponse> AdjustStocktakeAsync(StocktakeAdjustmentRequest request, CancellationToken cancellationToken = default)
+    {
+        var stock = await _dbContext.ProductStocks
+            .FirstOrDefaultAsync(s => s.ProductId == request.ProductId, cancellationToken);
+
+        if (stock == null)
+        {
+            throw new KeyNotFoundException($"找不到商品 ID 為 {request.ProductId} 的庫存記錄。");
+        }
+
+        await using var transaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
+        try
+        {
+            var previousQty = stock.CurrentQty;
+            var diff = request.ActualQty - previousQty;
+
+            stock.CurrentQty = request.ActualQty;
+            stock.UpdatedAt = DateTime.UtcNow;
+
+            var defaultReason = diff >= 0 ? $"盤盈調整 (+{diff})" : $"盤虧調整 ({diff})";
+            var movement = new StockMovement
+            {
+                Id = Guid.NewGuid(),
+                ProductId = request.ProductId,
+                MovementType = "ADJUSTMENT",
+                Quantity = diff,
+                PreviousQty = previousQty,
+                NewQty = stock.CurrentQty,
+                Reason = request.Reason ?? defaultReason,
+                Operator = request.Operator,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _dbContext.StockMovements.Add(movement);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            _logger.LogInformation("商品 {ProductId} 盤點調整完成，異動前: {Prev}，實盤覆寫為: {New}，差額: {Diff}，操作員: {Op}",
+                request.ProductId, previousQty, stock.CurrentQty, diff, request.Operator);
+
+            return new StockMovementResponse(
+                movement.Id,
+                movement.ProductId,
+                movement.MovementType,
+                movement.Quantity,
+                movement.PreviousQty,
+                movement.NewQty,
+                movement.Reason,
+                movement.Operator,
+                movement.CreatedAt
+            );
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            _logger.LogError(ex, "商品 {ProductId} 盤點調整失敗，交易已復原", request.ProductId);
+            throw;
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<StockMovementResponse> ReturnInboundAsync(StockReturnRequest request, CancellationToken cancellationToken = default)
+    {
+        var inboundRequest = new StockInboundRequest(
+            request.ProductId,
+            request.Quantity,
+            request.Reason ?? "退料入庫",
+            request.Operator
+        );
+
+        return await InboundAsync(inboundRequest, cancellationToken);
     }
 }

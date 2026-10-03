@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using WebAPICore.Api.Data;
 using WebAPICore.Api.Middleware;
@@ -16,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // 業務邏輯服務註冊 (Scoped)
 builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // 全域例外處理 + ProblemDetails (RFC 7807)
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

@@ -1,4 +1,4 @@
-﻿using WebAPICore.Api.Dtos;
+using WebAPICore.Api.Dtos;
 
 namespace WebAPICore.Api.Services;
 
@@ -26,4 +26,14 @@ public interface IInventoryService
     /// 取得指定商品的歷史異動流水帳
     /// </summary>
     Task<IReadOnlyList<StockMovementResponse>> GetMovementsByProductAsync(Guid productId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 庫存盤點調整作業（以實盤數量覆寫現有庫存，並記錄盤盈盤虧流水帳）
+    /// </summary>
+    Task<StockMovementResponse> AdjustStocktakeAsync(StocktakeAdjustmentRequest request, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 退料入庫作業（領料退回或客退入庫，加回現有庫存）
+    /// </summary>
+    Task<StockMovementResponse> ReturnInboundAsync(StockReturnRequest request, CancellationToken cancellationToken = default);
 }

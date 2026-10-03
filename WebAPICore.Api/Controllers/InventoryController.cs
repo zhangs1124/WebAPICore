@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebAPICore.Api.Dtos;
 using WebAPICore.Api.Services;
 
@@ -103,5 +103,59 @@ public class InventoryController : ControllerBase
     {
         var result = await _inventoryService.GetMovementsByProductAsync(productId, cancellationToken);
         return Ok(result);
+    }
+
+    /// <summary>
+    /// 庫存盤點調整（主管權限：以現場實盤數量直接校正，記錄盤盈虧）
+    /// </summary>
+    [HttpPost("stocktake")]
+    [ProducesResponseType(typeof(StockMovementResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StockMovementResponse>> Stocktake(
+        [FromBody] StocktakeAdjustmentRequest request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _inventoryService.AdjustStocktakeAsync(request, cancellationToken);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new ProblemDetails
+            {
+                Title = "找不到商品庫存",
+                Detail = ex.Message,
+                Status = StatusCodes.Status404NotFound
+            });
+        }
+    }
+
+    /// <summary>
+    /// 退料入庫（領料退回或客退入庫）
+    /// </summary>
+    [HttpPost("return")]
+    [ProducesResponseType(typeof(StockMovementResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<StockMovementResponse>> ReturnInbound(
+        [FromBody] StockReturnRequest request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _inventoryService.ReturnInboundAsync(request, cancellationToken);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new ProblemDetails
+            {
+                Title = "找不到商品庫存",
+                Detail = ex.Message,
+                Status = StatusCodes.Status404NotFound
+            });
+        }
     }
 }

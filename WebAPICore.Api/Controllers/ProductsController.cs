@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPICore.Api.Data;
 using WebAPICore.Api.Dtos;
@@ -63,6 +63,7 @@ public class ProductsController : ControllerBase
                 p.UnitPrice,
                 p.SafetyStock,
                 p.Stock != null ? p.Stock.CurrentQty : 0,
+                p.Stock != null ? p.Stock.OnOrderQty : 0,
                 p.Stock != null && p.Stock.CurrentQty <= p.SafetyStock,
                 p.CreatedAt
             ))
@@ -102,6 +103,7 @@ public class ProductsController : ControllerBase
             product.UnitPrice,
             product.SafetyStock,
             product.Stock != null ? product.Stock.CurrentQty : 0,
+            product.Stock != null ? product.Stock.OnOrderQty : 0,
             product.Stock != null && product.Stock.CurrentQty <= product.SafetyStock,
             product.CreatedAt
         );
@@ -166,6 +168,7 @@ public class ProductsController : ControllerBase
             product.UnitPrice,
             product.SafetyStock,
             stock.CurrentQty,
+            stock.OnOrderQty,
             stock.CurrentQty <= product.SafetyStock,
             product.CreatedAt
         );

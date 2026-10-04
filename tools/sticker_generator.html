@@ -1,0 +1,512 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>LINE 動態貼圖 / GIF 4格動畫產生器</title>
+  <!-- 載入 APNG 與 GIF 編碼函式庫 -->
+  <script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/upng-js@2.1.0/UPNG.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.3.2/gifshot.min.js"></script>
+  <style>
+    :root {
+      --primary: #06c755; /* LINE Green */
+      --primary-hover: #05a847;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { margin-bottom: 24px; text-align: center; }
+    h1 { color: #0f172a; font-size: 26px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    p.subtitle { color: var(--text-muted); font-size: 14px; }
+    
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .card h2 { font-size: 17px; margin-bottom: 16px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; color: #334155; }
+    
+    /* 拖曳上傳區 */
+    .drop-zone {
+      border: 2px dashed #cbd5e1; border-radius: 8px; padding: 32px 16px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa;
+    }
+    .drop-zone:hover, .drop-zone.dragover { border-color: var(--primary); background: #f0fdf4; }
+    .drop-zone p { color: var(--text-muted); font-size: 14px; }
+    .file-input { display: none; }
+    
+    /* 控制項表單 */
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #475569; }
+    select, input[type="range"] { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; outline: none; }
+    .range-wrap { display: flex; align-items: center; gap: 12px; }
+    .range-val { font-size: 13px; font-weight: bold; width: 45px; text-align: right; }
+    
+    /* 棋盤格背景（透明預覽） */
+    .checkerboard {
+      background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #e2e8f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+    .preview-box {
+      width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; position: relative; margin-bottom: 12px;
+    }
+    .preview-box canvas, .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    
+    /* 4 格展示區 */
+    .frames-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+    .frame-card { border: 1px solid var(--border); border-radius: 6px; padding: 6px; text-align: center; background: #fff; }
+    .frame-card .frame-thumb { width: 100%; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 4px; overflow: hidden; }
+    .frame-card .frame-thumb canvas { max-width: 100%; max-height: 100%; }
+    .frame-card span { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; font-weight: 500; }
+    
+    /* 按鈕區 */
+    .btn-group { display: flex; gap: 10px; margin-top: 16px; }
+    button {
+      flex: 1; padding: 10px 16px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: #3b82f6; color: white; }
+    .btn-secondary:hover { background: #2563eb; }
+    .btn-outline { background: white; border: 1px solid var(--border); color: #475569; }
+    .btn-outline:hover { background: #f1f5f9; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    /* 徽章與狀態 */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-left: 6px; }
+    .badge-line { background: #dcfce7; color: #166534; }
+    
+    .theme-selector { display: flex; gap: 8px; margin-bottom: 12px; }
+    .theme-btn { padding: 4px 10px; font-size: 12px; border: 1px solid var(--border); border-radius: 4px; background: white; cursor: pointer; }
+    .theme-btn.active { background: #0f172a; color: white; border-color: #0f172a; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1><span>LINE 動態貼圖 / GIF 4格動畫產生器</span><span class="badge badge-line">APNG / GIF 雙格式</span></h1>
+    <p class="subtitle">一張圖片自動演算 4 格連續物理動態 ➔ 自動轉為 LINE 貼圖標準規格（最大 320×270 偶數尺寸，1 秒 4 幀）</p>
+  </header>
+
+  <div class="grid">
+    <!-- 左側：設定與參數 -->
+    <div class="card">
+      <h2>1. 來源圖片與特效設定</h2>
+      
+      <!-- 拖曳上傳 -->
+      <div class="form-group">
+        <div class="drop-zone" id="dropZone">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="margin: 0 auto 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <p><strong>點擊選擇圖片</strong> 或 拖曳至此處</p>
+          <p style="font-size: 12px; margin-top: 4px;">支援 PNG（已去背佳）、JPG</p>
+        </div>
+        <input type="file" id="fileInput" class="file-input" accept="image/png, image/jpeg">
+      </div>
+
+      <!-- 自動去背設定 -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="autoBgRemoval"> 啟用「白色/淺色背景自動去背」
+        </label>
+        <div class="range-wrap" id="toleranceWrap" style="display: none; margin-top: 6px;">
+          <label style="margin:0; font-size: 12px; white-space:nowrap;">去背容差：</label>
+          <input type="range" id="bgTolerance" min="5" max="80" value="25">
+          <span class="range-val" id="bgToleranceVal">25</span>
+        </div>
+      </div>
+
+      <!-- 動畫動作模式 -->
+      <div class="form-group">
+        <label for="animMode">4格動作模式（動畫物理演算法）：</label>
+        <select id="animMode">
+          <option value="bounce" selected>【Q彈果凍跳】蓄力下壓 ➔ 彈跳浮空 ➔ 落地回彈</option>
+          <option value="wobble">【左右歡樂招手】左傾 ➔ 回正 ➔ 右傾搖擺</option>
+          <option value="pulse">【心跳/呼吸感】深呼吸膨脹 ➔ 縮小循環</option>
+          <option value="shake">【驚嚇/興奮抖動】高頻震動與微旋轉</option>
+        </select>
+      </div>
+
+      <!-- 動作強度 -->
+      <div class="form-group">
+        <label>動作幅度（強度）：</label>
+        <div class="range-wrap">
+          <input type="range" id="intensity" min="1" max="5" value="3">
+          <span class="range-val" id="intensityVal">標準</span>
+        </div>
+      </div>
+
+      <!-- 尺寸資訊 -->
+      <div class="form-group" style="background: #f8fafc; padding: 10px; border-radius: 6px; font-size: 12px; color: #475569;">
+        <div><strong>LINE 動態規格校正狀態：</strong></div>
+        <div id="sizeInfo">請先載入圖片...</div>
+      </div>
+    </div>
+
+    <!-- 右側：即時預覽與匯出 -->
+    <div class="card">
+      <h2>2. 即時預覽與雙規格匯出</h2>
+
+      <div class="theme-selector">
+        <span style="font-size: 12px; line-height: 24px; color: #64748b;">預覽底色：</span>
+        <button class="theme-btn active" data-bg="checker">透明網格</button>
+        <button class="theme-btn" data-bg="white">聊天室白底</button>
+        <button class="theme-btn" data-bg="dark">深色黑底</button>
+      </div>
+
+      <div class="preview-box checkerboard" id="previewContainer">
+        <canvas id="previewCanvas" width="320" height="270"></canvas>
+      </div>
+
+      <!-- 4格影格分鏡 -->
+      <label>4 格畫面分鏡序列（Frame 1~4）：</label>
+      <div class="frames-strip">
+        <div class="frame-card">
+          <div class="frame-thumb checkerboard"><canvas id="thumb0"></canvas></div>
+          <span>第 1 格 (封面)</span>
+        </div>
+        <div class="frame-card">
+          <div class="frame-thumb checkerboard"><canvas id="thumb1"></canvas></div>
+          <span>第 2 格</span>
+        </div>
+        <div class="frame-card">
+          <div class="frame-thumb checkerboard"><canvas id="thumb2"></canvas></div>
+          <span>第 3 格</span>
+        </div>
+        <div class="frame-card">
+          <div class="frame-thumb checkerboard"><canvas id="thumb3"></canvas></div>
+          <span>第 4 格</span>
+        </div>
+      </div>
+
+      <!-- 匯出按鈕 -->
+      <div class="btn-group">
+        <button id="btnExportApng" class="btn-primary" disabled>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+          匯出 LINE APNG (.png)
+        </button>
+        <button id="btnExportGif" class="btn-secondary" disabled>
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+          匯出標準 GIF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let rawImg = null;
+  let targetWidth = 320;
+  let targetHeight = 270;
+  const frameCanvases = [
+    document.createElement('canvas'),
+    document.createElement('canvas'),
+    document.createElement('canvas'),
+    document.createElement('canvas')
+  ];
+  let animTimer = null;
+  let currentFrameIdx = 0;
+
+  // DOM 元素
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const animModeSelect = document.getElementById('animMode');
+  const intensityInput = document.getElementById('intensity');
+  const intensityVal = document.getElementById('intensityVal');
+  const autoBgRemoval = document.getElementById('autoBgRemoval');
+  const toleranceWrap = document.getElementById('toleranceWrap');
+  const bgTolerance = document.getElementById('bgTolerance');
+  const bgToleranceVal = document.getElementById('bgToleranceVal');
+  const sizeInfo = document.getElementById('sizeInfo');
+  const previewCanvas = document.getElementById('previewCanvas');
+  const previewCtx = previewCanvas.getContext('2d');
+  const previewContainer = document.getElementById('previewContainer');
+  const btnExportApng = document.getElementById('btnExportApng');
+  const btnExportGif = document.getElementById('btnExportGif');
+
+  // 事件綁定
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFile(e.target.files[0]);
+    }
+  });
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  animModeSelect.addEventListener('change', generateFrames);
+  intensityInput.addEventListener('input', () => {
+    const labels = ['極微', '輕微', '標準', '明顯', '誇張'];
+    intensityVal.textContent = labels[intensityInput.value - 1];
+    generateFrames();
+  });
+
+  autoBgRemoval.addEventListener('change', () => {
+    toleranceWrap.style.display = autoBgRemoval.checked ? 'flex' : 'none';
+    generateFrames();
+  });
+  bgTolerance.addEventListener('input', () => {
+    bgToleranceVal.textContent = bgTolerance.value;
+    generateFrames();
+  });
+
+  // 底色切換測試
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const bg = btn.dataset.bg;
+      previewContainer.className = 'preview-box';
+      if (bg === 'checker') previewContainer.classList.add('checkerboard');
+      else if (bg === 'white') previewContainer.style.backgroundColor = '#ffffff';
+      else if (bg === 'dark') previewContainer.style.backgroundColor = '#1e1e1e';
+    });
+  });
+
+  // 讀取圖片檔案
+  function handleFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        rawImg = img;
+        calcTargetDimensions(img.width, img.height);
+        generateFrames();
+        btnExportApng.disabled = false;
+        btnExportGif.disabled = false;
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // 計算符合 LINE 規格之偶數解析度（最大 320x270，至少一邊 >= 270）
+  function calcTargetDimensions(w, h) {
+    const maxW = 320;
+    const maxH = 270;
+    let scale = Math.min(maxW / w, maxH / h);
+    let nw = Math.round(w * scale);
+    let nh = Math.round(h * scale);
+
+    // 強制校正為偶數
+    if (nw % 2 !== 0) nw -= 1;
+    if (nh % 2 !== 0) nh -= 1;
+
+    targetWidth = nw;
+    targetHeight = nh;
+
+    previewCanvas.width = targetWidth;
+    previewCanvas.height = targetHeight;
+
+    sizeInfo.innerHTML = `
+      原圖尺寸：${w} × ${h} px<br>
+      ➔ <strong>LINE 合規尺寸：${targetWidth} × ${targetHeight} px (偶數像素，完全合格)</strong>
+    `;
+  }
+
+  // 去背與前處理 Canvas
+  function getCleanSourceCanvas() {
+    const srcCanvas = document.createElement('canvas');
+    srcCanvas.width = targetWidth;
+    srcCanvas.height = targetHeight;
+    const sctx = srcCanvas.getContext('2d');
+    sctx.drawImage(rawImg, 0, 0, targetWidth, targetHeight);
+
+    if (autoBgRemoval.checked) {
+      const imgData = sctx.getImageData(0, 0, targetWidth, targetHeight);
+      const data = imgData.data;
+      const tol = parseInt(bgTolerance.value, 10);
+
+      // 取四角平均或左上角作為背景參考色
+      const bgR = data[0], bgG = data[1], bgB = data[2];
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const dist = Math.sqrt((r - bgR)**2 + (g - bgG)**2 + (b - bgB)**2);
+        if (dist < tol * 4.4) {
+          data[i + 3] = 0; // 設為完全透明
+        }
+      }
+      sctx.putImageData(imgData, 0, 0);
+    }
+    return srcCanvas;
+  }
+
+  // 生成 4 格連續物理動態
+  function generateFrames() {
+    if (!rawImg) return;
+    const baseCanvas = getCleanSourceCanvas();
+    const mode = animModeSelect.value;
+    const factor = parseInt(intensityInput.value, 10) / 3; // 基準倍率
+
+    frameCanvases.forEach((c) => {
+      c.width = targetWidth;
+      c.height = targetHeight;
+    });
+
+    for (let i = 0; i < 4; i++) {
+      const fc = frameCanvases[i];
+      const ctx = fc.getContext('2d');
+      ctx.clearRect(0, 0, targetWidth, targetHeight);
+      ctx.save();
+
+      // 計算變形參數
+      let scaleX = 1, scaleY = 1, transY = 0, transX = 0, angle = 0;
+
+      if (mode === 'bounce') {
+        // Q 彈跳動模式 (Squash & Stretch)
+        if (i === 0) {
+          // Frame 1: 預備
+          scaleX = 1.0; scaleY = 1.0; transY = 0;
+        } else if (i === 1) {
+          // Frame 2: 蓄力下壓
+          scaleX = 1.0 + (0.08 * factor);
+          scaleY = 1.0 - (0.09 * factor);
+          transY = 8 * factor;
+        } else if (i === 2) {
+          // Frame 3: 向上彈跳浮空
+          scaleX = 1.0 - (0.06 * factor);
+          scaleY = 1.0 + (0.12 * factor);
+          transY = -14 * factor;
+        } else if (i === 3) {
+          // Frame 4: 落地緩衝
+          scaleX = 1.0 + (0.03 * factor);
+          scaleY = 1.0 - (0.03 * factor);
+          transY = -2 * factor;
+        }
+      } else if (mode === 'wobble') {
+        // 左右招手搖擺 (以底座為軸心微轉)
+        if (i === 0) { angle = 0; }
+        else if (i === 1) { angle = -6 * factor; transX = -4 * factor; }
+        else if (i === 2) { angle = 0; }
+        else if (i === 3) { angle = 6 * factor; transX = 4 * factor; }
+      } else if (mode === 'pulse') {
+        // 呼吸心跳放大縮小
+        if (i === 0) { scaleX = 1.0; scaleY = 1.0; }
+        else if (i === 1) { scaleX = 1.0 + (0.08 * factor); scaleY = 1.0 + (0.08 * factor); }
+        else if (i === 2) { scaleX = 1.0; scaleY = 1.0; }
+        else if (i === 3) { scaleX = 1.0 - (0.06 * factor); scaleY = 1.0 - (0.06 * factor); }
+      } else if (mode === 'shake') {
+        // 興奮抖動
+        if (i === 0) { transX = -3 * factor; transY = 1 * factor; angle = -1.5 * factor; }
+        else if (i === 1) { transX = 3 * factor; transY = -2 * factor; angle = 1.5 * factor; }
+        else if (i === 2) { transX = -2 * factor; transY = 2 * factor; angle = -1 * factor; }
+        else if (i === 3) { transX = 2 * factor; transY = -1 * factor; angle = 1 * factor; }
+      }
+
+      // 執行畫布變換（以底部中心為變換錨點）
+      const anchorX = targetWidth / 2;
+      const anchorY = targetHeight * 0.95;
+
+      ctx.translate(anchorX + transX, anchorY + transY);
+      if (angle !== 0) ctx.rotate((angle * Math.PI) / 180);
+      ctx.scale(scaleX, scaleY);
+      ctx.translate(-anchorX, -anchorY);
+
+      // 繪製前處理完成的角色
+      ctx.drawImage(baseCanvas, 0, 0);
+      ctx.restore();
+
+      // 繪製縮圖
+      const thumb = document.getElementById(`thumb${i}`);
+      thumb.width = targetWidth;
+      thumb.height = targetHeight;
+      const tctx = thumb.getContext('2d');
+      tctx.clearRect(0, 0, targetWidth, targetHeight);
+      tctx.drawImage(fc, 0, 0);
+    }
+
+    startAnimationLoop();
+  }
+
+  // 播放動畫循環 (每格 250ms，4格剛好滿 1 秒，完全符合 LINE 整數秒規範)
+  function startAnimationLoop() {
+    if (animTimer) clearInterval(animTimer);
+    currentFrameIdx = 0;
+    animTimer = setInterval(() => {
+      previewCtx.clearRect(0, 0, targetWidth, targetHeight);
+      previewCtx.drawImage(frameCanvases[currentFrameIdx], 0, 0);
+      currentFrameIdx = (currentFrameIdx + 1) % 4;
+    }, 250);
+  }
+
+  // 匯出 APNG
+  btnExportApng.addEventListener('click', () => {
+    if (!window.UPNG) {
+      alert('APNG 編碼組件尚未完成載入，請確認網路連線。');
+      return;
+    }
+    const bufs = [];
+    const delays = [250, 250, 250, 250]; // 每個 frame 250ms = 總長 1 秒
+
+    frameCanvases.forEach(c => {
+      const ctx = c.getContext('2d');
+      const idata = ctx.getImageData(0, 0, targetWidth, targetHeight);
+      bufs.push(idata.data.buffer);
+    });
+
+    // UPNG.encode(frames, width, height, cnum, delays)
+    // cnum = 0 表示無損 32-bit RGBA，包含透明通道
+    const apngBuffer = UPNG.encode(bufs, targetWidth, targetHeight, 0, delays);
+    const blob = new Blob([apngBuffer], { type: 'image/png' });
+    downloadBlob(blob, 'line_sticker_animated.png');
+  });
+
+  // 匯出 GIF
+  btnExportGif.addEventListener('click', () => {
+    if (!window.gifshot) {
+      alert('GIF 編碼組件尚未完成載入，請確認網路連線。');
+      return;
+    }
+    const dataUrls = frameCanvases.map(c => c.toDataURL('image/png'));
+    gifshot.createGIF({
+      images: dataUrls,
+      gifWidth: targetWidth,
+      gifHeight: targetHeight,
+      interval: 0.25, // 0.25s * 4 = 1 秒
+      numFrames: 4,
+      sampleInterval: 10
+    }, function(obj) {
+      if (!obj.error) {
+        const link = document.createElement('a');
+        link.href = obj.image;
+        link.download = 'sticker_animation.gif';
+        link.click();
+      } else {
+        alert('GIF 產生失敗：' + obj.error);
+      }
+    });
+  });
+
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

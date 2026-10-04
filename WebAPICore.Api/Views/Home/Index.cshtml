@@ -142,7 +142,7 @@
                 <button class="btn btn-sm btn-primary" onclick="loadProducts()">
                     <i class="ti ti-search me-1"></i>查詢
                 </button>
-                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#productModal">
+                <button type="button" class="btn btn-sm btn-success" onclick="openCreateProductModal()">
                     <i class="ti ti-plus me-1"></i>新增商品
                 </button>
             </div>
@@ -154,6 +154,7 @@
                         <th>商品貨號 (SKU)</th>
                         <th>商品名稱</th>
                         <th>分類</th>
+                        <th>主要供應商</th>
                         <th class="text-end">銷售單價</th>
                         <th style="min-width: 180px;">現有庫存 / 在途採購</th>
                         <th class="text-center">安全庫存線</th>
@@ -162,7 +163,7 @@
                     </tr>
                 </thead>
                 <tbody id="productsTableBody">
-                    <tr><td colspan="8" class="text-center py-4 text-muted">正在載入商品數據...</td></tr>
+                    <tr><td colspan="9" class="text-center py-4 text-muted">正在載入商品數據...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -360,6 +361,16 @@
         refreshDashboard();
         // 預設載入供應商清單備用
         loadSuppliersForPO();
+
+        // 採購單選取供應商與商品連動事件監聽
+        const poSupSelect = document.getElementById("poSupplierSelect");
+        if (poSupSelect) {
+            poSupSelect.addEventListener("change", onPoSupplierChanged);
+        }
+        const poProdSelect = document.getElementById("poProductSelect");
+        if (poProdSelect) {
+            poProdSelect.addEventListener("change", onPoProductChanged);
+        }
     });
 
     // ==========================================
@@ -455,7 +466,7 @@
             document.getElementById("paginationInfo").innerText = `顯示第 1 至 ${currentProductsList.length} 筆，共 ${data.totalCount} 筆商品品項`;
 
             if (currentProductsList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">目前暫無商品，請點擊上方「+ 新增商品」建立第一筆資料！</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-muted">目前暫無商品，請點擊上方「+ 新增商品」建立第一筆資料！</td></tr>`;
                 return;
             }
 
@@ -468,12 +479,16 @@
 
                 const progressColor = isLow ? "bg-danger" : "bg-primary";
                 const ratio = p.safetyStock > 0 ? Math.min(100, Math.round((p.currentQty / (p.safetyStock * 2)) * 100)) : 100;
+                const supDisplay = p.supplierName 
+                    ? `<span class="badge bg-blue-lt" title="主要供應商"><i class="ti ti-building-store me-1"></i>${p.supplierName}</span>` 
+                    : `<span class="text-muted small">未指定</span>`;
 
                 rows += `
                 <tr>
                     <td class="font-monospace text-primary fw-bold">${p.sku}</td>
                     <td class="fw-semibold">${p.name}</td>
                     <td><span class="badge bg-secondary-lt">${p.category}</span></td>
+                    <td>${supDisplay}</td>
                     <td class="text-end font-monospace price-cost-cell" data-raw-price="NT$ ${p.unitPrice.toFixed(2)}">NT$ ${p.unitPrice.toFixed(2)}</td>
                     <td>
                         <div class="d-flex align-items-center">
@@ -487,10 +502,13 @@
                     <td class="text-center font-monospace text-muted">${p.safetyStock} 件</td>
                     <td class="text-center">${statusBadge}</td>
                     <td class="text-end">
-                        <button class="btn btn-sm btn-outline-success me-1" onclick="openStockModal('${p.id}', 'INBOUND')">
+                        <button class="btn btn-sm btn-outline-primary me-1 role-purchaser-only" onclick="openEditProductModal('${p.id}')" title="編輯商品主檔">
+                            <i class="ti ti-edit"></i> 編輯
+                        </button>
+                        <button class="btn btn-sm btn-outline-success me-1" onclick="openStockModal('${p.id}', 'INBOUND')" title="進貨入庫">
                             <i class="ti ti-plus"></i> 入庫
                         </button>
-                        <button class="btn btn-sm btn-outline-danger me-1" onclick="openStockModal('${p.id}', 'OUTBOUND')">
+                        <button class="btn btn-sm btn-outline-danger me-1" onclick="openStockModal('${p.id}', 'OUTBOUND')" title="銷貨出庫">
                             <i class="ti ti-minus"></i> 出庫
                         </button>
                         <button class="btn btn-sm btn-outline-info role-manager-only" onclick="openStocktakeDrawer('${p.id}', '${p.name.replace(/'/g, "\\'")}', ${p.currentQty})" title="主管盤點校正">
@@ -502,7 +520,7 @@
             tbody.innerHTML = rows;
             applyRolePermissions();
         } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-danger"><i class="ti ti-x me-1"></i>連線失敗：${err.message}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-danger"><i class="ti ti-x me-1"></i>連線失敗：${err.message}</td></tr>`;
         }
     }
 
@@ -700,7 +718,12 @@
                     <td class="font-monospace text-secondary">${s.phone}</td>
                     <td class="small text-muted">${s.address || "未提供"}</td>
                     <td class="text-center">${statusBadge}</td>
-                    <td class="text-end">${toggleBtn}</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary me-1 role-purchaser-only" onclick="openEditSupplierDrawer('${s.id}')" title="編輯供應商資料">
+                            <i class="ti ti-edit"></i> 編輯
+                        </button>
+                        ${toggleBtn}
+                    </td>
                 </tr>`;
             });
 
@@ -758,16 +781,106 @@
     // 7. 右側抽屜觸發控制器 (Offcanvas Actions)
     // ==========================================
     function openCreatePODrawer() {
+        document.getElementById("formCreatePO")?.reset();
         loadSuppliersForPO();
+        onPoSupplierChanged();
         const drawerEl = document.getElementById("purchaseDrawer");
         const drawer = new bootstrap.Offcanvas(drawerEl);
         drawer.show();
     }
 
     function openCreateSupplierDrawer() {
+        document.getElementById("supplierDrawerTitle").innerText = "新增合作供應商主檔";
+        document.getElementById("btnSubmitSupplierText").innerText = "確認建立供應商";
+        document.getElementById("editSupplierId").value = "";
+        document.getElementById("newSupCode").disabled = false;
+        document.getElementById("formCreateSupplier").reset();
+
         const drawerEl = document.getElementById("supplierDrawer");
         const drawer = new bootstrap.Offcanvas(drawerEl);
         drawer.show();
+    }
+
+    async function openEditSupplierDrawer(supplierId) {
+        try {
+            const res = await fetch(`/api/v1/suppliers/${supplierId}`);
+            if (!res.ok) throw new Error("讀取供應商資料失敗");
+            const s = await res.json();
+
+            document.getElementById("supplierDrawerTitle").innerText = "編輯合作供應商主檔";
+            document.getElementById("btnSubmitSupplierText").innerText = "儲存修改";
+            document.getElementById("editSupplierId").value = s.id;
+            document.getElementById("newSupCode").value = s.code;
+            document.getElementById("newSupCode").disabled = true; // 代碼鎖定不可修改
+            document.getElementById("newSupName").value = s.name;
+            document.getElementById("newSupContact").value = s.contactPerson;
+            document.getElementById("newSupPhone").value = s.phone;
+            document.getElementById("newSupEmail").value = s.email || "";
+            document.getElementById("newSupAddress").value = s.address || "";
+
+            const drawerEl = document.getElementById("supplierDrawer");
+            const drawer = new bootstrap.Offcanvas(drawerEl);
+            drawer.show();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "讀取失敗", text: err.message });
+        }
+    }
+
+    function populateProductSupplierOptions(selectedSupplierId = null) {
+        const select = document.getElementById("prodSupplier");
+        if (!select) return;
+        let html = '<option value="">-- 無指定供應商 --</option>';
+        cachedSuppliers.forEach(s => {
+            if (s.isActive || s.id === selectedSupplierId) {
+                const isSel = s.id === selectedSupplierId ? "selected" : "";
+                html += `<option value="${s.id}" ${isSel}>[${s.code}] ${s.name}</option>`;
+            }
+        });
+        select.innerHTML = html;
+    }
+
+    function openCreateProductModal() {
+        document.getElementById("productModalTitle").innerText = "新增商品品項";
+        document.getElementById("btnSaveProductText").innerText = "建立商品";
+        document.getElementById("editProductId").value = "";
+        document.getElementById("prodSku").disabled = false;
+        document.getElementById("prodSkuHint").innerText = "英數與橫線組合，系統唯一鍵。";
+        document.getElementById("prodInitialStockGroup").style.display = "";
+        document.getElementById("createProductForm").reset();
+
+        populateProductSupplierOptions();
+
+        const modalEl = document.getElementById("productModal");
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+
+    async function openEditProductModal(productId) {
+        try {
+            const res = await fetch(`/api/v1/products/${productId}`);
+            if (!res.ok) throw new Error("讀取商品資料失敗");
+            const p = await res.json();
+
+            document.getElementById("productModalTitle").innerText = "編輯商品主檔";
+            document.getElementById("btnSaveProductText").innerText = "儲存修改";
+            document.getElementById("editProductId").value = p.id;
+            document.getElementById("prodSku").value = p.sku;
+            document.getElementById("prodSku").disabled = true; // SKU 鎖定
+            document.getElementById("prodSkuHint").innerText = "商品貨號 (SKU) 為系統唯一識別碼，不可變更。";
+            document.getElementById("prodName").value = p.name;
+            document.getElementById("prodCategory").value = p.category;
+            document.getElementById("prodPrice").value = p.unitPrice;
+            document.getElementById("prodSafety").value = p.safetyStock;
+            document.getElementById("prodInitialStockGroup").style.display = "none"; // 編輯時隱藏期初庫存輸入
+
+            populateProductSupplierOptions(p.supplierId);
+
+            const modalEl = document.getElementById("productModal");
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "讀取失敗", text: err.message });
+        }
     }
 
     function openCreateUserDrawer() {
@@ -827,6 +940,8 @@
     // ==========================================
     // 8. 業務表單提交處理 (AJAX & Toast)
     // ==========================================
+    let cachedPoProducts = [];
+
     async function loadSuppliersForPO() {
         const select = document.getElementById("poSupplierSelect");
         if (!select) return;
@@ -845,13 +960,78 @@
         }
     }
 
-    // 建立供應商
+    // 採購單：選定供應商後連動過濾商品清單 (Cascading Filter)
+    async function onPoSupplierChanged() {
+        const supId = document.getElementById("poSupplierSelect")?.value;
+        const prodSelect = document.getElementById("poProductSelect");
+        const priceInput = document.getElementById("poUnitPrice");
+        if (!prodSelect) return;
+
+        if (!supId) {
+            prodSelect.innerHTML = `<option value="">-- 請先選擇供應商 --</option>`;
+            prodSelect.disabled = true;
+            if (priceInput) priceInput.value = "";
+            cachedPoProducts = [];
+            return;
+        }
+
+        prodSelect.disabled = false;
+        prodSelect.innerHTML = `<option value="">載入供應商商品中...</option>`;
+
+        try {
+            // 查詢該供應商所屬商品
+            const res = await fetch(`/api/v1/products?supplierId=${supId}&pageSize=100`);
+            if (!res.ok) throw new Error("讀取商品失敗");
+            const data = await res.json();
+            cachedPoProducts = data.items;
+
+            if (cachedPoProducts.length === 0) {
+                prodSelect.innerHTML = `<option value="">(此供應商目前尚無綁定商品，可至商品主檔指定)</option>`;
+                if (priceInput) priceInput.value = "";
+                return;
+            }
+
+            let html = `<option value="">-- 請選擇採購商品 (${cachedPoProducts.length} 項供貨) --</option>`;
+            cachedPoProducts.forEach(p => {
+                html += `<option value="${p.id}" data-price="${p.unitPrice}">[${p.sku}] ${p.name} (預設進價: NT$ ${p.unitPrice})</option>`;
+            });
+            prodSelect.innerHTML = html;
+            if (priceInput) priceInput.value = "";
+        } catch (err) {
+            prodSelect.innerHTML = `<option value="">載入失敗: ${err.message}</option>`;
+        }
+    }
+
+    // 採購單：選擇商品後自動帶入預設單價
+    function onPoProductChanged() {
+        const prodSelect = document.getElementById("poProductSelect");
+        const priceInput = document.getElementById("poUnitPrice");
+        if (!prodSelect || !priceInput) return;
+
+        const opt = prodSelect.selectedOptions[0];
+        if (opt && opt.dataset.price) {
+            priceInput.value = parseFloat(opt.dataset.price).toFixed(2);
+        } else {
+            priceInput.value = "";
+        }
+    }
+
+    // 建立或編輯供應商
     document.getElementById("formCreateSupplier")?.addEventListener("submit", async function (e) {
         e.preventDefault();
         const btn = document.getElementById("btnSubmitSupplier");
         btn.disabled = true;
 
-        const payload = {
+        const editId = document.getElementById("editSupplierId").value;
+        const isEdit = !!editId;
+
+        const payload = isEdit ? {
+            name: document.getElementById("newSupName").value.trim(),
+            contactPerson: document.getElementById("newSupContact").value.trim(),
+            phone: document.getElementById("newSupPhone").value.trim(),
+            email: document.getElementById("newSupEmail").value.trim() || null,
+            address: document.getElementById("newSupAddress").value.trim() || null
+        } : {
             code: document.getElementById("newSupCode").value.trim().toUpperCase(),
             name: document.getElementById("newSupName").value.trim(),
             contactPerson: document.getElementById("newSupContact").value.trim(),
@@ -860,18 +1040,22 @@
             address: document.getElementById("newSupAddress").value.trim() || null
         };
 
+        const url = isEdit ? `/api/v1/suppliers/${editId}` : "/api/v1/suppliers";
+        const method = isEdit ? "PUT" : "POST";
+
         try {
-            const res = await fetch("/api/v1/suppliers", {
-                method: "POST",
+            const res = await fetch(url, {
+                method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
             if (!res.ok) {
                 const err = await res.json();
-                throw new Error(err.detail || "建立供應商失敗");
+                throw new Error(err.detail || (isEdit ? "更新供應商失敗" : "建立供應商失敗"));
             }
-            Toast.fire({ icon: "success", title: "供應商建立成功！" });
+            Toast.fire({ icon: "success", title: isEdit ? "供應商資料已更新！" : "供應商建立成功！" });
             document.getElementById("formCreateSupplier").reset();
+            document.getElementById("editSupplierId").value = "";
             const drawerEl = document.getElementById("supplierDrawer");
             const drawer = bootstrap.Offcanvas.getInstance(drawerEl);
             if (drawer) drawer.hide();
@@ -879,7 +1063,7 @@
             loadSuppliersTable();
             loadSuppliersForPO();
         } catch (err) {
-            Swal.fire({ icon: "error", title: "建立失敗", text: err.message });
+            Swal.fire({ icon: "error", title: isEdit ? "更新失敗" : "建立失敗", text: err.message });
         } finally {
             btn.disabled = false;
         }
@@ -1180,40 +1364,57 @@
         }
     }
 
-    async function handleCreateProduct(e) {
+    async function handleProductFormSubmit(e) {
         e.preventDefault();
         const btn = document.getElementById("btnSaveProduct");
         btn.disabled = true;
 
-        const payload = {
+        const editId = document.getElementById("editProductId").value;
+        const isEdit = !!editId;
+
+        const supVal = document.getElementById("prodSupplier").value;
+        const supplierId = supVal ? supVal : null;
+
+        const payload = isEdit ? {
+            name: document.getElementById("prodName").value.trim(),
+            category: document.getElementById("prodCategory").value,
+            unitPrice: parseFloat(document.getElementById("prodPrice").value),
+            safetyStock: parseInt(document.getElementById("prodSafety").value),
+            supplierId: supplierId
+        } : {
             sku: document.getElementById("prodSku").value.trim(),
             name: document.getElementById("prodName").value.trim(),
             category: document.getElementById("prodCategory").value,
             unitPrice: parseFloat(document.getElementById("prodPrice").value),
             safetyStock: parseInt(document.getElementById("prodSafety").value),
-            initialStock: parseInt(document.getElementById("prodInitialStock").value) || 0
+            initialStock: parseInt(document.getElementById("prodInitialStock").value) || 0,
+            supplierId: supplierId
         };
 
+        const url = isEdit ? `/api/v1/products/${editId}` : "/api/v1/products";
+        const method = isEdit ? "PUT" : "POST";
+
         try {
-            const res = await fetch("/api/v1/products", {
-                method: "POST",
+            const res = await fetch(url, {
+                method: method,
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
             if (!res.ok) {
                 const errorData = await res.json();
-                throw new Error(errorData.detail || "建立失敗");
+                throw new Error(errorData.detail || (isEdit ? "更新商品失敗" : "建立商品失敗"));
             }
             const modalEl = document.getElementById("productModal");
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
             if (modalInstance) modalInstance.hide();
             document.getElementById("createProductForm").reset();
+            document.getElementById("editProductId").value = "";
 
-            Toast.fire({ icon: "success", title: "商品建立成功！已同步至 Supabase" });
+            Toast.fire({ icon: "success", title: isEdit ? "商品資料已更新！" : "商品建立成功！已同步至 Supabase" });
             loadProducts();
             refreshDashboard();
         } catch (err) {
-            Swal.fire({ icon: "error", title: "建立失敗", text: err.message });
+            Swal.fire({ icon: "error", title: isEdit ? "更新失敗" : "建立失敗", text: err.message });
         } finally {
             btn.disabled = false;
         }

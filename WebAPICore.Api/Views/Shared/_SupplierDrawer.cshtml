@@ -1,8 +1,8 @@
-<!-- 建立供應商右側滑出抽屜 (Offcanvas Drawer) -->
+<!-- 建立/編輯供應商右側滑出抽屜 (Offcanvas Drawer) -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="supplierDrawer" aria-labelledby="supplierDrawerLabel" style="width: 520px;">
     <div class="offcanvas-header bg-dark text-white">
         <h2 class="offcanvas-title fw-bold" id="supplierDrawerLabel">
-            <i class="ti ti-building-store text-info me-2"></i>新增合作供應商主檔
+            <i class="ti ti-building-store text-info me-2"></i><span id="supplierDrawerTitle">新增合作供應商主檔</span>
         </h2>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -12,14 +12,15 @@
             <div class="d-flex">
                 <i class="ti ti-info-circle fs-2 me-2"></i>
                 <div class="small">
-                    <strong>供應商主檔建立提示：</strong><br />
-                    • 代碼建議以英數字命名（如 SUP-005）。<br />
-                    • 建立成功後將立即同步至中央主表與採購開單選單。
+                    <strong>供應商主檔提示：</strong><br />
+                    • 代碼為英數系統識別碼（編輯時不可修改代碼）。<br />
+                    • 儲存後將立即同步至中央主表與採購開單選單。
                 </div>
             </div>
         </div>
 
         <form id="formCreateSupplier" autocomplete="off">
+            <input type="hidden" id="editSupplierId" value="" />
             <div class="row g-2 mb-3">
                 <div class="col-5">
                     <label class="form-label required small">供應商代碼</label>
@@ -53,7 +54,7 @@
             </div>
 
             <button type="submit" class="btn btn-info text-white w-100 fw-bold" id="btnSubmitSupplier">
-                <i class="ti ti-check me-1"></i>確認建立供應商
+                <i class="ti ti-check me-1"></i><span id="btnSubmitSupplierText">確認建立供應商</span>
             </button>
         </form>
     </div>

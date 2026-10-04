@@ -162,6 +162,7 @@ public class InventoryService : IInventoryService
         var lowStockProducts = await _dbContext.Products
             .AsNoTracking()
             .Include(p => p.Stock)
+            .Include(p => p.Supplier)
             .Where(p => p.Stock != null && p.Stock.CurrentQty <= p.SafetyStock)
             .Select(p => new ProductDetailResponse(
                 p.Id,
@@ -173,7 +174,9 @@ public class InventoryService : IInventoryService
                 p.Stock != null ? p.Stock.CurrentQty : 0,
                 p.Stock != null ? p.Stock.OnOrderQty : 0,
                 true,
-                p.CreatedAt
+                p.CreatedAt,
+                p.SupplierId,
+                p.Supplier != null ? p.Supplier.Name : null
             ))
             .ToListAsync(cancellationToken);
 

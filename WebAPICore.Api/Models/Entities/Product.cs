@@ -33,11 +33,17 @@ public class Product
     public int SafetyStock { get; set; } = 10;
 
     /// <summary>
+    /// 主要合作供應商 ID (選填)
+    /// </summary>
+    public Guid? SupplierId { get; set; }
+
+    /// <summary>
     /// 建立時間 (UTC)
     /// </summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     // 導覽屬性
+    public Supplier? Supplier { get; set; }
     public ProductStock? Stock { get; set; }
     public ICollection<StockMovement> Movements { get; set; } = new List<StockMovement>();
 }

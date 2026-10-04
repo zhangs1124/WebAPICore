@@ -19,13 +19,14 @@ public class ProductsController : ControllerBase
     }
 
     /// <summary>
-    /// 取得商品清單（支援分頁、關鍵字搜尋與分類篩選）
+    /// 取得商品清單（支援分頁、關鍵字搜尋、分類篩選與供應商篩選）
     /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(PagedResult<ProductDetailResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<PagedResult<ProductDetailResponse>>> GetProducts(
         [FromQuery] string? search,
         [FromQuery] string? category,
+        [FromQuery] Guid? supplierId,
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10,
         CancellationToken cancellationToken = default)
@@ -36,6 +37,7 @@ public class ProductsController : ControllerBase
         var query = _dbContext.Products
             .AsNoTracking()
             .Include(p => p.Stock)
+            .Include(p => p.Supplier)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
@@ -47,6 +49,11 @@ public class ProductsController : ControllerBase
         if (!string.IsNullOrWhiteSpace(category))
         {
             query = query.Where(p => p.Category == category.Trim());
+        }
+
+        if (supplierId.HasValue)
+        {
+            query = query.Where(p => p.SupplierId == supplierId.Value);
         }
 
         var totalCount = await query.CountAsync(cancellationToken);
@@ -65,7 +72,9 @@ public class ProductsController : ControllerBase
                 p.Stock != null ? p.Stock.CurrentQty : 0,
                 p.Stock != null ? p.Stock.OnOrderQty : 0,
                 p.Stock != null && p.Stock.CurrentQty <= p.SafetyStock,
-                p.CreatedAt
+                p.CreatedAt,
+                p.SupplierId,
+                p.Supplier != null ? p.Supplier.Name : null
             ))
             .ToListAsync(cancellationToken);
 
@@ -83,6 +92,7 @@ public class ProductsController : ControllerBase
         var product = await _dbContext.Products
             .AsNoTracking()
             .Include(p => p.Stock)
+            .Include(p => p.Supplier)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
         if (product == null)
@@ -105,7 +115,9 @@ public class ProductsController : ControllerBase
             product.Stock != null ? product.Stock.CurrentQty : 0,
             product.Stock != null ? product.Stock.OnOrderQty : 0,
             product.Stock != null && product.Stock.CurrentQty <= product.SafetyStock,
-            product.CreatedAt
+            product.CreatedAt,
+            product.SupplierId,
+            product.Supplier != null ? product.Supplier.Name : null
         );
 
         return Ok(response);
@@ -136,6 +148,13 @@ public class ProductsController : ControllerBase
             });
         }
 
+        string? supplierName = null;
+        if (request.SupplierId.HasValue)
+        {
+            var supplier = await _dbContext.Suppliers.FindAsync([request.SupplierId.Value], cancellationToken);
+            supplierName = supplier?.Name;
+        }
+
         var product = new Product
         {
             Id = Guid.NewGuid(),
@@ -144,6 +163,7 @@ public class ProductsController : ControllerBase
             Category = request.Category.Trim(),
             UnitPrice = request.UnitPrice,
             SafetyStock = request.SafetyStock,
+            SupplierId = request.SupplierId,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -170,9 +190,71 @@ public class ProductsController : ControllerBase
             stock.CurrentQty,
             stock.OnOrderQty,
             stock.CurrentQty <= product.SafetyStock,
-            product.CreatedAt
+            product.CreatedAt,
+            product.SupplierId,
+            supplierName
         );
 
         return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, response);
+    }
+
+    /// <summary>
+    /// 更新商品主檔基本資料
+    /// </summary>
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ProductDetailResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ProductDetailResponse>> UpdateProduct(
+        Guid id,
+        [FromBody] UpdateProductRequest request,
+        CancellationToken cancellationToken)
+    {
+        var product = await _dbContext.Products
+            .Include(p => p.Stock)
+            .Include(p => p.Supplier)
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+
+        if (product == null)
+        {
+            return NotFound(new ProblemDetails
+            {
+                Title = "找不到商品",
+                Detail = $"找不到 ID 為 {id} 的商品",
+                Status = StatusCodes.Status404NotFound
+            });
+        }
+
+        product.Name = request.Name.Trim();
+        product.Category = request.Category.Trim();
+        product.UnitPrice = request.UnitPrice;
+        product.SafetyStock = request.SafetyStock;
+        product.SupplierId = request.SupplierId;
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        // 重新載入供應商名稱
+        string? supplierName = null;
+        if (product.SupplierId.HasValue)
+        {
+            var supplier = await _dbContext.Suppliers.FindAsync([product.SupplierId.Value], cancellationToken);
+            supplierName = supplier?.Name;
+        }
+
+        var response = new ProductDetailResponse(
+            product.Id,
+            product.Sku,
+            product.Name,
+            product.Category,
+            product.UnitPrice,
+            product.SafetyStock,
+            product.Stock != null ? product.Stock.CurrentQty : 0,
+            product.Stock != null ? product.Stock.OnOrderQty : 0,
+            product.Stock != null && product.Stock.CurrentQty <= product.SafetyStock,
+            product.CreatedAt,
+            product.SupplierId,
+            supplierName
+        );
+
+        return Ok(response);
     }
 }

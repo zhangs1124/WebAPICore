@@ -89,6 +89,35 @@ public class SuppliersController : ControllerBase
     }
 
     /// <summary>
+    /// 更新供應商基本資料 (採購人員、主管與管理員專屬)
+    /// </summary>
+    [HttpPut("{id:guid}")]
+    [CustomAuth(Roles = "Admin,Manager,Purchaser")]
+    [ProducesResponseType(typeof(SupplierResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<SupplierResponse>> Update(
+        Guid id,
+        [FromBody] UpdateSupplierRequest request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _supplierService.UpdateAsync(id, request, cancellationToken);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new ProblemDetails
+            {
+                Title = "找不到供應商",
+                Detail = ex.Message,
+                Status = StatusCodes.Status404NotFound
+            });
+        }
+    }
+
+    /// <summary>
     /// 切換供應商啟用/停用合作狀態 (主管與管理員專屬)
     /// </summary>
     [HttpPost("{id:guid}/toggle-active")]

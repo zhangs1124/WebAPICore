@@ -301,4 +301,42 @@ public class InventoryAndPurchaseTests
         await Assert.ThrowsAsync<UnauthorizedAccessException>(() =>
             authService.LoginAsync(new LoginRequest("operator_chen", "WrongPassword!")));
     }
+
+    [Fact]
+    public async Task SupplierService_Update_ShouldModifyFieldsAndPersist()
+    {
+        // Arrange
+        var db = CreateInMemoryDbContext(Guid.NewGuid().ToString());
+        var supplierService = new SupplierService(db, NullLogger<SupplierService>.Instance);
+
+        var supplier = await supplierService.CreateAsync(new CreateSupplierRequest(
+            Code: "SUP-ORIG",
+            Name: "原始廠商股份有限公司",
+            ContactPerson: "張三",
+            Phone: "02-12345678",
+            Email: "old@supplier.com",
+            Address: "台北市南港區"
+        ));
+
+        // Act
+        var updateRequest = new UpdateSupplierRequest(
+            Name: "更新廠商科技股份有限公司",
+            ContactPerson: "李四",
+            Phone: "02-87654321",
+            Email: "new@supplier.com",
+            Address: "台北市信義區"
+        );
+        var updated = await supplierService.UpdateAsync(supplier.Id, updateRequest);
+
+        // Assert
+        Assert.Equal("SUP-ORIG", updated.Code); // 代碼保持不變
+        Assert.Equal("更新廠商科技股份有限公司", updated.Name);
+        Assert.Equal("李四", updated.ContactPerson);
+        Assert.Equal("02-87654321", updated.Phone);
+        Assert.Equal("new@supplier.com", updated.Email);
+        Assert.Equal("台北市信義區", updated.Address);
+
+        var fromDb = await supplierService.GetByIdAsync(supplier.Id);
+        Assert.Equal("更新廠商科技股份有限公司", fromDb.Name);
+    }
 }

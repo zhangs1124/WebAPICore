@@ -1,4 +1,4 @@
-namespace WebAPICore.Api.Models.Entities;
+﻿namespace WebAPICore.Api.Models.Entities;
 
 /// <summary>
 /// 供應商基本主檔實體
@@ -47,7 +47,8 @@ public class Supplier
     /// </summary>
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    // 導覽屬性：此供應商的採購訂購單
+    // 導覽屬性：此供應商的採購訂購單與供貨商品清單
     public ICollection<PurchaseOrder> PurchaseOrders { get; set; } = new List<PurchaseOrder>();
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }
 

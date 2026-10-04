@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebAPICore.Api.Dtos;
 
@@ -25,7 +25,30 @@ public record CreateProductRequest(
     int SafetyStock = 10,
 
     [Range(0, 100000, ErrorMessage = "初始庫存量不可為負數")]
-    int InitialStock = 0
+    int InitialStock = 0,
+
+    Guid? SupplierId = null
+);
+
+/// <summary>
+/// 更新商品請求 DTO
+/// </summary>
+public record UpdateProductRequest(
+    [Required(ErrorMessage = "商品名稱不可為空")]
+    [MaxLength(100, ErrorMessage = "名稱長度不可超過 100 個字元")]
+    string Name,
+
+    [Required(ErrorMessage = "商品分類不可為空")]
+    [MaxLength(50, ErrorMessage = "分類長度不可超過 50 個字元")]
+    string Category,
+
+    [Range(0.01, 10000000, ErrorMessage = "單價必須大於 0")]
+    decimal UnitPrice,
+
+    [Range(0, 100000, ErrorMessage = "安全庫存量不可為負數")]
+    int SafetyStock,
+
+    Guid? SupplierId = null
 );
 
 /// <summary>
@@ -41,7 +64,9 @@ public record ProductDetailResponse(
     int CurrentQty,
     int OnOrderQty,
     bool IsLowStock,
-    DateTime CreatedAt
+    DateTime CreatedAt,
+    Guid? SupplierId = null,
+    string? SupplierName = null
 );
 
 /// <summary>

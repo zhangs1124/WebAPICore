@@ -1,4 +1,4 @@
-using WebAPICore.Api.Dtos;
+﻿using WebAPICore.Api.Dtos;
 
 namespace WebAPICore.Api.Services;
 
@@ -21,6 +21,11 @@ public interface ISupplierService
     /// 依 ID 取得供應商詳細資料
     /// </summary>
     Task<SupplierResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 更新供應商基本主檔資料
+    /// </summary>
+    Task<SupplierResponse> UpdateAsync(Guid id, UpdateSupplierRequest request, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 切換供應商啟用/停用合作狀態

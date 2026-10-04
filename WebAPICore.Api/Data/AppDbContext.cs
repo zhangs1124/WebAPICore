@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebAPICore.Api.Models.Entities;
 
 namespace WebAPICore.Api.Data;
@@ -50,6 +50,11 @@ public class AppDbContext : DbContext
 
             entity.Property(p => p.SafetyStock)
                 .HasDefaultValue(10);
+
+            entity.HasOne(p => p.Supplier)
+                .WithMany(s => s.Products)
+                .HasForeignKey(p => p.SupplierId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         // 2. 庫存即時檔配置

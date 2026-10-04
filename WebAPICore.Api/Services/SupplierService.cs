@@ -84,6 +84,27 @@ public class SupplierService : ISupplierService
     }
 
     /// <inheritdoc />
+    public async Task<SupplierResponse> UpdateAsync(Guid id, UpdateSupplierRequest request, CancellationToken cancellationToken = default)
+    {
+        var supplier = await _dbContext.Suppliers.FindAsync([id], cancellationToken);
+        if (supplier == null)
+        {
+            throw new KeyNotFoundException($"找不到 ID 為 {id} 的供應商。");
+        }
+
+        supplier.Name = request.Name.Trim();
+        supplier.ContactPerson = request.ContactPerson.Trim();
+        supplier.Phone = request.Phone.Trim();
+        supplier.Email = request.Email?.Trim();
+        supplier.Address = request.Address?.Trim();
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("成功更新供應商主檔: {Code} - {Name}", supplier.Code, supplier.Name);
+        return MapToResponse(supplier);
+    }
+
+    /// <inheritdoc />
     public async Task<bool> ToggleActiveAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var supplier = await _dbContext.Suppliers.FindAsync([id], cancellationToken);
